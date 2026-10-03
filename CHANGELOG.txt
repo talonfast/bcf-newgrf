@@ -1,6 +1,11 @@
 BC Ferries, MV Coho & Victoria Clipper - changelog
 ==================================================
 
+v5 (2026-10-03)
+- Fix: ships broke down far too often. Reliability now decays like
+  OpenTTD's own ships (5; 7 for pre-1985 classes, 10 for the PacifiCat,
+  20 for the cardboard Pirate Pak) instead of 20 for everything.
+
 v4 (2026-10-03)
 - Victoria Clipper IV and V (passenger-only fast catamarans, Union Jack livery).
 - Stack smoke spawned at each ship's real exhaust outlets (lighter for LNG/hybrid).

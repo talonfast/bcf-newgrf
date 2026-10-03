@@ -4,7 +4,7 @@ grf {
     grfid: "TFBC";
     name: string(STR_GRF_NAME);
     desc: string(STR_GRF_DESC);
-    version: 4;
+    version: 5;
     min_compatible_version: 1;
     param 0 {
         cap_mode {
@@ -170,7 +170,7 @@ item(FEAT_SHIPS, coho, 0) {
         introduction_date: date(1959, 3, 1);
         model_life: 90;
         vehicle_life: 50;
-        reliability_decay: 20;
+        reliability_decay: 7;
         cost_factor: 150;
         running_cost_factor: 120;
         sprite_id: SPRITE_ID_NEW_SHIP;
@@ -339,7 +339,7 @@ item(FEAT_SHIPS, sidney, 1) {
         introduction_date: date(1960, 3, 1);
         model_life: 25;
         vehicle_life: 40;
-        reliability_decay: 20;
+        reliability_decay: 7;
         cost_factor: 140;
         running_cost_factor: 120;
         sprite_id: SPRITE_ID_NEW_SHIP;
@@ -508,7 +508,7 @@ item(FEAT_SHIPS, vclass, 2) {
         introduction_date: date(1962, 3, 1);
         model_life: 10;
         vehicle_life: 40;
-        reliability_decay: 20;
+        reliability_decay: 7;
         cost_factor: 145;
         running_cost_factor: 120;
         sprite_id: SPRITE_ID_NEW_SHIP;
@@ -677,7 +677,7 @@ item(FEAT_SHIPS, vclass_s, 3) {
         introduction_date: date(1970, 3, 1);
         model_life: 30;
         vehicle_life: 40;
-        reliability_decay: 20;
+        reliability_decay: 7;
         cost_factor: 165;
         running_cost_factor: 130;
         sprite_id: SPRITE_ID_NEW_SHIP;
@@ -847,7 +847,7 @@ item(FEAT_SHIPS, burnaby, 4) {
         introduction_date: date(1965, 3, 1);
         model_life: 25;
         vehicle_life: 45;
-        reliability_decay: 20;
+        reliability_decay: 7;
         cost_factor: 160;
         running_cost_factor: 130;
         sprite_id: SPRITE_ID_NEW_SHIP;
@@ -1016,7 +1016,7 @@ item(FEAT_SHIPS, bowen, 5) {
         introduction_date: date(1965, 3, 1);
         model_life: 40;
         vehicle_life: 55;
-        reliability_decay: 20;
+        reliability_decay: 7;
         cost_factor: 90;
         running_cost_factor: 70;
         sprite_id: SPRITE_ID_NEW_SHIP;
@@ -1185,7 +1185,7 @@ item(FEAT_SHIPS, rupert, 6) {
         introduction_date: date(1966, 3, 1);
         model_life: 30;
         vehicle_life: 45;
-        reliability_decay: 20;
+        reliability_decay: 7;
         cost_factor: 130;
         running_cost_factor: 110;
         sprite_id: SPRITE_ID_NEW_SHIP;
@@ -1354,7 +1354,7 @@ item(FEAT_SHIPS, tclass, 7) {
         introduction_date: date(1969, 3, 1);
         model_life: 40;
         vehicle_life: 55;
-        reliability_decay: 20;
+        reliability_decay: 7;
         cost_factor: 50;
         running_cost_factor: 40;
         sprite_id: SPRITE_ID_NEW_SHIP;
@@ -1523,7 +1523,7 @@ item(FEAT_SHIPS, nimpkish, 8) {
         introduction_date: date(1973, 3, 1);
         model_life: 40;
         vehicle_life: 50;
-        reliability_decay: 20;
+        reliability_decay: 7;
         cost_factor: 40;
         running_cost_factor: 32;
         sprite_id: SPRITE_ID_NEW_SHIP;
@@ -1692,7 +1692,7 @@ item(FEAT_SHIPS, cclass, 9) {
         introduction_date: date(1976, 3, 1);
         model_life: 10;
         vehicle_life: 50;
-        reliability_decay: 20;
+        reliability_decay: 7;
         cost_factor: 190;
         running_cost_factor: 150;
         sprite_id: SPRITE_ID_NEW_SHIP;
@@ -1861,7 +1861,7 @@ item(FEAT_SHIPS, cclass_ob, 10) {
         introduction_date: date(1981, 3, 1);
         model_life: 45;
         vehicle_life: 50;
-        reliability_decay: 20;
+        reliability_decay: 7;
         cost_factor: 190;
         running_cost_factor: 150;
         sprite_id: SPRITE_ID_NEW_SHIP;
@@ -2031,7 +2031,7 @@ item(FEAT_SHIPS, quinitsa, 11) {
         introduction_date: date(1977, 3, 1);
         model_life: 35;
         vehicle_life: 50;
-        reliability_decay: 20;
+        reliability_decay: 7;
         cost_factor: 65;
         running_cost_factor: 50;
         sprite_id: SPRITE_ID_NEW_SHIP;
@@ -2200,7 +2200,7 @@ item(FEAT_SHIPS, north, 12) {
         introduction_date: date(1980, 3, 1);
         model_life: 26;
         vehicle_life: 40;
-        reliability_decay: 20;
+        reliability_decay: 7;
         cost_factor: 150;
         running_cost_factor: 125;
         sprite_id: SPRITE_ID_NEW_SHIP;
@@ -2369,7 +2369,7 @@ item(FEAT_SHIPS, quinsam, 13) {
         introduction_date: date(1982, 3, 1);
         model_life: 40;
         vehicle_life: 50;
-        reliability_decay: 20;
+        reliability_decay: 7;
         cost_factor: 80;
         running_cost_factor: 60;
         sprite_id: SPRITE_ID_NEW_SHIP;
@@ -2538,7 +2538,7 @@ item(FEAT_SHIPS, intermediate, 14) {
         introduction_date: date(1991, 3, 1);
         model_life: 35;
         vehicle_life: 45;
-        reliability_decay: 20;
+        reliability_decay: 5;
         cost_factor: 110;
         running_cost_factor: 80;
         sprite_id: SPRITE_ID_NEW_SHIP;
@@ -2707,7 +2707,7 @@ item(FEAT_SHIPS, spirit, 15) {
         introduction_date: date(1993, 3, 1);
         model_life: 25;
         vehicle_life: 50;
-        reliability_decay: 20;
+        reliability_decay: 5;
         cost_factor: 230;
         running_cost_factor: 170;
         sprite_id: SPRITE_ID_NEW_SHIP;
@@ -2876,7 +2876,7 @@ item(FEAT_SHIPS, spirit_lng, 16) {
         introduction_date: date(2018, 3, 1);
         model_life: 30;
         vehicle_life: 40;
-        reliability_decay: 20;
+        reliability_decay: 5;
         cost_factor: 235;
         running_cost_factor: 130;
         sprite_id: SPRITE_ID_NEW_SHIP;
@@ -3046,7 +3046,7 @@ item(FEAT_SHIPS, century, 17) {
         introduction_date: date(1997, 3, 1);
         model_life: 30;
         vehicle_life: 45;
-        reliability_decay: 20;
+        reliability_decay: 5;
         cost_factor: 105;
         running_cost_factor: 80;
         sprite_id: SPRITE_ID_NEW_SHIP;
@@ -3215,7 +3215,7 @@ item(FEAT_SHIPS, pacificat, 18) {
         introduction_date: date(1999, 3, 1);
         model_life: 5;
         vehicle_life: 20;
-        reliability_decay: 20;
+        reliability_decay: 10;
         cost_factor: 250;
         running_cost_factor: 250;
         sprite_id: SPRITE_ID_NEW_SHIP;
@@ -3384,7 +3384,7 @@ item(FEAT_SHIPS, nadventure, 19) {
         introduction_date: date(2007, 3, 1);
         model_life: 30;
         vehicle_life: 40;
-        reliability_decay: 20;
+        reliability_decay: 5;
         cost_factor: 150;
         running_cost_factor: 115;
         sprite_id: SPRITE_ID_NEW_SHIP;
@@ -3553,7 +3553,7 @@ item(FEAT_SHIPS, coastal, 20) {
         introduction_date: date(2008, 3, 1);
         model_life: 40;
         vehicle_life: 50;
-        reliability_decay: 20;
+        reliability_decay: 5;
         cost_factor: 220;
         running_cost_factor: 150;
         sprite_id: SPRITE_ID_NEW_SHIP;
@@ -3722,7 +3722,7 @@ item(FEAT_SHIPS, coastal_2010, 21) {
         introduction_date: date(2008, 3, 1);
         model_life: 40;
         vehicle_life: 50;
-        reliability_decay: 20;
+        reliability_decay: 5;
         cost_factor: 220;
         running_cost_factor: 150;
         sprite_id: SPRITE_ID_NEW_SHIP;
@@ -3892,7 +3892,7 @@ item(FEAT_SHIPS, nexpedition, 22) {
         introduction_date: date(2009, 3, 1);
         model_life: 35;
         vehicle_life: 45;
-        reliability_decay: 20;
+        reliability_decay: 5;
         cost_factor: 175;
         running_cost_factor: 130;
         sprite_id: SPRITE_ID_NEW_SHIP;
@@ -4061,7 +4061,7 @@ item(FEAT_SHIPS, salish, 23) {
         introduction_date: date(2016, 3, 1);
         model_life: 40;
         vehicle_life: 45;
-        reliability_decay: 20;
+        reliability_decay: 5;
         cost_factor: 150;
         running_cost_factor: 90;
         sprite_id: SPRITE_ID_NEW_SHIP;
@@ -4230,7 +4230,7 @@ item(FEAT_SHIPS, island, 24) {
         introduction_date: date(2020, 3, 1);
         model_life: 60;
         vehicle_life: 45;
-        reliability_decay: 20;
+        reliability_decay: 5;
         cost_factor: 110;
         running_cost_factor: 45;
         sprite_id: SPRITE_ID_NEW_SHIP;
@@ -4530,7 +4530,7 @@ item(FEAT_SHIPS, spirit_vi, 26) {
         introduction_date: date(1994, 3, 1);
         model_life: 25;
         vehicle_life: 50;
-        reliability_decay: 20;
+        reliability_decay: 5;
         cost_factor: 230;
         running_cost_factor: 170;
         sprite_id: SPRITE_ID_NEW_SHIP;
@@ -4700,7 +4700,7 @@ item(FEAT_SHIPS, coastal_insp, 27) {
         introduction_date: date(2008, 3, 1);
         model_life: 40;
         vehicle_life: 50;
-        reliability_decay: 20;
+        reliability_decay: 5;
         cost_factor: 220;
         running_cost_factor: 150;
         sprite_id: SPRITE_ID_NEW_SHIP;
@@ -4870,7 +4870,7 @@ item(FEAT_SHIPS, coastal_cel, 28) {
         introduction_date: date(2008, 3, 1);
         model_life: 40;
         vehicle_life: 50;
-        reliability_decay: 20;
+        reliability_decay: 5;
         cost_factor: 220;
         running_cost_factor: 150;
         sprite_id: SPRITE_ID_NEW_SHIP;
@@ -5040,7 +5040,7 @@ item(FEAT_SHIPS, coastal_insp_2010, 29) {
         introduction_date: date(2008, 3, 1);
         model_life: 40;
         vehicle_life: 50;
-        reliability_decay: 20;
+        reliability_decay: 5;
         cost_factor: 220;
         running_cost_factor: 150;
         sprite_id: SPRITE_ID_NEW_SHIP;
@@ -5210,7 +5210,7 @@ item(FEAT_SHIPS, coastal_cel_2010, 30) {
         introduction_date: date(2008, 3, 1);
         model_life: 40;
         vehicle_life: 50;
-        reliability_decay: 20;
+        reliability_decay: 5;
         cost_factor: 220;
         running_cost_factor: 150;
         sprite_id: SPRITE_ID_NEW_SHIP;
@@ -5380,7 +5380,7 @@ item(FEAT_SHIPS, cclass_cow, 31) {
         introduction_date: date(1976, 3, 1);
         model_life: 10;
         vehicle_life: 50;
-        reliability_decay: 20;
+        reliability_decay: 7;
         cost_factor: 190;
         running_cost_factor: 150;
         sprite_id: SPRITE_ID_NEW_SHIP;
@@ -5550,7 +5550,7 @@ item(FEAT_SHIPS, cclass_alb, 32) {
         introduction_date: date(1976, 3, 1);
         model_life: 10;
         vehicle_life: 50;
-        reliability_decay: 20;
+        reliability_decay: 7;
         cost_factor: 190;
         running_cost_factor: 150;
         sprite_id: SPRITE_ID_NEW_SHIP;
@@ -5720,7 +5720,7 @@ item(FEAT_SHIPS, cclass_sur, 33) {
         introduction_date: date(1981, 3, 1);
         model_life: 45;
         vehicle_life: 50;
-        reliability_decay: 20;
+        reliability_decay: 7;
         cost_factor: 190;
         running_cost_factor: 150;
         sprite_id: SPRITE_ID_NEW_SHIP;
@@ -5890,7 +5890,7 @@ item(FEAT_SHIPS, salish_eagle, 34) {
         introduction_date: date(2017, 3, 1);
         model_life: 40;
         vehicle_life: 45;
-        reliability_decay: 20;
+        reliability_decay: 5;
         cost_factor: 150;
         running_cost_factor: 90;
         sprite_id: SPRITE_ID_NEW_SHIP;
@@ -6060,7 +6060,7 @@ item(FEAT_SHIPS, salish_raven, 35) {
         introduction_date: date(2017, 3, 1);
         model_life: 40;
         vehicle_life: 45;
-        reliability_decay: 20;
+        reliability_decay: 5;
         cost_factor: 150;
         running_cost_factor: 90;
         sprite_id: SPRITE_ID_NEW_SHIP;
@@ -6230,7 +6230,7 @@ item(FEAT_SHIPS, burnaby_nan, 36) {
         introduction_date: date(1965, 3, 1);
         model_life: 25;
         vehicle_life: 45;
-        reliability_decay: 20;
+        reliability_decay: 7;
         cost_factor: 160;
         running_cost_factor: 130;
         sprite_id: SPRITE_ID_NEW_SHIP;
@@ -6400,7 +6400,7 @@ item(FEAT_SHIPS, burnaby_nw, 37) {
         introduction_date: date(1964, 3, 1);
         model_life: 25;
         vehicle_life: 45;
-        reliability_decay: 20;
+        reliability_decay: 7;
         cost_factor: 160;
         running_cost_factor: 130;
         sprite_id: SPRITE_ID_NEW_SHIP;
@@ -6570,7 +6570,7 @@ item(FEAT_SHIPS, intermediate_cum, 38) {
         introduction_date: date(1992, 3, 1);
         model_life: 35;
         vehicle_life: 45;
-        reliability_decay: 20;
+        reliability_decay: 5;
         cost_factor: 110;
         running_cost_factor: 80;
         sprite_id: SPRITE_ID_NEW_SHIP;
@@ -6740,7 +6740,7 @@ item(FEAT_SHIPS, vclass_s_vic, 39) {
         introduction_date: date(1970, 3, 1);
         model_life: 30;
         vehicle_life: 40;
-        reliability_decay: 20;
+        reliability_decay: 7;
         cost_factor: 165;
         running_cost_factor: 130;
         sprite_id: SPRITE_ID_NEW_SHIP;
@@ -6910,7 +6910,7 @@ item(FEAT_SHIPS, salish_heron, 40) {
         introduction_date: date(2022, 3, 1);
         model_life: 40;
         vehicle_life: 45;
-        reliability_decay: 20;
+        reliability_decay: 5;
         cost_factor: 150;
         running_cost_factor: 90;
         sprite_id: SPRITE_ID_NEW_SHIP;
@@ -7080,7 +7080,7 @@ item(FEAT_SHIPS, clipper4, 41) {
         introduction_date: date(1993, 3, 1);
         model_life: 30;
         vehicle_life: 30;
-        reliability_decay: 20;
+        reliability_decay: 5;
         cost_factor: 140;
         running_cost_factor: 150;
         sprite_id: SPRITE_ID_NEW_SHIP;
@@ -7247,7 +7247,7 @@ item(FEAT_SHIPS, clipper5, 42) {
         introduction_date: date(2019, 3, 1);
         model_life: 40;
         vehicle_life: 30;
-        reliability_decay: 20;
+        reliability_decay: 5;
         cost_factor: 170;
         running_cost_factor: 190;
         sprite_id: SPRITE_ID_NEW_SHIP;

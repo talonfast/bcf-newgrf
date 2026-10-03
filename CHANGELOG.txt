@@ -1,0 +1,25 @@
+BC Ferries, MV Coho & Victoria Clipper - changelog
+==================================================
+
+v4 (2026-10-03)
+- Victoria Clipper IV and V (passenger-only fast catamarans, Union Jack livery).
+- Stack smoke spawned at each ship's real exhaust outlets (lighter for LNG/hybrid).
+- Salish class: central tower with overhanging wheelhouse, gooseneck exhausts,
+  per-ship Coast Salish hull art (Orca, Eagle, Raven, new Salish Heron).
+- Structure fixes from photos: Northern Adventure single stack; Bowen,
+  Intermediate and T-class central houses over open car decks; ramp gantries
+  on Quinsam and Quinitsa; Queen of the North red boot-top.
+
+v3
+- Lighting: cast shadows, ambient occlusion, sheen, 2x2 anti-aliasing at 4x.
+- Shadow on the water; bow wave and stern wake only while under way.
+- Age-based weathering (seams, rust streaks, waterline grime).
+- Car-deck portals, bridge wings, liferafts, radomes, davits.
+- Sister ships as build-list variants; three distinct Vancouver 2010 wraps.
+- Fleet scaled up 1.5x (Spirit class ~2.4 tiles); fixed engine IDs.
+
+v2
+- 32bpp sprites at 1x/2x/4x; photo-matched liveries and logos; Pirate Pak.
+
+v1
+- First release: 24 ships, 8bpp sprites.

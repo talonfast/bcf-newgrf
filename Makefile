@@ -25,7 +25,22 @@ setup:
 clean:
 	rm -rf gfx bcferries.nml lang $(GRF) preview.png .nmlcache
 
-.PHONY: all preview showcase install setup clean
+.PHONY: all preview showcase install setup clean release
 
 showcase: gfx/sprites.json
 	$(PY) src/make_showcase.py showcase.png
+
+VERSION := $(shell sed -n 's/^GRF_VERSION = //p' src/make_nml.py)
+REL     := bcferries-v$(VERSION)
+
+# releases/<name>.tar is what OpenTTD loads directly from its newgrf folder.
+# COPYFILE_DISABLE keeps macOS from adding ._ metadata files to the tar.
+release: $(GRF)
+	rm -rf dist/$(REL) && mkdir -p dist/$(REL) releases
+	cp $(GRF) dist/$(REL)/
+	cp README.md dist/$(REL)/readme.txt
+	cp CHANGELOG.txt dist/$(REL)/changelog.txt
+	cp LICENSE.txt dist/$(REL)/license.txt
+	cd dist && COPYFILE_DISABLE=1 tar --no-mac-metadata -cf ../releases/$(REL).tar $(REL)
+	rm -rf dist
+	@ls -la releases/$(REL).tar

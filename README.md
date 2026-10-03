@@ -40,12 +40,18 @@ refrigerated cargo (two units per car space). Bulk and liquid are excluded.
 
 **Parameter "Capacity scale":** 100% (realistic), 50% or 25%.
 
+## Installing a release
+Drop `releases/bcferries-vN.tar` into `~/Documents/OpenTTD/newgrf/` (Windows:
+`Documents\OpenTTD\newgrf\`) as-is - OpenTTD reads the GRF straight from the
+tar. See `CHANGELOG.txt` for what changed and `LICENSE.txt` for terms.
+
 ## Building
 ```
 make setup     # one time: venv with nml, pillow, numpy
 make           # renders gfx/, generates bcferries.nml, compiles bcferries.grf
 make preview   # preview.png of all ships at 4x
 make install   # copy to ~/Documents/OpenTTD/newgrf/
+make release   # package releases/bcferries-vN.tar (bump GRF_VERSION in src/make_nml.py first)
 ```
 Graphics: 8bpp at 1x (fallback) plus 32bpp at 1x, 2x and 4x zoom. The
 32bpp sprites need a 32bpp blitter (the default in current OpenTTD/JGRPP).

@@ -1,6 +1,19 @@
 BC Ferries, MV Coho & Victoria Clipper - changelog
 ==================================================
 
+v7 (2026-10-03)
+- The rest of the terminal, as objects under "BC Ferries terminals":
+  ferry terminal building (2x2, roof-top BC Ferries letters), toll plaza
+  (tiles side by side, booths, canopy, lattice light towers), vehicle
+  holding lanes (two random car layouts), berth ramp and towers,
+  berth wingwall and dolphin (on water), passenger walkway (tiles in a
+  row), terminal control tower.
+
+v6 (2026-10-03)
+- New object: Tsawwassen Quay Market (2x1 tiles, 4 rotations), in a new
+  "BC Ferries terminals" object class. Glass hall with glulam timber
+  columns and beam ends, louvred bays, tiled end wall, paved surround.
+
 v5 (2026-10-03)
 - Fix: ships broke down far too often. Reliability now decays like
   OpenTTD's own ships (5; 7 for pre-1985 classes, 10 for the PacifiCat,

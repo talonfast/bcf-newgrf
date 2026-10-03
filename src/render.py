@@ -100,6 +100,23 @@ MAT = {
     "fries":     (240, 196, 80),
     "paper":     (246, 244, 238),
     "mushroom":  (120, 84, 56),
+    # buildings
+    "concrete":  (192, 190, 182),
+    "alu":       (172, 178, 184),
+    "timber":    (204, 128, 58),
+    "louvre":    (104, 110, 118),
+    "stone":     (150, 152, 148),
+    "roofmetal": (140, 144, 148),
+    "rust":      (128, 72, 42),
+    "asphalt":   (74, 76, 80),
+    "laneline":  (232, 232, 226),
+    "membrane":  (214, 216, 218),
+    "skin":      (222, 182, 150),
+    "skin2":     (150, 106, 78),
+    "denim":     (56, 76, 120),
+    "umbrella":  (226, 60, 48),
+    "signgreen": (40, 170, 70),
+    "flagred":   (214, 32, 40),
 }
 MAT_NAMES = list(MAT.keys())
 MAT_ID = {n: i + 1 for i, n in enumerate(MAT_NAMES)}
@@ -851,12 +868,6 @@ class Ship:
         pos = pos * k
         pu, pv, pw = pos[:, 0], pos[:, 1], pos[:, 2]
         nu, nv, nw = nrm[:, 0], nrm[:, 1], nrm[:, 2]
-        cam = np.array([1.0, 1.0, 2.0]) / math.sqrt(6)
-        half = LIGHT + cam
-        half /= np.linalg.norm(half)
-        e1 = np.cross(LIGHT, [0, 0, 1.0])
-        e1 /= np.linalg.norm(e1)
-        e2 = np.cross(LIGHT, e1)
         views = []
         for hx, hy in HEADINGS:
             n = math.hypot(hx, hy)
@@ -870,29 +881,7 @@ class Ship:
             wz = nw / ZS
             wl = np.sqrt(wx ** 2 + wy ** 2 + wz ** 2) + 1e-6
             wx, wy, wz = wx / wl, wy / wl, wz / wl
-            ndl = np.clip(wx * LIGHT[0] + wy * LIGHT[1] + wz * LIGHT[2], 0, 1)
-            # --- cast shadows: light-space depth map with 3x3 soft filtering
-            la, lb, ld = x * e1[0] + y * e1[1] + z * e1[2], x * e2[0] + y * e2[1] + z * e2[2], \
-                x * LIGHT[0] + y * LIGHT[1] + z * LIGHT[2]
-            cs = 0.06
-            ia = ((la - la.min()) / cs).astype(np.int64) + 1
-            ib = ((lb - lb.min()) / cs).astype(np.int64) + 1
-            na, nb_ = ia.max() + 2, ib.max() + 2
-            maxd = np.full(na * nb_, -1e9, np.float32)
-            o = np.argsort(ld)
-            maxd[(ia * nb_ + ib)[o]] = ld[o]
-            bias = 0.09 + 0.18 * (1 - ndl)
-            lit_f = np.zeros_like(ld)
-            for da in (-1, 0, 1):
-                for db in (-1, 0, 1):
-                    lit_f += ld >= maxd[(ia + da) * nb_ + (ib + db)] - bias
-            shadow = lit_f / 9.0
-            # --- shading: ambient (occluded) + direct (shadowed) + specular
-            spec = np.clip(wx * half[0] + wy * half[1] + wz * half[2], 0, 1) ** shin
-            col = base * (0.62 * ao + 0.48 * ndl * shadow)[:, None]
-            col += (255 * spec_k * spec * shadow)[:, None]
-            col[glossy] += (38 * np.clip(wz[glossy] + 0.3, 0, 1))[:, None]   # sky in glass
-            col = np.clip(col, 0, 255)
+            col = shade(x, y, z, wx, wy, wz, base, ao, glossy, spec_k, shin)
             # --- screen positions: ship, its shadow on the water, the wake
             sx = ZOOM * 2 * (y - x)
             sy = ZOOM * ((x + y) - z)
@@ -906,20 +895,7 @@ class Ship:
             y0 = (int(np.floor(ally.min())) // ZOOM - 1) * ZOOM
             wdt = -(-(int(np.ceil(allx.max())) - x0 + 3) // ZOOM) * ZOOM
             hgt = -(-(int(np.ceil(ally.max())) - y0 + 3) // ZOOM) * ZOOM
-            depth = x + y + 2 * z
-            order = np.argsort(depth)
-            # --- 2x2 jittered passes = anti-aliased 4x image
-            acc = np.zeros((hgt * wdt, 3), np.float32)
-            cnt = np.zeros(hgt * wdt, np.float32)
-            for ox, oy in ((0.25, 0.25), (0.75, 0.25), (0.25, 0.75), (0.75, 0.75)):
-                lin = (np.floor(sy + oy).astype(int) - y0) * wdt + (np.floor(sx + ox).astype(int) - x0)
-                buf = np.full(hgt * wdt, -1, dtype=np.int64)
-                buf[lin[order]] = order
-                hit = buf >= 0
-                acc[hit] += col[buf[hit]]
-                cnt[hit] += 1
-            ship_a = (cnt / 4).reshape(hgt, wdt)
-            ship_c = (acc / np.maximum(cnt, 1)[:, None]).reshape(hgt, wdt, 3)
+            ship_c, ship_a = raster(sx, sy, x + y + 2 * z, col, x0, y0, wdt, hgt)
             # --- soft shadow on the water
             sh = np.zeros(hgt * wdt, np.float32)
             sh[(ssy.astype(int) - y0) * wdt + (ssx.astype(int) - x0)] = 1
@@ -931,12 +907,6 @@ class Ship:
             np.maximum.at(wk, (wsy.astype(int) - y0) * wdt + (wsx.astype(int) - x0), wk_a)
             wk_a2 = np.clip(_blur(wk.reshape(hgt, wdt), 2, 1) * 1.15, 0, 0.9)
             wk_c = np.array([236, 244, 250], np.float32)
-
-            def over(c1, a1, c2, a2):
-                a = a1 + a2 * (1 - a1)
-                c = (c1 * a1[..., None] + c2 * (a2 * (1 - a1))[..., None]) / \
-                    np.maximum(a, 1e-6)[..., None]
-                return c, a
             uc_s, ua_s = np.broadcast_to(sh_c, (hgt, wdt, 3)), sh_a
             uc_m, ua_m = over(np.broadcast_to(wk_c, (hgt, wdt, 3)), wk_a2, uc_s, ua_s)
             still = over(ship_c, ship_a, uc_s, ua_s)
@@ -944,6 +914,64 @@ class Ship:
             views.append((np.dstack([still[0], still[1]]), np.dstack([moving[0], moving[1]]),
                           x0, y0))
         return views
+
+
+_CAM = np.array([1.0, 1.0, 2.0]) / math.sqrt(6)
+_HALF = (LIGHT + _CAM) / np.linalg.norm(LIGHT + _CAM)
+_E1 = np.cross(LIGHT, [0, 0, 1.0]) / np.linalg.norm(np.cross(LIGHT, [0, 0, 1.0]))
+_E2 = np.cross(LIGHT, _E1)
+
+
+def shade(x, y, z, wx, wy, wz, base, ao, glossy, spec_k, shin):
+    """Light surface points given in screen-world coordinates (x SW, y SE,
+    z up in pixels) with unit normals: ambient (occluded) + direct with cast
+    shadows from a light-space depth map (3x3 soft filter) + specular, plus
+    a little sky reflected in glass. Returns RGB float per point."""
+    ndl = np.clip(wx * LIGHT[0] + wy * LIGHT[1] + wz * LIGHT[2], 0, 1)
+    la = x * _E1[0] + y * _E1[1] + z * _E1[2]
+    lb = x * _E2[0] + y * _E2[1] + z * _E2[2]
+    ld = x * LIGHT[0] + y * LIGHT[1] + z * LIGHT[2]
+    cs = 0.06
+    ia = ((la - la.min()) / cs).astype(np.int64) + 1
+    ib = ((lb - lb.min()) / cs).astype(np.int64) + 1
+    na, nb_ = ia.max() + 2, ib.max() + 2
+    maxd = np.full(na * nb_, -1e9, np.float32)
+    o = np.argsort(ld)
+    maxd[(ia * nb_ + ib)[o]] = ld[o]
+    bias = 0.09 + 0.18 * (1 - ndl)
+    lit_f = np.zeros_like(ld)
+    for da in (-1, 0, 1):
+        for db in (-1, 0, 1):
+            lit_f += ld >= maxd[(ia + da) * nb_ + (ib + db)] - bias
+    shadow = lit_f / 9.0
+    spec = np.clip(wx * _HALF[0] + wy * _HALF[1] + wz * _HALF[2], 0, 1) ** shin
+    col = base * (0.62 * ao + 0.48 * ndl * shadow)[:, None]
+    col += (255 * spec_k * spec * shadow)[:, None]
+    col[glossy] += (38 * np.clip(wz[glossy] + 0.3, 0, 1))[:, None]   # sky in glass
+    return np.clip(col, 0, 255)
+
+
+def raster(sx, sy, depth, col, x0, y0, wdt, hgt):
+    """Z-buffer points into a wdt x hgt image at origin (x0, y0) with four
+    jittered passes (2x2 anti-aliasing). Returns (rgb, alpha) arrays."""
+    order = np.argsort(depth)
+    acc = np.zeros((hgt * wdt, 3), np.float32)
+    cnt = np.zeros(hgt * wdt, np.float32)
+    for ox, oy in ((0.25, 0.25), (0.75, 0.25), (0.25, 0.75), (0.75, 0.75)):
+        lin = (np.floor(sy + oy).astype(int) - y0) * wdt + (np.floor(sx + ox).astype(int) - x0)
+        buf = np.full(hgt * wdt, -1, dtype=np.int64)
+        buf[lin[order]] = order
+        hit = buf >= 0
+        acc[hit] += col[buf[hit]]
+        cnt[hit] += 1
+    return (acc / np.maximum(cnt, 1)[:, None]).reshape(hgt, wdt, 3), (cnt / 4).reshape(hgt, wdt)
+
+
+def over(c1, a1, c2, a2):
+    """Straight-alpha 'over' compositing of layer 1 on layer 2."""
+    a = a1 + a2 * (1 - a1)
+    c = (c1 * a1[..., None] + c2 * (a2 * (1 - a1))[..., None]) / np.maximum(a, 1e-6)[..., None]
+    return c, a
 
 
 def _blur(img, r, passes):

@@ -33,6 +33,21 @@ Figures are approximate, rounded real-world values. In-game years are the
 years each class entered service. Variants appear grouped under the parent
 ship in the build list (OpenTTD 13+/JGRPP).
 
+## Terminal objects
+Placeable from the landscaping toolbar under **BC Ferries terminals**:
+| Object | Tiles | Notes |
+|---|---|---|
+| Tsawwassen Quay Market | 2x1 | glass hall, glulam timber, from 2009 |
+| Ferry terminal building | 2x2 | roof-top BC Ferries letters |
+| Toll plaza | 1x1 | place tiles side by side across the road |
+| Vehicle holding lanes | 1x1 | two random car layouts |
+| Berth ramp and towers | 1x1 | at the quay edge, ramp towards the water |
+| Berth wingwall and dolphin | 1x1 | on water; fenders face the neighbouring tile |
+| Passenger walkway | 1x1 | place tiles in a row |
+| Terminal control tower | 1x1 | |
+
+`make scene` composes `scene.png`, a whole terminal from these sprites.
+
 ## Cargo
 Passengers by default. Refit to the vehicle deck to carry `VEHI` (FIRS-style
 "Vehicles", one per car space) or any mail/express/piece-goods/armoured/

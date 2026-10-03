@@ -127,6 +127,42 @@ switch(FEAT_SHIPS, SELF, sw_cap_coho, cargo_classes & bitmask(CC_PASSENGERS)) {
     return max(1, 1000 >> cap_mode);
 }
 
+switch(FEAT_SHIPS, SELF, sw_fx_coho_0, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -1, -1, 26), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coho_1, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -1, 0, 26), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coho_2, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -1, 1, 26), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coho_3, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 1, 26), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coho_4, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 1, 1, 26), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coho_5, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 1, 0, 26), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coho_6, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 1, -1, 26), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coho_7, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, -1, 26), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coho, direction) {
+    0: sw_fx_coho_0;
+    1: sw_fx_coho_1;
+    2: sw_fx_coho_2;
+    3: sw_fx_coho_3;
+    4: sw_fx_coho_4;
+    5: sw_fx_coho_5;
+    6: sw_fx_coho_6;
+    7: sw_fx_coho_7;
+    sw_fx_coho_0;
+}
+
 item(FEAT_SHIPS, coho, 0) {
     property {
         name: string(STR_NAME_COHO);
@@ -148,11 +184,13 @@ item(FEAT_SHIPS, coho, 0) {
         refit_cost: 10;
         loading_speed: 50;
         sound_effect: SOUND_DEPARTURE_FERRY;
+        effect_spawn_model: EFFECT_SPAWN_MODEL_STEAM;
     }
     graphics {
         cargo_capacity: sw_cap_coho;
         purchase_cargo_capacity: sw_cap_coho;
         additional_text: return string(STR_DESC_COHO);
+        create_effect: sw_fx_coho;
         purchase: ss_coho;
         default: sw_gfx_coho;
     }
@@ -258,6 +296,42 @@ switch(FEAT_SHIPS, SELF, sw_cap_sidney, cargo_classes & bitmask(CC_PASSENGERS)) 
     return max(1, 1000 >> cap_mode);
 }
 
+switch(FEAT_SHIPS, SELF, sw_fx_sidney_0, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 3, 3, 21), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_sidney_1, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 4, 0, 21), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_sidney_2, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 3, -3, 21), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_sidney_3, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, -4, 21), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_sidney_4, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -3, -3, 21), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_sidney_5, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -4, 0, 21), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_sidney_6, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -3, 3, 21), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_sidney_7, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 4, 21), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_sidney, direction) {
+    0: sw_fx_sidney_0;
+    1: sw_fx_sidney_1;
+    2: sw_fx_sidney_2;
+    3: sw_fx_sidney_3;
+    4: sw_fx_sidney_4;
+    5: sw_fx_sidney_5;
+    6: sw_fx_sidney_6;
+    7: sw_fx_sidney_7;
+    sw_fx_sidney_0;
+}
+
 item(FEAT_SHIPS, sidney, 1) {
     property {
         name: string(STR_NAME_SIDNEY);
@@ -279,11 +353,13 @@ item(FEAT_SHIPS, sidney, 1) {
         refit_cost: 10;
         loading_speed: 50;
         sound_effect: SOUND_DEPARTURE_FERRY;
+        effect_spawn_model: EFFECT_SPAWN_MODEL_STEAM;
     }
     graphics {
         cargo_capacity: sw_cap_sidney;
         purchase_cargo_capacity: sw_cap_sidney;
         additional_text: return string(STR_DESC_SIDNEY);
+        create_effect: sw_fx_sidney;
         purchase: ss_sidney;
         default: sw_gfx_sidney;
     }
@@ -389,6 +465,42 @@ switch(FEAT_SHIPS, SELF, sw_cap_vclass, cargo_classes & bitmask(CC_PASSENGERS)) 
     return max(1, 1000 >> cap_mode);
 }
 
+switch(FEAT_SHIPS, SELF, sw_fx_vclass_0, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 23), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_vclass_1, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 23), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_vclass_2, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 23), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_vclass_3, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 23), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_vclass_4, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 23), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_vclass_5, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 23), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_vclass_6, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 23), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_vclass_7, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 23), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_vclass, direction) {
+    0: sw_fx_vclass_0;
+    1: sw_fx_vclass_1;
+    2: sw_fx_vclass_2;
+    3: sw_fx_vclass_3;
+    4: sw_fx_vclass_4;
+    5: sw_fx_vclass_5;
+    6: sw_fx_vclass_6;
+    7: sw_fx_vclass_7;
+    sw_fx_vclass_0;
+}
+
 item(FEAT_SHIPS, vclass, 2) {
     property {
         name: string(STR_NAME_VCLASS);
@@ -410,11 +522,13 @@ item(FEAT_SHIPS, vclass, 2) {
         refit_cost: 10;
         loading_speed: 50;
         sound_effect: SOUND_DEPARTURE_FERRY;
+        effect_spawn_model: EFFECT_SPAWN_MODEL_STEAM;
     }
     graphics {
         cargo_capacity: sw_cap_vclass;
         purchase_cargo_capacity: sw_cap_vclass;
         additional_text: return string(STR_DESC_VCLASS);
+        create_effect: sw_fx_vclass;
         purchase: ss_vclass;
         default: sw_gfx_vclass;
     }
@@ -520,6 +634,42 @@ switch(FEAT_SHIPS, SELF, sw_cap_vclass_s, cargo_classes & bitmask(CC_PASSENGERS)
     return max(1, 1360 >> cap_mode);
 }
 
+switch(FEAT_SHIPS, SELF, sw_fx_vclass_s_0, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 26), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_vclass_s_1, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 1, 0, 26), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_vclass_s_2, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 26), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_vclass_s_3, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, -1, 26), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_vclass_s_4, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 26), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_vclass_s_5, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -1, 0, 26), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_vclass_s_6, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 26), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_vclass_s_7, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 1, 26), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_vclass_s, direction) {
+    0: sw_fx_vclass_s_0;
+    1: sw_fx_vclass_s_1;
+    2: sw_fx_vclass_s_2;
+    3: sw_fx_vclass_s_3;
+    4: sw_fx_vclass_s_4;
+    5: sw_fx_vclass_s_5;
+    6: sw_fx_vclass_s_6;
+    7: sw_fx_vclass_s_7;
+    sw_fx_vclass_s_0;
+}
+
 item(FEAT_SHIPS, vclass_s, 3) {
     property {
         name: string(STR_NAME_VCLASS_S);
@@ -542,11 +692,13 @@ item(FEAT_SHIPS, vclass_s, 3) {
         loading_speed: 68;
         sound_effect: SOUND_DEPARTURE_FERRY;
         variant_group: vclass;
+        effect_spawn_model: EFFECT_SPAWN_MODEL_STEAM;
     }
     graphics {
         cargo_capacity: sw_cap_vclass_s;
         purchase_cargo_capacity: sw_cap_vclass_s;
         additional_text: return string(STR_DESC_VCLASS_S);
+        create_effect: sw_fx_vclass_s;
         purchase: ss_vclass_s;
         default: sw_gfx_vclass_s;
     }
@@ -652,6 +804,42 @@ switch(FEAT_SHIPS, SELF, sw_cap_burnaby, cargo_classes & bitmask(CC_PASSENGERS))
     return max(1, 1200 >> cap_mode);
 }
 
+switch(FEAT_SHIPS, SELF, sw_fx_burnaby_0, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -3, -3, 27), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_burnaby_1, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -5, 0, 27), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_burnaby_2, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -3, 3, 27), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_burnaby_3, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 5, 27), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_burnaby_4, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 3, 3, 27), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_burnaby_5, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 5, 0, 27), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_burnaby_6, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 3, -3, 27), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_burnaby_7, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, -5, 27), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_burnaby, direction) {
+    0: sw_fx_burnaby_0;
+    1: sw_fx_burnaby_1;
+    2: sw_fx_burnaby_2;
+    3: sw_fx_burnaby_3;
+    4: sw_fx_burnaby_4;
+    5: sw_fx_burnaby_5;
+    6: sw_fx_burnaby_6;
+    7: sw_fx_burnaby_7;
+    sw_fx_burnaby_0;
+}
+
 item(FEAT_SHIPS, burnaby, 4) {
     property {
         name: string(STR_NAME_BURNABY);
@@ -673,11 +861,13 @@ item(FEAT_SHIPS, burnaby, 4) {
         refit_cost: 10;
         loading_speed: 60;
         sound_effect: SOUND_DEPARTURE_FERRY;
+        effect_spawn_model: EFFECT_SPAWN_MODEL_STEAM;
     }
     graphics {
         cargo_capacity: sw_cap_burnaby;
         purchase_cargo_capacity: sw_cap_burnaby;
         additional_text: return string(STR_DESC_BURNABY);
+        create_effect: sw_fx_burnaby;
         purchase: ss_burnaby;
         default: sw_gfx_burnaby;
     }
@@ -783,6 +973,42 @@ switch(FEAT_SHIPS, SELF, sw_cap_bowen, cargo_classes & bitmask(CC_PASSENGERS)) {
     return max(1, 400 >> cap_mode);
 }
 
+switch(FEAT_SHIPS, SELF, sw_fx_bowen_0, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -2, -2, 22), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_bowen_1, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -3, 0, 22), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_bowen_2, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -2, 2, 22), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_bowen_3, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 3, 22), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_bowen_4, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 2, 2, 22), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_bowen_5, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 3, 0, 22), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_bowen_6, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 2, -2, 22), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_bowen_7, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, -3, 22), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_bowen, direction) {
+    0: sw_fx_bowen_0;
+    1: sw_fx_bowen_1;
+    2: sw_fx_bowen_2;
+    3: sw_fx_bowen_3;
+    4: sw_fx_bowen_4;
+    5: sw_fx_bowen_5;
+    6: sw_fx_bowen_6;
+    7: sw_fx_bowen_7;
+    sw_fx_bowen_0;
+}
+
 item(FEAT_SHIPS, bowen, 5) {
     property {
         name: string(STR_NAME_BOWEN);
@@ -804,11 +1030,13 @@ item(FEAT_SHIPS, bowen, 5) {
         refit_cost: 10;
         loading_speed: 20;
         sound_effect: SOUND_DEPARTURE_FERRY;
+        effect_spawn_model: EFFECT_SPAWN_MODEL_STEAM;
     }
     graphics {
         cargo_capacity: sw_cap_bowen;
         purchase_cargo_capacity: sw_cap_bowen;
         additional_text: return string(STR_DESC_BOWEN);
+        create_effect: sw_fx_bowen;
         purchase: ss_bowen;
         default: sw_gfx_bowen;
     }
@@ -914,6 +1142,42 @@ switch(FEAT_SHIPS, SELF, sw_cap_rupert, cargo_classes & bitmask(CC_PASSENGERS)) 
     return max(1, 458 >> cap_mode);
 }
 
+switch(FEAT_SHIPS, SELF, sw_fx_rupert_0, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 6, 6, 26), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_rupert_1, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 8, 0, 26), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_rupert_2, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 6, -6, 26), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_rupert_3, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, -8, 26), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_rupert_4, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -6, -6, 26), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_rupert_5, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -8, 0, 26), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_rupert_6, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -6, 6, 26), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_rupert_7, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 8, 26), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_rupert, direction) {
+    0: sw_fx_rupert_0;
+    1: sw_fx_rupert_1;
+    2: sw_fx_rupert_2;
+    3: sw_fx_rupert_3;
+    4: sw_fx_rupert_4;
+    5: sw_fx_rupert_5;
+    6: sw_fx_rupert_6;
+    7: sw_fx_rupert_7;
+    sw_fx_rupert_0;
+}
+
 item(FEAT_SHIPS, rupert, 6) {
     property {
         name: string(STR_NAME_RUPERT);
@@ -935,11 +1199,13 @@ item(FEAT_SHIPS, rupert, 6) {
         refit_cost: 10;
         loading_speed: 22;
         sound_effect: SOUND_DEPARTURE_FERRY;
+        effect_spawn_model: EFFECT_SPAWN_MODEL_STEAM;
     }
     graphics {
         cargo_capacity: sw_cap_rupert;
         purchase_cargo_capacity: sw_cap_rupert;
         additional_text: return string(STR_DESC_RUPERT);
+        create_effect: sw_fx_rupert;
         purchase: ss_rupert;
         default: sw_gfx_rupert;
     }
@@ -1045,6 +1311,42 @@ switch(FEAT_SHIPS, SELF, sw_cap_tclass, cargo_classes & bitmask(CC_PASSENGERS)) 
     return max(1, 150 >> cap_mode);
 }
 
+switch(FEAT_SHIPS, SELF, sw_fx_tclass_0, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 3, 3, 17), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_tclass_1, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 4, 0, 17), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_tclass_2, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 3, -3, 17), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_tclass_3, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, -4, 17), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_tclass_4, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -3, -3, 17), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_tclass_5, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -4, 0, 17), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_tclass_6, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -3, 3, 17), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_tclass_7, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 4, 17), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_tclass, direction) {
+    0: sw_fx_tclass_0;
+    1: sw_fx_tclass_1;
+    2: sw_fx_tclass_2;
+    3: sw_fx_tclass_3;
+    4: sw_fx_tclass_4;
+    5: sw_fx_tclass_5;
+    6: sw_fx_tclass_6;
+    7: sw_fx_tclass_7;
+    sw_fx_tclass_0;
+}
+
 item(FEAT_SHIPS, tclass, 7) {
     property {
         name: string(STR_NAME_TCLASS);
@@ -1066,11 +1368,13 @@ item(FEAT_SHIPS, tclass, 7) {
         refit_cost: 10;
         loading_speed: 10;
         sound_effect: SOUND_DEPARTURE_FERRY;
+        effect_spawn_model: EFFECT_SPAWN_MODEL_STEAM;
     }
     graphics {
         cargo_capacity: sw_cap_tclass;
         purchase_cargo_capacity: sw_cap_tclass;
         additional_text: return string(STR_DESC_TCLASS);
+        create_effect: sw_fx_tclass;
         purchase: ss_tclass;
         default: sw_gfx_tclass;
     }
@@ -1176,6 +1480,42 @@ switch(FEAT_SHIPS, SELF, sw_cap_nimpkish, cargo_classes & bitmask(CC_PASSENGERS)
     return max(1, 95 >> cap_mode);
 }
 
+switch(FEAT_SHIPS, SELF, sw_fx_nimpkish_0, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 14), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_nimpkish_1, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 14), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_nimpkish_2, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 14), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_nimpkish_3, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 14), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_nimpkish_4, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 14), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_nimpkish_5, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 14), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_nimpkish_6, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 14), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_nimpkish_7, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 14), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_nimpkish, direction) {
+    0: sw_fx_nimpkish_0;
+    1: sw_fx_nimpkish_1;
+    2: sw_fx_nimpkish_2;
+    3: sw_fx_nimpkish_3;
+    4: sw_fx_nimpkish_4;
+    5: sw_fx_nimpkish_5;
+    6: sw_fx_nimpkish_6;
+    7: sw_fx_nimpkish_7;
+    sw_fx_nimpkish_0;
+}
+
 item(FEAT_SHIPS, nimpkish, 8) {
     property {
         name: string(STR_NAME_NIMPKISH);
@@ -1197,11 +1537,13 @@ item(FEAT_SHIPS, nimpkish, 8) {
         refit_cost: 10;
         loading_speed: 10;
         sound_effect: SOUND_DEPARTURE_FERRY;
+        effect_spawn_model: EFFECT_SPAWN_MODEL_STEAM;
     }
     graphics {
         cargo_capacity: sw_cap_nimpkish;
         purchase_cargo_capacity: sw_cap_nimpkish;
         additional_text: return string(STR_DESC_NIMPKISH);
+        create_effect: sw_fx_nimpkish;
         purchase: ss_nimpkish;
         default: sw_gfx_nimpkish;
     }
@@ -1307,6 +1649,42 @@ switch(FEAT_SHIPS, SELF, sw_cap_cclass, cargo_classes & bitmask(CC_PASSENGERS)) 
     return max(1, 1466 >> cap_mode);
 }
 
+switch(FEAT_SHIPS, SELF, sw_fx_cclass_0, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -1, -1, 32), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_cclass_1, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -1, 0, 32), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_cclass_2, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -1, 1, 32), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_cclass_3, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 1, 32), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_cclass_4, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 1, 1, 32), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_cclass_5, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 1, 0, 32), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_cclass_6, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 1, -1, 32), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_cclass_7, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, -1, 32), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_cclass, direction) {
+    0: sw_fx_cclass_0;
+    1: sw_fx_cclass_1;
+    2: sw_fx_cclass_2;
+    3: sw_fx_cclass_3;
+    4: sw_fx_cclass_4;
+    5: sw_fx_cclass_5;
+    6: sw_fx_cclass_6;
+    7: sw_fx_cclass_7;
+    sw_fx_cclass_0;
+}
+
 item(FEAT_SHIPS, cclass, 9) {
     property {
         name: string(STR_NAME_CCLASS);
@@ -1328,11 +1706,13 @@ item(FEAT_SHIPS, cclass, 9) {
         refit_cost: 10;
         loading_speed: 73;
         sound_effect: SOUND_DEPARTURE_FERRY;
+        effect_spawn_model: EFFECT_SPAWN_MODEL_STEAM;
     }
     graphics {
         cargo_capacity: sw_cap_cclass;
         purchase_cargo_capacity: sw_cap_cclass;
         additional_text: return string(STR_DESC_CCLASS);
+        create_effect: sw_fx_cclass;
         purchase: ss_cclass;
         default: sw_gfx_cclass;
     }
@@ -1438,6 +1818,42 @@ switch(FEAT_SHIPS, SELF, sw_cap_cclass_ob, cargo_classes & bitmask(CC_PASSENGERS
     return max(1, 1494 >> cap_mode);
 }
 
+switch(FEAT_SHIPS, SELF, sw_fx_cclass_ob_0, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -1, -1, 32), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_cclass_ob_1, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -1, 0, 32), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_cclass_ob_2, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -1, 1, 32), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_cclass_ob_3, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 1, 32), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_cclass_ob_4, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 1, 1, 32), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_cclass_ob_5, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 1, 0, 32), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_cclass_ob_6, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 1, -1, 32), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_cclass_ob_7, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, -1, 32), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_cclass_ob, direction) {
+    0: sw_fx_cclass_ob_0;
+    1: sw_fx_cclass_ob_1;
+    2: sw_fx_cclass_ob_2;
+    3: sw_fx_cclass_ob_3;
+    4: sw_fx_cclass_ob_4;
+    5: sw_fx_cclass_ob_5;
+    6: sw_fx_cclass_ob_6;
+    7: sw_fx_cclass_ob_7;
+    sw_fx_cclass_ob_0;
+}
+
 item(FEAT_SHIPS, cclass_ob, 10) {
     property {
         name: string(STR_NAME_CCLASS_OB);
@@ -1460,11 +1876,13 @@ item(FEAT_SHIPS, cclass_ob, 10) {
         loading_speed: 74;
         sound_effect: SOUND_DEPARTURE_FERRY;
         variant_group: cclass;
+        effect_spawn_model: EFFECT_SPAWN_MODEL_STEAM;
     }
     graphics {
         cargo_capacity: sw_cap_cclass_ob;
         purchase_cargo_capacity: sw_cap_cclass_ob;
         additional_text: return string(STR_DESC_CCLASS_OB);
+        create_effect: sw_fx_cclass_ob;
         purchase: ss_cclass_ob;
         default: sw_gfx_cclass_ob;
     }
@@ -1570,6 +1988,42 @@ switch(FEAT_SHIPS, SELF, sw_cap_quinitsa, cargo_classes & bitmask(CC_PASSENGERS)
     return max(1, 300 >> cap_mode);
 }
 
+switch(FEAT_SHIPS, SELF, sw_fx_quinitsa_0, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -4, -1, 18), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_quinitsa_1, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -4, 2, 18), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_quinitsa_2, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -1, 4, 18), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_quinitsa_3, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 2, 4, 18), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_quinitsa_4, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 4, 1, 18), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_quinitsa_5, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 4, -2, 18), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_quinitsa_6, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 1, -4, 18), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_quinitsa_7, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -2, -4, 18), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_quinitsa, direction) {
+    0: sw_fx_quinitsa_0;
+    1: sw_fx_quinitsa_1;
+    2: sw_fx_quinitsa_2;
+    3: sw_fx_quinitsa_3;
+    4: sw_fx_quinitsa_4;
+    5: sw_fx_quinitsa_5;
+    6: sw_fx_quinitsa_6;
+    7: sw_fx_quinitsa_7;
+    sw_fx_quinitsa_0;
+}
+
 item(FEAT_SHIPS, quinitsa, 11) {
     property {
         name: string(STR_NAME_QUINITSA);
@@ -1591,11 +2045,13 @@ item(FEAT_SHIPS, quinitsa, 11) {
         refit_cost: 10;
         loading_speed: 15;
         sound_effect: SOUND_DEPARTURE_FERRY;
+        effect_spawn_model: EFFECT_SPAWN_MODEL_STEAM;
     }
     graphics {
         cargo_capacity: sw_cap_quinitsa;
         purchase_cargo_capacity: sw_cap_quinitsa;
         additional_text: return string(STR_DESC_QUINITSA);
+        create_effect: sw_fx_quinitsa;
         purchase: ss_quinitsa;
         default: sw_gfx_quinitsa;
     }
@@ -1701,6 +2157,42 @@ switch(FEAT_SHIPS, SELF, sw_cap_north, cargo_classes & bitmask(CC_PASSENGERS)) {
     return max(1, 700 >> cap_mode);
 }
 
+switch(FEAT_SHIPS, SELF, sw_fx_north_0, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 2, 2, 28), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_north_1, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 3, 0, 28), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_north_2, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 2, -2, 28), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_north_3, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, -3, 28), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_north_4, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -2, -2, 28), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_north_5, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -3, 0, 28), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_north_6, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -2, 2, 28), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_north_7, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 3, 28), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_north, direction) {
+    0: sw_fx_north_0;
+    1: sw_fx_north_1;
+    2: sw_fx_north_2;
+    3: sw_fx_north_3;
+    4: sw_fx_north_4;
+    5: sw_fx_north_5;
+    6: sw_fx_north_6;
+    7: sw_fx_north_7;
+    sw_fx_north_0;
+}
+
 item(FEAT_SHIPS, north, 12) {
     property {
         name: string(STR_NAME_NORTH);
@@ -1722,11 +2214,13 @@ item(FEAT_SHIPS, north, 12) {
         refit_cost: 10;
         loading_speed: 35;
         sound_effect: SOUND_DEPARTURE_FERRY;
+        effect_spawn_model: EFFECT_SPAWN_MODEL_STEAM;
     }
     graphics {
         cargo_capacity: sw_cap_north;
         purchase_cargo_capacity: sw_cap_north;
         additional_text: return string(STR_DESC_NORTH);
+        create_effect: sw_fx_north;
         purchase: ss_north;
         default: sw_gfx_north;
     }
@@ -1832,6 +2326,42 @@ switch(FEAT_SHIPS, SELF, sw_cap_quinsam, cargo_classes & bitmask(CC_PASSENGERS))
     return max(1, 400 >> cap_mode);
 }
 
+switch(FEAT_SHIPS, SELF, sw_fx_quinsam_0, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 5, 3, 19), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_quinsam_1, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 6, -2, 19), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_quinsam_2, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 3, -5, 19), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_quinsam_3, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -2, -6, 19), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_quinsam_4, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -5, -3, 19), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_quinsam_5, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -6, 2, 19), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_quinsam_6, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -3, 5, 19), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_quinsam_7, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 2, 6, 19), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_quinsam, direction) {
+    0: sw_fx_quinsam_0;
+    1: sw_fx_quinsam_1;
+    2: sw_fx_quinsam_2;
+    3: sw_fx_quinsam_3;
+    4: sw_fx_quinsam_4;
+    5: sw_fx_quinsam_5;
+    6: sw_fx_quinsam_6;
+    7: sw_fx_quinsam_7;
+    sw_fx_quinsam_0;
+}
+
 item(FEAT_SHIPS, quinsam, 13) {
     property {
         name: string(STR_NAME_QUINSAM);
@@ -1853,11 +2383,13 @@ item(FEAT_SHIPS, quinsam, 13) {
         refit_cost: 10;
         loading_speed: 20;
         sound_effect: SOUND_DEPARTURE_FERRY;
+        effect_spawn_model: EFFECT_SPAWN_MODEL_STEAM;
     }
     graphics {
         cargo_capacity: sw_cap_quinsam;
         purchase_cargo_capacity: sw_cap_quinsam;
         additional_text: return string(STR_DESC_QUINSAM);
+        create_effect: sw_fx_quinsam;
         purchase: ss_quinsam;
         default: sw_gfx_quinsam;
     }
@@ -1963,6 +2495,42 @@ switch(FEAT_SHIPS, SELF, sw_cap_intermediate, cargo_classes & bitmask(CC_PASSENG
     return max(1, 462 >> cap_mode);
 }
 
+switch(FEAT_SHIPS, SELF, sw_fx_intermediate_0, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 24), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_intermediate_1, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -1, 0, 24), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_intermediate_2, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 24), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_intermediate_3, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 1, 24), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_intermediate_4, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 24), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_intermediate_5, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 1, 0, 24), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_intermediate_6, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 24), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_intermediate_7, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, -1, 24), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_intermediate, direction) {
+    0: sw_fx_intermediate_0;
+    1: sw_fx_intermediate_1;
+    2: sw_fx_intermediate_2;
+    3: sw_fx_intermediate_3;
+    4: sw_fx_intermediate_4;
+    5: sw_fx_intermediate_5;
+    6: sw_fx_intermediate_6;
+    7: sw_fx_intermediate_7;
+    sw_fx_intermediate_0;
+}
+
 item(FEAT_SHIPS, intermediate, 14) {
     property {
         name: string(STR_NAME_INTERMEDIATE);
@@ -1984,11 +2552,13 @@ item(FEAT_SHIPS, intermediate, 14) {
         refit_cost: 10;
         loading_speed: 23;
         sound_effect: SOUND_DEPARTURE_FERRY;
+        effect_spawn_model: EFFECT_SPAWN_MODEL_STEAM;
     }
     graphics {
         cargo_capacity: sw_cap_intermediate;
         purchase_cargo_capacity: sw_cap_intermediate;
         additional_text: return string(STR_DESC_INTERMEDIATE);
+        create_effect: sw_fx_intermediate;
         purchase: ss_intermediate;
         default: sw_gfx_intermediate;
     }
@@ -2094,6 +2664,42 @@ switch(FEAT_SHIPS, SELF, sw_cap_spirit, cargo_classes & bitmask(CC_PASSENGERS)) 
     return max(1, 2100 >> cap_mode);
 }
 
+switch(FEAT_SHIPS, SELF, sw_fx_spirit_0, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -4, -4, 39), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_spirit_1, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -5, 0, 39), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_spirit_2, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -4, 4, 39), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_spirit_3, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 5, 39), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_spirit_4, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 4, 4, 39), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_spirit_5, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 5, 0, 39), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_spirit_6, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 4, -4, 39), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_spirit_7, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, -5, 39), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_spirit, direction) {
+    0: sw_fx_spirit_0;
+    1: sw_fx_spirit_1;
+    2: sw_fx_spirit_2;
+    3: sw_fx_spirit_3;
+    4: sw_fx_spirit_4;
+    5: sw_fx_spirit_5;
+    6: sw_fx_spirit_6;
+    7: sw_fx_spirit_7;
+    sw_fx_spirit_0;
+}
+
 item(FEAT_SHIPS, spirit, 15) {
     property {
         name: string(STR_NAME_SPIRIT);
@@ -2115,11 +2721,13 @@ item(FEAT_SHIPS, spirit, 15) {
         refit_cost: 10;
         loading_speed: 105;
         sound_effect: SOUND_DEPARTURE_FERRY;
+        effect_spawn_model: EFFECT_SPAWN_MODEL_STEAM;
     }
     graphics {
         cargo_capacity: sw_cap_spirit;
         purchase_cargo_capacity: sw_cap_spirit;
         additional_text: return string(STR_DESC_SPIRIT);
+        create_effect: sw_fx_spirit;
         purchase: ss_spirit;
         default: sw_gfx_spirit;
     }
@@ -2225,6 +2833,42 @@ switch(FEAT_SHIPS, SELF, sw_cap_spirit_lng, cargo_classes & bitmask(CC_PASSENGER
     return max(1, 1965 >> cap_mode);
 }
 
+switch(FEAT_SHIPS, SELF, sw_fx_spirit_lng_0, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -4, -4, 39), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_spirit_lng_1, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -5, 0, 39), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_spirit_lng_2, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -4, 4, 39), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_spirit_lng_3, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 5, 39), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_spirit_lng_4, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 4, 4, 39), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_spirit_lng_5, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 5, 0, 39), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_spirit_lng_6, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 4, -4, 39), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_spirit_lng_7, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, -5, 39), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_spirit_lng, direction) {
+    0: sw_fx_spirit_lng_0;
+    1: sw_fx_spirit_lng_1;
+    2: sw_fx_spirit_lng_2;
+    3: sw_fx_spirit_lng_3;
+    4: sw_fx_spirit_lng_4;
+    5: sw_fx_spirit_lng_5;
+    6: sw_fx_spirit_lng_6;
+    7: sw_fx_spirit_lng_7;
+    sw_fx_spirit_lng_0;
+}
+
 item(FEAT_SHIPS, spirit_lng, 16) {
     property {
         name: string(STR_NAME_SPIRIT_LNG);
@@ -2247,11 +2891,13 @@ item(FEAT_SHIPS, spirit_lng, 16) {
         loading_speed: 98;
         sound_effect: SOUND_DEPARTURE_FERRY;
         variant_group: spirit;
+        effect_spawn_model: EFFECT_SPAWN_MODEL_ELECTRIC;
     }
     graphics {
         cargo_capacity: sw_cap_spirit_lng;
         purchase_cargo_capacity: sw_cap_spirit_lng;
         additional_text: return string(STR_DESC_SPIRIT_LNG);
+        create_effect: sw_fx_spirit_lng;
         purchase: ss_spirit_lng;
         default: sw_gfx_spirit_lng;
     }
@@ -2357,6 +3003,42 @@ switch(FEAT_SHIPS, SELF, sw_cap_century, cargo_classes & bitmask(CC_PASSENGERS))
     return max(1, 600 >> cap_mode);
 }
 
+switch(FEAT_SHIPS, SELF, sw_fx_century_0, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 1, 1, 25), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_century_1, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 2, 0, 25), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_century_2, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 1, -1, 25), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_century_3, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, -2, 25), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_century_4, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -1, -1, 25), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_century_5, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -2, 0, 25), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_century_6, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -1, 1, 25), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_century_7, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 2, 25), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_century, direction) {
+    0: sw_fx_century_0;
+    1: sw_fx_century_1;
+    2: sw_fx_century_2;
+    3: sw_fx_century_3;
+    4: sw_fx_century_4;
+    5: sw_fx_century_5;
+    6: sw_fx_century_6;
+    7: sw_fx_century_7;
+    sw_fx_century_0;
+}
+
 item(FEAT_SHIPS, century, 17) {
     property {
         name: string(STR_NAME_CENTURY);
@@ -2378,11 +3060,13 @@ item(FEAT_SHIPS, century, 17) {
         refit_cost: 10;
         loading_speed: 30;
         sound_effect: SOUND_DEPARTURE_FERRY;
+        effect_spawn_model: EFFECT_SPAWN_MODEL_STEAM;
     }
     graphics {
         cargo_capacity: sw_cap_century;
         purchase_cargo_capacity: sw_cap_century;
         additional_text: return string(STR_DESC_CENTURY);
+        create_effect: sw_fx_century;
         purchase: ss_century;
         default: sw_gfx_century;
     }
@@ -2488,6 +3172,42 @@ switch(FEAT_SHIPS, SELF, sw_cap_pacificat, cargo_classes & bitmask(CC_PASSENGERS
     return max(1, 1000 >> cap_mode);
 }
 
+switch(FEAT_SHIPS, SELF, sw_fx_pacificat_0, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 7, 10, 19), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 10, 7, 19), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_pacificat_1, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 12, 2, 19), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 12, -2, 19), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_pacificat_2, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 10, -7, 19), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 7, -10, 19), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_pacificat_3, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 2, -12, 19), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -2, -12, 19), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_pacificat_4, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -7, -10, 19), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -10, -7, 19), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_pacificat_5, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -12, -2, 19), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -12, 2, 19), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_pacificat_6, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -10, 7, 19), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -7, 10, 19), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_pacificat_7, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -2, 12, 19), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 2, 12, 19), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_pacificat, direction) {
+    0: sw_fx_pacificat_0;
+    1: sw_fx_pacificat_1;
+    2: sw_fx_pacificat_2;
+    3: sw_fx_pacificat_3;
+    4: sw_fx_pacificat_4;
+    5: sw_fx_pacificat_5;
+    6: sw_fx_pacificat_6;
+    7: sw_fx_pacificat_7;
+    sw_fx_pacificat_0;
+}
+
 item(FEAT_SHIPS, pacificat, 18) {
     property {
         name: string(STR_NAME_PACIFICAT);
@@ -2509,11 +3229,13 @@ item(FEAT_SHIPS, pacificat, 18) {
         refit_cost: 10;
         loading_speed: 50;
         sound_effect: SOUND_DEPARTURE_FERRY;
+        effect_spawn_model: EFFECT_SPAWN_MODEL_STEAM;
     }
     graphics {
         cargo_capacity: sw_cap_pacificat;
         purchase_cargo_capacity: sw_cap_pacificat;
         additional_text: return string(STR_DESC_PACIFICAT);
+        create_effect: sw_fx_pacificat;
         purchase: ss_pacificat;
         default: sw_gfx_pacificat;
     }
@@ -2619,6 +3341,42 @@ switch(FEAT_SHIPS, SELF, sw_cap_nadventure, cargo_classes & bitmask(CC_PASSENGER
     return max(1, 600 >> cap_mode);
 }
 
+switch(FEAT_SHIPS, SELF, sw_fx_nadventure_0, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 6, 6, 28), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_nadventure_1, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 8, 0, 28), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_nadventure_2, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 6, -6, 28), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_nadventure_3, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, -8, 28), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_nadventure_4, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -6, -6, 28), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_nadventure_5, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -8, 0, 28), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_nadventure_6, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -6, 6, 28), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_nadventure_7, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 8, 28), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_nadventure, direction) {
+    0: sw_fx_nadventure_0;
+    1: sw_fx_nadventure_1;
+    2: sw_fx_nadventure_2;
+    3: sw_fx_nadventure_3;
+    4: sw_fx_nadventure_4;
+    5: sw_fx_nadventure_5;
+    6: sw_fx_nadventure_6;
+    7: sw_fx_nadventure_7;
+    sw_fx_nadventure_0;
+}
+
 item(FEAT_SHIPS, nadventure, 19) {
     property {
         name: string(STR_NAME_NADVENTURE);
@@ -2640,11 +3398,13 @@ item(FEAT_SHIPS, nadventure, 19) {
         refit_cost: 10;
         loading_speed: 30;
         sound_effect: SOUND_DEPARTURE_FERRY;
+        effect_spawn_model: EFFECT_SPAWN_MODEL_STEAM;
     }
     graphics {
         cargo_capacity: sw_cap_nadventure;
         purchase_cargo_capacity: sw_cap_nadventure;
         additional_text: return string(STR_DESC_NADVENTURE);
+        create_effect: sw_fx_nadventure;
         purchase: ss_nadventure;
         default: sw_gfx_nadventure;
     }
@@ -2750,6 +3510,42 @@ switch(FEAT_SHIPS, SELF, sw_cap_coastal, cargo_classes & bitmask(CC_PASSENGERS))
     return max(1, 1604 >> cap_mode);
 }
 
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_0, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 38), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_1, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 38), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_2, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 38), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_3, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 38), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_4, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 38), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_5, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 38), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_6, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 38), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_7, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 38), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coastal, direction) {
+    0: sw_fx_coastal_0;
+    1: sw_fx_coastal_1;
+    2: sw_fx_coastal_2;
+    3: sw_fx_coastal_3;
+    4: sw_fx_coastal_4;
+    5: sw_fx_coastal_5;
+    6: sw_fx_coastal_6;
+    7: sw_fx_coastal_7;
+    sw_fx_coastal_0;
+}
+
 item(FEAT_SHIPS, coastal, 20) {
     property {
         name: string(STR_NAME_COASTAL);
@@ -2771,11 +3567,13 @@ item(FEAT_SHIPS, coastal, 20) {
         refit_cost: 10;
         loading_speed: 80;
         sound_effect: SOUND_DEPARTURE_FERRY;
+        effect_spawn_model: EFFECT_SPAWN_MODEL_STEAM;
     }
     graphics {
         cargo_capacity: sw_cap_coastal;
         purchase_cargo_capacity: sw_cap_coastal;
         additional_text: return string(STR_DESC_COASTAL);
+        create_effect: sw_fx_coastal;
         purchase: ss_coastal;
         default: sw_gfx_coastal;
     }
@@ -2881,6 +3679,42 @@ switch(FEAT_SHIPS, SELF, sw_cap_coastal_2010, cargo_classes & bitmask(CC_PASSENG
     return max(1, 1604 >> cap_mode);
 }
 
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_2010_0, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 38), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_2010_1, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 38), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_2010_2, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 38), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_2010_3, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 38), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_2010_4, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 38), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_2010_5, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 38), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_2010_6, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 38), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_2010_7, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 38), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_2010, direction) {
+    0: sw_fx_coastal_2010_0;
+    1: sw_fx_coastal_2010_1;
+    2: sw_fx_coastal_2010_2;
+    3: sw_fx_coastal_2010_3;
+    4: sw_fx_coastal_2010_4;
+    5: sw_fx_coastal_2010_5;
+    6: sw_fx_coastal_2010_6;
+    7: sw_fx_coastal_2010_7;
+    sw_fx_coastal_2010_0;
+}
+
 item(FEAT_SHIPS, coastal_2010, 21) {
     property {
         name: string(STR_NAME_COASTAL_2010);
@@ -2903,11 +3737,13 @@ item(FEAT_SHIPS, coastal_2010, 21) {
         loading_speed: 80;
         sound_effect: SOUND_DEPARTURE_FERRY;
         variant_group: coastal;
+        effect_spawn_model: EFFECT_SPAWN_MODEL_STEAM;
     }
     graphics {
         cargo_capacity: sw_cap_coastal_2010;
         purchase_cargo_capacity: sw_cap_coastal_2010;
         additional_text: return string(STR_DESC_COASTAL_2010);
+        create_effect: sw_fx_coastal_2010;
         purchase: ss_coastal_2010;
         default: sw_gfx_coastal_2010;
     }
@@ -3013,6 +3849,42 @@ switch(FEAT_SHIPS, SELF, sw_cap_nexpedition, cargo_classes & bitmask(CC_PASSENGE
     return max(1, 600 >> cap_mode);
 }
 
+switch(FEAT_SHIPS, SELF, sw_fx_nexpedition_0, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 8, 8, 34), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_nexpedition_1, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 11, 0, 34), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_nexpedition_2, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 8, -8, 34), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_nexpedition_3, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, -11, 34), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_nexpedition_4, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -8, -8, 34), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_nexpedition_5, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -11, 0, 34), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_nexpedition_6, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -8, 8, 34), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_nexpedition_7, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 11, 34), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_nexpedition, direction) {
+    0: sw_fx_nexpedition_0;
+    1: sw_fx_nexpedition_1;
+    2: sw_fx_nexpedition_2;
+    3: sw_fx_nexpedition_3;
+    4: sw_fx_nexpedition_4;
+    5: sw_fx_nexpedition_5;
+    6: sw_fx_nexpedition_6;
+    7: sw_fx_nexpedition_7;
+    sw_fx_nexpedition_0;
+}
+
 item(FEAT_SHIPS, nexpedition, 22) {
     property {
         name: string(STR_NAME_NEXPEDITION);
@@ -3034,11 +3906,13 @@ item(FEAT_SHIPS, nexpedition, 22) {
         refit_cost: 10;
         loading_speed: 30;
         sound_effect: SOUND_DEPARTURE_FERRY;
+        effect_spawn_model: EFFECT_SPAWN_MODEL_STEAM;
     }
     graphics {
         cargo_capacity: sw_cap_nexpedition;
         purchase_cargo_capacity: sw_cap_nexpedition;
         additional_text: return string(STR_DESC_NEXPEDITION);
+        create_effect: sw_fx_nexpedition;
         purchase: ss_nexpedition;
         default: sw_gfx_nexpedition;
     }
@@ -3047,84 +3921,84 @@ item(FEAT_SHIPS, nexpedition, 22) {
 
 /* ---- Salish class ---- */
 spriteset(ss_salish, "gfx/salish.png") {
-    [2, 2, 57, 88, -21, -39]
-    [61, 2, 122, 74, -71, -38]
-    [185, 2, 150, 42, -97, -31]
-    [337, 2, 121, 57, -70, -38]
-    [460, 2, 58, 72, -22, -49]
-    [520, 2, 107, 57, -36, -38]
-    [629, 2, 142, 42, -45, -31]
-    [773, 2, 106, 74, -36, -38]
+    [2, 2, 64, 90, -21, -41]
+    [68, 2, 121, 76, -71, -40]
+    [191, 2, 150, 48, -97, -37]
+    [343, 2, 120, 59, -70, -40]
+    [465, 2, 65, 72, -22, -49]
+    [532, 2, 107, 59, -36, -40]
+    [641, 2, 142, 48, -45, -37]
+    [785, 2, 106, 76, -36, -40]
 }
 alternative_sprites(ss_salish, ZOOM_LEVEL_NORMAL, BIT_DEPTH_32BPP, "gfx/salish_1x.png") {
-    [2, 2, 57, 88, -21, -39]
-    [61, 2, 122, 74, -71, -38]
-    [185, 2, 150, 42, -97, -31]
-    [337, 2, 121, 57, -70, -38]
-    [460, 2, 58, 72, -22, -49]
-    [520, 2, 107, 57, -36, -38]
-    [629, 2, 142, 42, -45, -31]
-    [773, 2, 106, 74, -36, -38]
+    [2, 2, 64, 90, -21, -41]
+    [68, 2, 121, 76, -71, -40]
+    [191, 2, 150, 48, -97, -37]
+    [343, 2, 120, 59, -70, -40]
+    [465, 2, 65, 72, -22, -49]
+    [532, 2, 107, 59, -36, -40]
+    [641, 2, 142, 48, -45, -37]
+    [785, 2, 106, 76, -36, -40]
 }
 alternative_sprites(ss_salish, ZOOM_LEVEL_IN_2X, BIT_DEPTH_32BPP, "gfx/salish_2x.png") {
-    [2, 2, 114, 176, -42, -78]
-    [118, 2, 244, 148, -142, -76]
-    [364, 2, 300, 84, -194, -62]
-    [666, 2, 242, 114, -140, -76]
-    [910, 2, 116, 144, -44, -98]
-    [1028, 2, 214, 114, -72, -76]
-    [1244, 2, 284, 84, -90, -62]
-    [1530, 2, 212, 148, -72, -76]
+    [2, 2, 128, 180, -42, -82]
+    [132, 2, 242, 152, -142, -80]
+    [376, 2, 300, 96, -194, -74]
+    [678, 2, 240, 118, -140, -80]
+    [920, 2, 130, 144, -44, -98]
+    [1052, 2, 214, 118, -72, -80]
+    [1268, 2, 284, 96, -90, -74]
+    [1554, 2, 212, 152, -72, -80]
 }
 alternative_sprites(ss_salish, ZOOM_LEVEL_IN_4X, BIT_DEPTH_32BPP, "gfx/salish_4x.png") {
-    [2, 2, 228, 352, -84, -156]
-    [232, 2, 488, 296, -284, -152]
-    [722, 2, 600, 168, -388, -124]
-    [1324, 2, 484, 228, -280, -152]
-    [1810, 2, 232, 288, -88, -196]
-    [2044, 2, 428, 228, -144, -152]
-    [2474, 2, 568, 168, -180, -124]
-    [3044, 2, 424, 296, -144, -152]
+    [2, 2, 256, 360, -84, -164]
+    [260, 2, 484, 304, -284, -160]
+    [746, 2, 600, 192, -388, -148]
+    [1348, 2, 480, 236, -280, -160]
+    [1830, 2, 260, 288, -88, -196]
+    [2092, 2, 428, 236, -144, -160]
+    [2522, 2, 568, 192, -180, -148]
+    [3092, 2, 424, 304, -144, -160]
 }
 spriteset(ss_salish_mv, "gfx/salish_mv.png") {
-    [2, 2, 57, 88, -21, -39]
-    [61, 2, 122, 74, -71, -38]
-    [185, 2, 150, 42, -97, -31]
-    [337, 2, 121, 57, -70, -38]
-    [460, 2, 58, 72, -22, -49]
-    [520, 2, 107, 57, -36, -38]
-    [629, 2, 142, 42, -45, -31]
-    [773, 2, 106, 74, -36, -38]
+    [2, 2, 64, 90, -21, -41]
+    [68, 2, 121, 76, -71, -40]
+    [191, 2, 150, 48, -97, -37]
+    [343, 2, 120, 59, -70, -40]
+    [465, 2, 65, 72, -22, -49]
+    [532, 2, 107, 59, -36, -40]
+    [641, 2, 142, 48, -45, -37]
+    [785, 2, 106, 76, -36, -40]
 }
 alternative_sprites(ss_salish_mv, ZOOM_LEVEL_NORMAL, BIT_DEPTH_32BPP, "gfx/salish_mv_1x.png") {
-    [2, 2, 57, 88, -21, -39]
-    [61, 2, 122, 74, -71, -38]
-    [185, 2, 150, 42, -97, -31]
-    [337, 2, 121, 57, -70, -38]
-    [460, 2, 58, 72, -22, -49]
-    [520, 2, 107, 57, -36, -38]
-    [629, 2, 142, 42, -45, -31]
-    [773, 2, 106, 74, -36, -38]
+    [2, 2, 64, 90, -21, -41]
+    [68, 2, 121, 76, -71, -40]
+    [191, 2, 150, 48, -97, -37]
+    [343, 2, 120, 59, -70, -40]
+    [465, 2, 65, 72, -22, -49]
+    [532, 2, 107, 59, -36, -40]
+    [641, 2, 142, 48, -45, -37]
+    [785, 2, 106, 76, -36, -40]
 }
 alternative_sprites(ss_salish_mv, ZOOM_LEVEL_IN_2X, BIT_DEPTH_32BPP, "gfx/salish_mv_2x.png") {
-    [2, 2, 114, 176, -42, -78]
-    [118, 2, 244, 148, -142, -76]
-    [364, 2, 300, 84, -194, -62]
-    [666, 2, 242, 114, -140, -76]
-    [910, 2, 116, 144, -44, -98]
-    [1028, 2, 214, 114, -72, -76]
-    [1244, 2, 284, 84, -90, -62]
-    [1530, 2, 212, 148, -72, -76]
+    [2, 2, 128, 180, -42, -82]
+    [132, 2, 242, 152, -142, -80]
+    [376, 2, 300, 96, -194, -74]
+    [678, 2, 240, 118, -140, -80]
+    [920, 2, 130, 144, -44, -98]
+    [1052, 2, 214, 118, -72, -80]
+    [1268, 2, 284, 96, -90, -74]
+    [1554, 2, 212, 152, -72, -80]
 }
 alternative_sprites(ss_salish_mv, ZOOM_LEVEL_IN_4X, BIT_DEPTH_32BPP, "gfx/salish_mv_4x.png") {
-    [2, 2, 228, 352, -84, -156]
-    [232, 2, 488, 296, -284, -152]
-    [722, 2, 600, 168, -388, -124]
-    [1324, 2, 484, 228, -280, -152]
-    [1810, 2, 232, 288, -88, -196]
-    [2044, 2, 428, 228, -144, -152]
-    [2474, 2, 568, 168, -180, -124]
-    [3044, 2, 424, 296, -144, -152]
+    [2, 2, 256, 360, -84, -164]
+    [260, 2, 484, 304, -284, -160]
+    [746, 2, 600, 192, -388, -148]
+    [1348, 2, 480, 236, -280, -160]
+    [1830, 2, 260, 288, -88, -196]
+    [2092, 2, 428, 236, -144, -160]
+    [2522, 2, 568, 192, -180, -148]
+    [3092, 2, 424, 304, -144, -160]
 }
 
 // Wake and bow wave only while under way
@@ -3142,6 +4016,42 @@ switch(FEAT_SHIPS, SELF, sw_cap_salish_freight, cargo_type_in_veh) {
 switch(FEAT_SHIPS, SELF, sw_cap_salish, cargo_classes & bitmask(CC_PASSENGERS)) {
     0: sw_cap_salish_freight;
     return max(1, 600 >> cap_mode);
+}
+
+switch(FEAT_SHIPS, SELF, sw_fx_salish_0, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 4, 4, 30), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -4, -4, 30), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_salish_1, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 6, 0, 30), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -6, 0, 30), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_salish_2, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 4, -4, 30), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -4, 4, 30), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_salish_3, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, -6, 30), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 6, 30), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_salish_4, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -4, -4, 30), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 4, 4, 30), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_salish_5, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -6, 0, 30), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 6, 0, 30), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_salish_6, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -4, 4, 30), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 4, -4, 30), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_salish_7, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 6, 30), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, -6, 30), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_salish, direction) {
+    0: sw_fx_salish_0;
+    1: sw_fx_salish_1;
+    2: sw_fx_salish_2;
+    3: sw_fx_salish_3;
+    4: sw_fx_salish_4;
+    5: sw_fx_salish_5;
+    6: sw_fx_salish_6;
+    7: sw_fx_salish_7;
+    sw_fx_salish_0;
 }
 
 item(FEAT_SHIPS, salish, 23) {
@@ -3165,11 +4075,13 @@ item(FEAT_SHIPS, salish, 23) {
         refit_cost: 10;
         loading_speed: 30;
         sound_effect: SOUND_DEPARTURE_FERRY;
+        effect_spawn_model: EFFECT_SPAWN_MODEL_ELECTRIC;
     }
     graphics {
         cargo_capacity: sw_cap_salish;
         purchase_cargo_capacity: sw_cap_salish;
         additional_text: return string(STR_DESC_SALISH);
+        create_effect: sw_fx_salish;
         purchase: ss_salish;
         default: sw_gfx_salish;
     }
@@ -3275,6 +4187,42 @@ switch(FEAT_SHIPS, SELF, sw_cap_island, cargo_classes & bitmask(CC_PASSENGERS)) 
     return max(1, 300 >> cap_mode);
 }
 
+switch(FEAT_SHIPS, SELF, sw_fx_island_0, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 2, 0, 20), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_island_1, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 1, -2, 20), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_island_2, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, -2, 20), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_island_3, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -2, -1, 20), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_island_4, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -2, 0, 20), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_island_5, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -1, 2, 20), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_island_6, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 2, 20), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_island_7, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 2, 1, 20), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_island, direction) {
+    0: sw_fx_island_0;
+    1: sw_fx_island_1;
+    2: sw_fx_island_2;
+    3: sw_fx_island_3;
+    4: sw_fx_island_4;
+    5: sw_fx_island_5;
+    6: sw_fx_island_6;
+    7: sw_fx_island_7;
+    sw_fx_island_0;
+}
+
 item(FEAT_SHIPS, island, 24) {
     property {
         name: string(STR_NAME_ISLAND);
@@ -3296,11 +4244,13 @@ item(FEAT_SHIPS, island, 24) {
         refit_cost: 10;
         loading_speed: 15;
         sound_effect: SOUND_DEPARTURE_FERRY;
+        effect_spawn_model: EFFECT_SPAWN_MODEL_ELECTRIC;
     }
     graphics {
         cargo_capacity: sw_cap_island;
         purchase_cargo_capacity: sw_cap_island;
         additional_text: return string(STR_DESC_ISLAND);
+        create_effect: sw_fx_island;
         purchase: ss_island;
         default: sw_gfx_island;
     }
@@ -3537,6 +4487,42 @@ switch(FEAT_SHIPS, SELF, sw_cap_spirit_vi, cargo_classes & bitmask(CC_PASSENGERS
     return max(1, 2100 >> cap_mode);
 }
 
+switch(FEAT_SHIPS, SELF, sw_fx_spirit_vi_0, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -4, -4, 39), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_spirit_vi_1, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -5, 0, 39), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_spirit_vi_2, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -4, 4, 39), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_spirit_vi_3, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 5, 39), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_spirit_vi_4, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 4, 4, 39), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_spirit_vi_5, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 5, 0, 39), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_spirit_vi_6, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 4, -4, 39), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_spirit_vi_7, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, -5, 39), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_spirit_vi, direction) {
+    0: sw_fx_spirit_vi_0;
+    1: sw_fx_spirit_vi_1;
+    2: sw_fx_spirit_vi_2;
+    3: sw_fx_spirit_vi_3;
+    4: sw_fx_spirit_vi_4;
+    5: sw_fx_spirit_vi_5;
+    6: sw_fx_spirit_vi_6;
+    7: sw_fx_spirit_vi_7;
+    sw_fx_spirit_vi_0;
+}
+
 item(FEAT_SHIPS, spirit_vi, 26) {
     property {
         name: string(STR_NAME_SPIRIT_VI);
@@ -3559,11 +4545,13 @@ item(FEAT_SHIPS, spirit_vi, 26) {
         loading_speed: 105;
         sound_effect: SOUND_DEPARTURE_FERRY;
         variant_group: spirit;
+        effect_spawn_model: EFFECT_SPAWN_MODEL_STEAM;
     }
     graphics {
         cargo_capacity: sw_cap_spirit_vi;
         purchase_cargo_capacity: sw_cap_spirit_vi;
         additional_text: return string(STR_DESC_SPIRIT_VI);
+        create_effect: sw_fx_spirit_vi;
         purchase: ss_spirit_vi;
         default: sw_gfx_spirit_vi;
     }
@@ -3669,6 +4657,42 @@ switch(FEAT_SHIPS, SELF, sw_cap_coastal_insp, cargo_classes & bitmask(CC_PASSENG
     return max(1, 1604 >> cap_mode);
 }
 
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_insp_0, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 38), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_insp_1, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 38), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_insp_2, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 38), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_insp_3, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 38), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_insp_4, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 38), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_insp_5, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 38), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_insp_6, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 38), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_insp_7, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 38), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_insp, direction) {
+    0: sw_fx_coastal_insp_0;
+    1: sw_fx_coastal_insp_1;
+    2: sw_fx_coastal_insp_2;
+    3: sw_fx_coastal_insp_3;
+    4: sw_fx_coastal_insp_4;
+    5: sw_fx_coastal_insp_5;
+    6: sw_fx_coastal_insp_6;
+    7: sw_fx_coastal_insp_7;
+    sw_fx_coastal_insp_0;
+}
+
 item(FEAT_SHIPS, coastal_insp, 27) {
     property {
         name: string(STR_NAME_COASTAL_INSP);
@@ -3691,11 +4715,13 @@ item(FEAT_SHIPS, coastal_insp, 27) {
         loading_speed: 80;
         sound_effect: SOUND_DEPARTURE_FERRY;
         variant_group: coastal;
+        effect_spawn_model: EFFECT_SPAWN_MODEL_STEAM;
     }
     graphics {
         cargo_capacity: sw_cap_coastal_insp;
         purchase_cargo_capacity: sw_cap_coastal_insp;
         additional_text: return string(STR_DESC_COASTAL_INSP);
+        create_effect: sw_fx_coastal_insp;
         purchase: ss_coastal_insp;
         default: sw_gfx_coastal_insp;
     }
@@ -3801,6 +4827,42 @@ switch(FEAT_SHIPS, SELF, sw_cap_coastal_cel, cargo_classes & bitmask(CC_PASSENGE
     return max(1, 1604 >> cap_mode);
 }
 
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_cel_0, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 38), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_cel_1, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 38), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_cel_2, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 38), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_cel_3, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 38), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_cel_4, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 38), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_cel_5, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 38), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_cel_6, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 38), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_cel_7, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 38), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_cel, direction) {
+    0: sw_fx_coastal_cel_0;
+    1: sw_fx_coastal_cel_1;
+    2: sw_fx_coastal_cel_2;
+    3: sw_fx_coastal_cel_3;
+    4: sw_fx_coastal_cel_4;
+    5: sw_fx_coastal_cel_5;
+    6: sw_fx_coastal_cel_6;
+    7: sw_fx_coastal_cel_7;
+    sw_fx_coastal_cel_0;
+}
+
 item(FEAT_SHIPS, coastal_cel, 28) {
     property {
         name: string(STR_NAME_COASTAL_CEL);
@@ -3823,11 +4885,13 @@ item(FEAT_SHIPS, coastal_cel, 28) {
         loading_speed: 80;
         sound_effect: SOUND_DEPARTURE_FERRY;
         variant_group: coastal;
+        effect_spawn_model: EFFECT_SPAWN_MODEL_STEAM;
     }
     graphics {
         cargo_capacity: sw_cap_coastal_cel;
         purchase_cargo_capacity: sw_cap_coastal_cel;
         additional_text: return string(STR_DESC_COASTAL_CEL);
+        create_effect: sw_fx_coastal_cel;
         purchase: ss_coastal_cel;
         default: sw_gfx_coastal_cel;
     }
@@ -3933,6 +4997,42 @@ switch(FEAT_SHIPS, SELF, sw_cap_coastal_insp_2010, cargo_classes & bitmask(CC_PA
     return max(1, 1604 >> cap_mode);
 }
 
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_insp_2010_0, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 38), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_insp_2010_1, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 38), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_insp_2010_2, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 38), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_insp_2010_3, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 38), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_insp_2010_4, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 38), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_insp_2010_5, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 38), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_insp_2010_6, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 38), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_insp_2010_7, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 38), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_insp_2010, direction) {
+    0: sw_fx_coastal_insp_2010_0;
+    1: sw_fx_coastal_insp_2010_1;
+    2: sw_fx_coastal_insp_2010_2;
+    3: sw_fx_coastal_insp_2010_3;
+    4: sw_fx_coastal_insp_2010_4;
+    5: sw_fx_coastal_insp_2010_5;
+    6: sw_fx_coastal_insp_2010_6;
+    7: sw_fx_coastal_insp_2010_7;
+    sw_fx_coastal_insp_2010_0;
+}
+
 item(FEAT_SHIPS, coastal_insp_2010, 29) {
     property {
         name: string(STR_NAME_COASTAL_INSP_2010);
@@ -3955,11 +5055,13 @@ item(FEAT_SHIPS, coastal_insp_2010, 29) {
         loading_speed: 80;
         sound_effect: SOUND_DEPARTURE_FERRY;
         variant_group: coastal;
+        effect_spawn_model: EFFECT_SPAWN_MODEL_STEAM;
     }
     graphics {
         cargo_capacity: sw_cap_coastal_insp_2010;
         purchase_cargo_capacity: sw_cap_coastal_insp_2010;
         additional_text: return string(STR_DESC_COASTAL_INSP_2010);
+        create_effect: sw_fx_coastal_insp_2010;
         purchase: ss_coastal_insp_2010;
         default: sw_gfx_coastal_insp_2010;
     }
@@ -4065,6 +5167,42 @@ switch(FEAT_SHIPS, SELF, sw_cap_coastal_cel_2010, cargo_classes & bitmask(CC_PAS
     return max(1, 1604 >> cap_mode);
 }
 
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_cel_2010_0, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 38), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_cel_2010_1, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 38), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_cel_2010_2, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 38), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_cel_2010_3, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 38), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_cel_2010_4, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 38), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_cel_2010_5, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 38), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_cel_2010_6, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 38), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_cel_2010_7, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 38), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_coastal_cel_2010, direction) {
+    0: sw_fx_coastal_cel_2010_0;
+    1: sw_fx_coastal_cel_2010_1;
+    2: sw_fx_coastal_cel_2010_2;
+    3: sw_fx_coastal_cel_2010_3;
+    4: sw_fx_coastal_cel_2010_4;
+    5: sw_fx_coastal_cel_2010_5;
+    6: sw_fx_coastal_cel_2010_6;
+    7: sw_fx_coastal_cel_2010_7;
+    sw_fx_coastal_cel_2010_0;
+}
+
 item(FEAT_SHIPS, coastal_cel_2010, 30) {
     property {
         name: string(STR_NAME_COASTAL_CEL_2010);
@@ -4087,11 +5225,13 @@ item(FEAT_SHIPS, coastal_cel_2010, 30) {
         loading_speed: 80;
         sound_effect: SOUND_DEPARTURE_FERRY;
         variant_group: coastal;
+        effect_spawn_model: EFFECT_SPAWN_MODEL_STEAM;
     }
     graphics {
         cargo_capacity: sw_cap_coastal_cel_2010;
         purchase_cargo_capacity: sw_cap_coastal_cel_2010;
         additional_text: return string(STR_DESC_COASTAL_CEL_2010);
+        create_effect: sw_fx_coastal_cel_2010;
         purchase: ss_coastal_cel_2010;
         default: sw_gfx_coastal_cel_2010;
     }
@@ -4197,6 +5337,42 @@ switch(FEAT_SHIPS, SELF, sw_cap_cclass_cow, cargo_classes & bitmask(CC_PASSENGER
     return max(1, 1466 >> cap_mode);
 }
 
+switch(FEAT_SHIPS, SELF, sw_fx_cclass_cow_0, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -1, -1, 32), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_cclass_cow_1, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -1, 0, 32), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_cclass_cow_2, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -1, 1, 32), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_cclass_cow_3, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 1, 32), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_cclass_cow_4, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 1, 1, 32), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_cclass_cow_5, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 1, 0, 32), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_cclass_cow_6, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 1, -1, 32), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_cclass_cow_7, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, -1, 32), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_cclass_cow, direction) {
+    0: sw_fx_cclass_cow_0;
+    1: sw_fx_cclass_cow_1;
+    2: sw_fx_cclass_cow_2;
+    3: sw_fx_cclass_cow_3;
+    4: sw_fx_cclass_cow_4;
+    5: sw_fx_cclass_cow_5;
+    6: sw_fx_cclass_cow_6;
+    7: sw_fx_cclass_cow_7;
+    sw_fx_cclass_cow_0;
+}
+
 item(FEAT_SHIPS, cclass_cow, 31) {
     property {
         name: string(STR_NAME_CCLASS_COW);
@@ -4219,11 +5395,13 @@ item(FEAT_SHIPS, cclass_cow, 31) {
         loading_speed: 73;
         sound_effect: SOUND_DEPARTURE_FERRY;
         variant_group: cclass;
+        effect_spawn_model: EFFECT_SPAWN_MODEL_STEAM;
     }
     graphics {
         cargo_capacity: sw_cap_cclass_cow;
         purchase_cargo_capacity: sw_cap_cclass_cow;
         additional_text: return string(STR_DESC_CCLASS_COW);
+        create_effect: sw_fx_cclass_cow;
         purchase: ss_cclass_cow;
         default: sw_gfx_cclass_cow;
     }
@@ -4329,6 +5507,42 @@ switch(FEAT_SHIPS, SELF, sw_cap_cclass_alb, cargo_classes & bitmask(CC_PASSENGER
     return max(1, 1466 >> cap_mode);
 }
 
+switch(FEAT_SHIPS, SELF, sw_fx_cclass_alb_0, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -1, -1, 32), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_cclass_alb_1, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -1, 0, 32), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_cclass_alb_2, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -1, 1, 32), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_cclass_alb_3, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 1, 32), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_cclass_alb_4, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 1, 1, 32), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_cclass_alb_5, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 1, 0, 32), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_cclass_alb_6, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 1, -1, 32), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_cclass_alb_7, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, -1, 32), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_cclass_alb, direction) {
+    0: sw_fx_cclass_alb_0;
+    1: sw_fx_cclass_alb_1;
+    2: sw_fx_cclass_alb_2;
+    3: sw_fx_cclass_alb_3;
+    4: sw_fx_cclass_alb_4;
+    5: sw_fx_cclass_alb_5;
+    6: sw_fx_cclass_alb_6;
+    7: sw_fx_cclass_alb_7;
+    sw_fx_cclass_alb_0;
+}
+
 item(FEAT_SHIPS, cclass_alb, 32) {
     property {
         name: string(STR_NAME_CCLASS_ALB);
@@ -4351,11 +5565,13 @@ item(FEAT_SHIPS, cclass_alb, 32) {
         loading_speed: 73;
         sound_effect: SOUND_DEPARTURE_FERRY;
         variant_group: cclass;
+        effect_spawn_model: EFFECT_SPAWN_MODEL_STEAM;
     }
     graphics {
         cargo_capacity: sw_cap_cclass_alb;
         purchase_cargo_capacity: sw_cap_cclass_alb;
         additional_text: return string(STR_DESC_CCLASS_ALB);
+        create_effect: sw_fx_cclass_alb;
         purchase: ss_cclass_alb;
         default: sw_gfx_cclass_alb;
     }
@@ -4461,6 +5677,42 @@ switch(FEAT_SHIPS, SELF, sw_cap_cclass_sur, cargo_classes & bitmask(CC_PASSENGER
     return max(1, 1494 >> cap_mode);
 }
 
+switch(FEAT_SHIPS, SELF, sw_fx_cclass_sur_0, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -1, -1, 32), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_cclass_sur_1, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -1, 0, 32), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_cclass_sur_2, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -1, 1, 32), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_cclass_sur_3, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 1, 32), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_cclass_sur_4, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 1, 1, 32), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_cclass_sur_5, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 1, 0, 32), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_cclass_sur_6, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 1, -1, 32), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_cclass_sur_7, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, -1, 32), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_cclass_sur, direction) {
+    0: sw_fx_cclass_sur_0;
+    1: sw_fx_cclass_sur_1;
+    2: sw_fx_cclass_sur_2;
+    3: sw_fx_cclass_sur_3;
+    4: sw_fx_cclass_sur_4;
+    5: sw_fx_cclass_sur_5;
+    6: sw_fx_cclass_sur_6;
+    7: sw_fx_cclass_sur_7;
+    sw_fx_cclass_sur_0;
+}
+
 item(FEAT_SHIPS, cclass_sur, 33) {
     property {
         name: string(STR_NAME_CCLASS_SUR);
@@ -4483,11 +5735,13 @@ item(FEAT_SHIPS, cclass_sur, 33) {
         loading_speed: 74;
         sound_effect: SOUND_DEPARTURE_FERRY;
         variant_group: cclass_ob;
+        effect_spawn_model: EFFECT_SPAWN_MODEL_STEAM;
     }
     graphics {
         cargo_capacity: sw_cap_cclass_sur;
         purchase_cargo_capacity: sw_cap_cclass_sur;
         additional_text: return string(STR_DESC_CCLASS_SUR);
+        create_effect: sw_fx_cclass_sur;
         purchase: ss_cclass_sur;
         default: sw_gfx_cclass_sur;
     }
@@ -4496,84 +5750,84 @@ item(FEAT_SHIPS, cclass_sur, 33) {
 
 /* ---- Salish Eagle ---- */
 spriteset(ss_salish_eagle, "gfx/salish_eagle.png") {
-    [2, 2, 57, 88, -21, -39]
-    [61, 2, 122, 74, -71, -38]
-    [185, 2, 150, 42, -97, -31]
-    [337, 2, 121, 57, -70, -38]
-    [460, 2, 58, 72, -22, -49]
-    [520, 2, 107, 57, -36, -38]
-    [629, 2, 142, 42, -45, -31]
-    [773, 2, 106, 74, -36, -38]
+    [2, 2, 64, 90, -21, -41]
+    [68, 2, 121, 76, -71, -40]
+    [191, 2, 150, 48, -97, -37]
+    [343, 2, 120, 59, -70, -40]
+    [465, 2, 65, 72, -22, -49]
+    [532, 2, 107, 59, -36, -40]
+    [641, 2, 142, 48, -45, -37]
+    [785, 2, 106, 76, -36, -40]
 }
 alternative_sprites(ss_salish_eagle, ZOOM_LEVEL_NORMAL, BIT_DEPTH_32BPP, "gfx/salish_eagle_1x.png") {
-    [2, 2, 57, 88, -21, -39]
-    [61, 2, 122, 74, -71, -38]
-    [185, 2, 150, 42, -97, -31]
-    [337, 2, 121, 57, -70, -38]
-    [460, 2, 58, 72, -22, -49]
-    [520, 2, 107, 57, -36, -38]
-    [629, 2, 142, 42, -45, -31]
-    [773, 2, 106, 74, -36, -38]
+    [2, 2, 64, 90, -21, -41]
+    [68, 2, 121, 76, -71, -40]
+    [191, 2, 150, 48, -97, -37]
+    [343, 2, 120, 59, -70, -40]
+    [465, 2, 65, 72, -22, -49]
+    [532, 2, 107, 59, -36, -40]
+    [641, 2, 142, 48, -45, -37]
+    [785, 2, 106, 76, -36, -40]
 }
 alternative_sprites(ss_salish_eagle, ZOOM_LEVEL_IN_2X, BIT_DEPTH_32BPP, "gfx/salish_eagle_2x.png") {
-    [2, 2, 114, 176, -42, -78]
-    [118, 2, 244, 148, -142, -76]
-    [364, 2, 300, 84, -194, -62]
-    [666, 2, 242, 114, -140, -76]
-    [910, 2, 116, 144, -44, -98]
-    [1028, 2, 214, 114, -72, -76]
-    [1244, 2, 284, 84, -90, -62]
-    [1530, 2, 212, 148, -72, -76]
+    [2, 2, 128, 180, -42, -82]
+    [132, 2, 242, 152, -142, -80]
+    [376, 2, 300, 96, -194, -74]
+    [678, 2, 240, 118, -140, -80]
+    [920, 2, 130, 144, -44, -98]
+    [1052, 2, 214, 118, -72, -80]
+    [1268, 2, 284, 96, -90, -74]
+    [1554, 2, 212, 152, -72, -80]
 }
 alternative_sprites(ss_salish_eagle, ZOOM_LEVEL_IN_4X, BIT_DEPTH_32BPP, "gfx/salish_eagle_4x.png") {
-    [2, 2, 228, 352, -84, -156]
-    [232, 2, 488, 296, -284, -152]
-    [722, 2, 600, 168, -388, -124]
-    [1324, 2, 484, 228, -280, -152]
-    [1810, 2, 232, 288, -88, -196]
-    [2044, 2, 428, 228, -144, -152]
-    [2474, 2, 568, 168, -180, -124]
-    [3044, 2, 424, 296, -144, -152]
+    [2, 2, 256, 360, -84, -164]
+    [260, 2, 484, 304, -284, -160]
+    [746, 2, 600, 192, -388, -148]
+    [1348, 2, 480, 236, -280, -160]
+    [1830, 2, 260, 288, -88, -196]
+    [2092, 2, 428, 236, -144, -160]
+    [2522, 2, 568, 192, -180, -148]
+    [3092, 2, 424, 304, -144, -160]
 }
 spriteset(ss_salish_eagle_mv, "gfx/salish_eagle_mv.png") {
-    [2, 2, 57, 88, -21, -39]
-    [61, 2, 122, 74, -71, -38]
-    [185, 2, 150, 42, -97, -31]
-    [337, 2, 121, 57, -70, -38]
-    [460, 2, 58, 72, -22, -49]
-    [520, 2, 107, 57, -36, -38]
-    [629, 2, 142, 42, -45, -31]
-    [773, 2, 106, 74, -36, -38]
+    [2, 2, 64, 90, -21, -41]
+    [68, 2, 121, 76, -71, -40]
+    [191, 2, 150, 48, -97, -37]
+    [343, 2, 120, 59, -70, -40]
+    [465, 2, 65, 72, -22, -49]
+    [532, 2, 107, 59, -36, -40]
+    [641, 2, 142, 48, -45, -37]
+    [785, 2, 106, 76, -36, -40]
 }
 alternative_sprites(ss_salish_eagle_mv, ZOOM_LEVEL_NORMAL, BIT_DEPTH_32BPP, "gfx/salish_eagle_mv_1x.png") {
-    [2, 2, 57, 88, -21, -39]
-    [61, 2, 122, 74, -71, -38]
-    [185, 2, 150, 42, -97, -31]
-    [337, 2, 121, 57, -70, -38]
-    [460, 2, 58, 72, -22, -49]
-    [520, 2, 107, 57, -36, -38]
-    [629, 2, 142, 42, -45, -31]
-    [773, 2, 106, 74, -36, -38]
+    [2, 2, 64, 90, -21, -41]
+    [68, 2, 121, 76, -71, -40]
+    [191, 2, 150, 48, -97, -37]
+    [343, 2, 120, 59, -70, -40]
+    [465, 2, 65, 72, -22, -49]
+    [532, 2, 107, 59, -36, -40]
+    [641, 2, 142, 48, -45, -37]
+    [785, 2, 106, 76, -36, -40]
 }
 alternative_sprites(ss_salish_eagle_mv, ZOOM_LEVEL_IN_2X, BIT_DEPTH_32BPP, "gfx/salish_eagle_mv_2x.png") {
-    [2, 2, 114, 176, -42, -78]
-    [118, 2, 244, 148, -142, -76]
-    [364, 2, 300, 84, -194, -62]
-    [666, 2, 242, 114, -140, -76]
-    [910, 2, 116, 144, -44, -98]
-    [1028, 2, 214, 114, -72, -76]
-    [1244, 2, 284, 84, -90, -62]
-    [1530, 2, 212, 148, -72, -76]
+    [2, 2, 128, 180, -42, -82]
+    [132, 2, 242, 152, -142, -80]
+    [376, 2, 300, 96, -194, -74]
+    [678, 2, 240, 118, -140, -80]
+    [920, 2, 130, 144, -44, -98]
+    [1052, 2, 214, 118, -72, -80]
+    [1268, 2, 284, 96, -90, -74]
+    [1554, 2, 212, 152, -72, -80]
 }
 alternative_sprites(ss_salish_eagle_mv, ZOOM_LEVEL_IN_4X, BIT_DEPTH_32BPP, "gfx/salish_eagle_mv_4x.png") {
-    [2, 2, 228, 352, -84, -156]
-    [232, 2, 488, 296, -284, -152]
-    [722, 2, 600, 168, -388, -124]
-    [1324, 2, 484, 228, -280, -152]
-    [1810, 2, 232, 288, -88, -196]
-    [2044, 2, 428, 228, -144, -152]
-    [2474, 2, 568, 168, -180, -124]
-    [3044, 2, 424, 296, -144, -152]
+    [2, 2, 256, 360, -84, -164]
+    [260, 2, 484, 304, -284, -160]
+    [746, 2, 600, 192, -388, -148]
+    [1348, 2, 480, 236, -280, -160]
+    [1830, 2, 260, 288, -88, -196]
+    [2092, 2, 428, 236, -144, -160]
+    [2522, 2, 568, 192, -180, -148]
+    [3092, 2, 424, 304, -144, -160]
 }
 
 // Wake and bow wave only while under way
@@ -4591,6 +5845,42 @@ switch(FEAT_SHIPS, SELF, sw_cap_salish_eagle_freight, cargo_type_in_veh) {
 switch(FEAT_SHIPS, SELF, sw_cap_salish_eagle, cargo_classes & bitmask(CC_PASSENGERS)) {
     0: sw_cap_salish_eagle_freight;
     return max(1, 600 >> cap_mode);
+}
+
+switch(FEAT_SHIPS, SELF, sw_fx_salish_eagle_0, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 4, 4, 30), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -4, -4, 30), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_salish_eagle_1, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 6, 0, 30), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -6, 0, 30), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_salish_eagle_2, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 4, -4, 30), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -4, 4, 30), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_salish_eagle_3, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, -6, 30), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 6, 30), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_salish_eagle_4, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -4, -4, 30), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 4, 4, 30), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_salish_eagle_5, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -6, 0, 30), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 6, 0, 30), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_salish_eagle_6, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -4, 4, 30), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 4, -4, 30), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_salish_eagle_7, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 6, 30), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, -6, 30), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_salish_eagle, direction) {
+    0: sw_fx_salish_eagle_0;
+    1: sw_fx_salish_eagle_1;
+    2: sw_fx_salish_eagle_2;
+    3: sw_fx_salish_eagle_3;
+    4: sw_fx_salish_eagle_4;
+    5: sw_fx_salish_eagle_5;
+    6: sw_fx_salish_eagle_6;
+    7: sw_fx_salish_eagle_7;
+    sw_fx_salish_eagle_0;
 }
 
 item(FEAT_SHIPS, salish_eagle, 34) {
@@ -4615,11 +5905,13 @@ item(FEAT_SHIPS, salish_eagle, 34) {
         loading_speed: 30;
         sound_effect: SOUND_DEPARTURE_FERRY;
         variant_group: salish;
+        effect_spawn_model: EFFECT_SPAWN_MODEL_ELECTRIC;
     }
     graphics {
         cargo_capacity: sw_cap_salish_eagle;
         purchase_cargo_capacity: sw_cap_salish_eagle;
         additional_text: return string(STR_DESC_SALISH_EAGLE);
+        create_effect: sw_fx_salish_eagle;
         purchase: ss_salish_eagle;
         default: sw_gfx_salish_eagle;
     }
@@ -4628,84 +5920,84 @@ item(FEAT_SHIPS, salish_eagle, 34) {
 
 /* ---- Salish Raven ---- */
 spriteset(ss_salish_raven, "gfx/salish_raven.png") {
-    [2, 2, 57, 88, -21, -39]
-    [61, 2, 122, 74, -71, -38]
-    [185, 2, 150, 42, -97, -31]
-    [337, 2, 121, 57, -70, -38]
-    [460, 2, 58, 72, -22, -49]
-    [520, 2, 107, 57, -36, -38]
-    [629, 2, 142, 42, -45, -31]
-    [773, 2, 106, 74, -36, -38]
+    [2, 2, 64, 90, -21, -41]
+    [68, 2, 121, 76, -71, -40]
+    [191, 2, 150, 48, -97, -37]
+    [343, 2, 120, 59, -70, -40]
+    [465, 2, 65, 72, -22, -49]
+    [532, 2, 107, 59, -36, -40]
+    [641, 2, 142, 48, -45, -37]
+    [785, 2, 106, 76, -36, -40]
 }
 alternative_sprites(ss_salish_raven, ZOOM_LEVEL_NORMAL, BIT_DEPTH_32BPP, "gfx/salish_raven_1x.png") {
-    [2, 2, 57, 88, -21, -39]
-    [61, 2, 122, 74, -71, -38]
-    [185, 2, 150, 42, -97, -31]
-    [337, 2, 121, 57, -70, -38]
-    [460, 2, 58, 72, -22, -49]
-    [520, 2, 107, 57, -36, -38]
-    [629, 2, 142, 42, -45, -31]
-    [773, 2, 106, 74, -36, -38]
+    [2, 2, 64, 90, -21, -41]
+    [68, 2, 121, 76, -71, -40]
+    [191, 2, 150, 48, -97, -37]
+    [343, 2, 120, 59, -70, -40]
+    [465, 2, 65, 72, -22, -49]
+    [532, 2, 107, 59, -36, -40]
+    [641, 2, 142, 48, -45, -37]
+    [785, 2, 106, 76, -36, -40]
 }
 alternative_sprites(ss_salish_raven, ZOOM_LEVEL_IN_2X, BIT_DEPTH_32BPP, "gfx/salish_raven_2x.png") {
-    [2, 2, 114, 176, -42, -78]
-    [118, 2, 244, 148, -142, -76]
-    [364, 2, 300, 84, -194, -62]
-    [666, 2, 242, 114, -140, -76]
-    [910, 2, 116, 144, -44, -98]
-    [1028, 2, 214, 114, -72, -76]
-    [1244, 2, 284, 84, -90, -62]
-    [1530, 2, 212, 148, -72, -76]
+    [2, 2, 128, 180, -42, -82]
+    [132, 2, 242, 152, -142, -80]
+    [376, 2, 300, 96, -194, -74]
+    [678, 2, 240, 118, -140, -80]
+    [920, 2, 130, 144, -44, -98]
+    [1052, 2, 214, 118, -72, -80]
+    [1268, 2, 284, 96, -90, -74]
+    [1554, 2, 212, 152, -72, -80]
 }
 alternative_sprites(ss_salish_raven, ZOOM_LEVEL_IN_4X, BIT_DEPTH_32BPP, "gfx/salish_raven_4x.png") {
-    [2, 2, 228, 352, -84, -156]
-    [232, 2, 488, 296, -284, -152]
-    [722, 2, 600, 168, -388, -124]
-    [1324, 2, 484, 228, -280, -152]
-    [1810, 2, 232, 288, -88, -196]
-    [2044, 2, 428, 228, -144, -152]
-    [2474, 2, 568, 168, -180, -124]
-    [3044, 2, 424, 296, -144, -152]
+    [2, 2, 256, 360, -84, -164]
+    [260, 2, 484, 304, -284, -160]
+    [746, 2, 600, 192, -388, -148]
+    [1348, 2, 480, 236, -280, -160]
+    [1830, 2, 260, 288, -88, -196]
+    [2092, 2, 428, 236, -144, -160]
+    [2522, 2, 568, 192, -180, -148]
+    [3092, 2, 424, 304, -144, -160]
 }
 spriteset(ss_salish_raven_mv, "gfx/salish_raven_mv.png") {
-    [2, 2, 57, 88, -21, -39]
-    [61, 2, 122, 74, -71, -38]
-    [185, 2, 150, 42, -97, -31]
-    [337, 2, 121, 57, -70, -38]
-    [460, 2, 58, 72, -22, -49]
-    [520, 2, 107, 57, -36, -38]
-    [629, 2, 142, 42, -45, -31]
-    [773, 2, 106, 74, -36, -38]
+    [2, 2, 64, 90, -21, -41]
+    [68, 2, 121, 76, -71, -40]
+    [191, 2, 150, 48, -97, -37]
+    [343, 2, 120, 59, -70, -40]
+    [465, 2, 65, 72, -22, -49]
+    [532, 2, 107, 59, -36, -40]
+    [641, 2, 142, 48, -45, -37]
+    [785, 2, 106, 76, -36, -40]
 }
 alternative_sprites(ss_salish_raven_mv, ZOOM_LEVEL_NORMAL, BIT_DEPTH_32BPP, "gfx/salish_raven_mv_1x.png") {
-    [2, 2, 57, 88, -21, -39]
-    [61, 2, 122, 74, -71, -38]
-    [185, 2, 150, 42, -97, -31]
-    [337, 2, 121, 57, -70, -38]
-    [460, 2, 58, 72, -22, -49]
-    [520, 2, 107, 57, -36, -38]
-    [629, 2, 142, 42, -45, -31]
-    [773, 2, 106, 74, -36, -38]
+    [2, 2, 64, 90, -21, -41]
+    [68, 2, 121, 76, -71, -40]
+    [191, 2, 150, 48, -97, -37]
+    [343, 2, 120, 59, -70, -40]
+    [465, 2, 65, 72, -22, -49]
+    [532, 2, 107, 59, -36, -40]
+    [641, 2, 142, 48, -45, -37]
+    [785, 2, 106, 76, -36, -40]
 }
 alternative_sprites(ss_salish_raven_mv, ZOOM_LEVEL_IN_2X, BIT_DEPTH_32BPP, "gfx/salish_raven_mv_2x.png") {
-    [2, 2, 114, 176, -42, -78]
-    [118, 2, 244, 148, -142, -76]
-    [364, 2, 300, 84, -194, -62]
-    [666, 2, 242, 114, -140, -76]
-    [910, 2, 116, 144, -44, -98]
-    [1028, 2, 214, 114, -72, -76]
-    [1244, 2, 284, 84, -90, -62]
-    [1530, 2, 212, 148, -72, -76]
+    [2, 2, 128, 180, -42, -82]
+    [132, 2, 242, 152, -142, -80]
+    [376, 2, 300, 96, -194, -74]
+    [678, 2, 240, 118, -140, -80]
+    [920, 2, 130, 144, -44, -98]
+    [1052, 2, 214, 118, -72, -80]
+    [1268, 2, 284, 96, -90, -74]
+    [1554, 2, 212, 152, -72, -80]
 }
 alternative_sprites(ss_salish_raven_mv, ZOOM_LEVEL_IN_4X, BIT_DEPTH_32BPP, "gfx/salish_raven_mv_4x.png") {
-    [2, 2, 228, 352, -84, -156]
-    [232, 2, 488, 296, -284, -152]
-    [722, 2, 600, 168, -388, -124]
-    [1324, 2, 484, 228, -280, -152]
-    [1810, 2, 232, 288, -88, -196]
-    [2044, 2, 428, 228, -144, -152]
-    [2474, 2, 568, 168, -180, -124]
-    [3044, 2, 424, 296, -144, -152]
+    [2, 2, 256, 360, -84, -164]
+    [260, 2, 484, 304, -284, -160]
+    [746, 2, 600, 192, -388, -148]
+    [1348, 2, 480, 236, -280, -160]
+    [1830, 2, 260, 288, -88, -196]
+    [2092, 2, 428, 236, -144, -160]
+    [2522, 2, 568, 192, -180, -148]
+    [3092, 2, 424, 304, -144, -160]
 }
 
 // Wake and bow wave only while under way
@@ -4723,6 +6015,42 @@ switch(FEAT_SHIPS, SELF, sw_cap_salish_raven_freight, cargo_type_in_veh) {
 switch(FEAT_SHIPS, SELF, sw_cap_salish_raven, cargo_classes & bitmask(CC_PASSENGERS)) {
     0: sw_cap_salish_raven_freight;
     return max(1, 600 >> cap_mode);
+}
+
+switch(FEAT_SHIPS, SELF, sw_fx_salish_raven_0, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 4, 4, 30), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -4, -4, 30), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_salish_raven_1, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 6, 0, 30), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -6, 0, 30), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_salish_raven_2, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 4, -4, 30), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -4, 4, 30), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_salish_raven_3, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, -6, 30), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 6, 30), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_salish_raven_4, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -4, -4, 30), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 4, 4, 30), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_salish_raven_5, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -6, 0, 30), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 6, 0, 30), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_salish_raven_6, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -4, 4, 30), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 4, -4, 30), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_salish_raven_7, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 6, 30), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, -6, 30), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_salish_raven, direction) {
+    0: sw_fx_salish_raven_0;
+    1: sw_fx_salish_raven_1;
+    2: sw_fx_salish_raven_2;
+    3: sw_fx_salish_raven_3;
+    4: sw_fx_salish_raven_4;
+    5: sw_fx_salish_raven_5;
+    6: sw_fx_salish_raven_6;
+    7: sw_fx_salish_raven_7;
+    sw_fx_salish_raven_0;
 }
 
 item(FEAT_SHIPS, salish_raven, 35) {
@@ -4747,11 +6075,13 @@ item(FEAT_SHIPS, salish_raven, 35) {
         loading_speed: 30;
         sound_effect: SOUND_DEPARTURE_FERRY;
         variant_group: salish;
+        effect_spawn_model: EFFECT_SPAWN_MODEL_ELECTRIC;
     }
     graphics {
         cargo_capacity: sw_cap_salish_raven;
         purchase_cargo_capacity: sw_cap_salish_raven;
         additional_text: return string(STR_DESC_SALISH_RAVEN);
+        create_effect: sw_fx_salish_raven;
         purchase: ss_salish_raven;
         default: sw_gfx_salish_raven;
     }
@@ -4857,6 +6187,42 @@ switch(FEAT_SHIPS, SELF, sw_cap_burnaby_nan, cargo_classes & bitmask(CC_PASSENGE
     return max(1, 1200 >> cap_mode);
 }
 
+switch(FEAT_SHIPS, SELF, sw_fx_burnaby_nan_0, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -3, -3, 27), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_burnaby_nan_1, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -5, 0, 27), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_burnaby_nan_2, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -3, 3, 27), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_burnaby_nan_3, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 5, 27), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_burnaby_nan_4, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 3, 3, 27), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_burnaby_nan_5, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 5, 0, 27), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_burnaby_nan_6, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 3, -3, 27), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_burnaby_nan_7, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, -5, 27), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_burnaby_nan, direction) {
+    0: sw_fx_burnaby_nan_0;
+    1: sw_fx_burnaby_nan_1;
+    2: sw_fx_burnaby_nan_2;
+    3: sw_fx_burnaby_nan_3;
+    4: sw_fx_burnaby_nan_4;
+    5: sw_fx_burnaby_nan_5;
+    6: sw_fx_burnaby_nan_6;
+    7: sw_fx_burnaby_nan_7;
+    sw_fx_burnaby_nan_0;
+}
+
 item(FEAT_SHIPS, burnaby_nan, 36) {
     property {
         name: string(STR_NAME_BURNABY_NAN);
@@ -4879,11 +6245,13 @@ item(FEAT_SHIPS, burnaby_nan, 36) {
         loading_speed: 60;
         sound_effect: SOUND_DEPARTURE_FERRY;
         variant_group: burnaby;
+        effect_spawn_model: EFFECT_SPAWN_MODEL_STEAM;
     }
     graphics {
         cargo_capacity: sw_cap_burnaby_nan;
         purchase_cargo_capacity: sw_cap_burnaby_nan;
         additional_text: return string(STR_DESC_BURNABY_NAN);
+        create_effect: sw_fx_burnaby_nan;
         purchase: ss_burnaby_nan;
         default: sw_gfx_burnaby_nan;
     }
@@ -4989,6 +6357,42 @@ switch(FEAT_SHIPS, SELF, sw_cap_burnaby_nw, cargo_classes & bitmask(CC_PASSENGER
     return max(1, 1200 >> cap_mode);
 }
 
+switch(FEAT_SHIPS, SELF, sw_fx_burnaby_nw_0, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -3, -3, 27), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_burnaby_nw_1, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -5, 0, 27), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_burnaby_nw_2, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -3, 3, 27), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_burnaby_nw_3, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 5, 27), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_burnaby_nw_4, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 3, 3, 27), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_burnaby_nw_5, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 5, 0, 27), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_burnaby_nw_6, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 3, -3, 27), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_burnaby_nw_7, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, -5, 27), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_burnaby_nw, direction) {
+    0: sw_fx_burnaby_nw_0;
+    1: sw_fx_burnaby_nw_1;
+    2: sw_fx_burnaby_nw_2;
+    3: sw_fx_burnaby_nw_3;
+    4: sw_fx_burnaby_nw_4;
+    5: sw_fx_burnaby_nw_5;
+    6: sw_fx_burnaby_nw_6;
+    7: sw_fx_burnaby_nw_7;
+    sw_fx_burnaby_nw_0;
+}
+
 item(FEAT_SHIPS, burnaby_nw, 37) {
     property {
         name: string(STR_NAME_BURNABY_NW);
@@ -5011,11 +6415,13 @@ item(FEAT_SHIPS, burnaby_nw, 37) {
         loading_speed: 60;
         sound_effect: SOUND_DEPARTURE_FERRY;
         variant_group: burnaby;
+        effect_spawn_model: EFFECT_SPAWN_MODEL_STEAM;
     }
     graphics {
         cargo_capacity: sw_cap_burnaby_nw;
         purchase_cargo_capacity: sw_cap_burnaby_nw;
         additional_text: return string(STR_DESC_BURNABY_NW);
+        create_effect: sw_fx_burnaby_nw;
         purchase: ss_burnaby_nw;
         default: sw_gfx_burnaby_nw;
     }
@@ -5121,6 +6527,42 @@ switch(FEAT_SHIPS, SELF, sw_cap_intermediate_cum, cargo_classes & bitmask(CC_PAS
     return max(1, 462 >> cap_mode);
 }
 
+switch(FEAT_SHIPS, SELF, sw_fx_intermediate_cum_0, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 24), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_intermediate_cum_1, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -1, 0, 24), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_intermediate_cum_2, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 24), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_intermediate_cum_3, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 1, 24), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_intermediate_cum_4, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 24), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_intermediate_cum_5, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 1, 0, 24), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_intermediate_cum_6, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 24), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_intermediate_cum_7, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, -1, 24), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_intermediate_cum, direction) {
+    0: sw_fx_intermediate_cum_0;
+    1: sw_fx_intermediate_cum_1;
+    2: sw_fx_intermediate_cum_2;
+    3: sw_fx_intermediate_cum_3;
+    4: sw_fx_intermediate_cum_4;
+    5: sw_fx_intermediate_cum_5;
+    6: sw_fx_intermediate_cum_6;
+    7: sw_fx_intermediate_cum_7;
+    sw_fx_intermediate_cum_0;
+}
+
 item(FEAT_SHIPS, intermediate_cum, 38) {
     property {
         name: string(STR_NAME_INTERMEDIATE_CUM);
@@ -5143,11 +6585,13 @@ item(FEAT_SHIPS, intermediate_cum, 38) {
         loading_speed: 23;
         sound_effect: SOUND_DEPARTURE_FERRY;
         variant_group: intermediate;
+        effect_spawn_model: EFFECT_SPAWN_MODEL_STEAM;
     }
     graphics {
         cargo_capacity: sw_cap_intermediate_cum;
         purchase_cargo_capacity: sw_cap_intermediate_cum;
         additional_text: return string(STR_DESC_INTERMEDIATE_CUM);
+        create_effect: sw_fx_intermediate_cum;
         purchase: ss_intermediate_cum;
         default: sw_gfx_intermediate_cum;
     }
@@ -5253,6 +6697,42 @@ switch(FEAT_SHIPS, SELF, sw_cap_vclass_s_vic, cargo_classes & bitmask(CC_PASSENG
     return max(1, 1360 >> cap_mode);
 }
 
+switch(FEAT_SHIPS, SELF, sw_fx_vclass_s_vic_0, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 26), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_vclass_s_vic_1, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 1, 0, 26), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_vclass_s_vic_2, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 26), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_vclass_s_vic_3, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, -1, 26), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_vclass_s_vic_4, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 26), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_vclass_s_vic_5, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -1, 0, 26), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_vclass_s_vic_6, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 0, 26), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_vclass_s_vic_7, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 1, 26), 0x100)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 1;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_vclass_s_vic, direction) {
+    0: sw_fx_vclass_s_vic_0;
+    1: sw_fx_vclass_s_vic_1;
+    2: sw_fx_vclass_s_vic_2;
+    3: sw_fx_vclass_s_vic_3;
+    4: sw_fx_vclass_s_vic_4;
+    5: sw_fx_vclass_s_vic_5;
+    6: sw_fx_vclass_s_vic_6;
+    7: sw_fx_vclass_s_vic_7;
+    sw_fx_vclass_s_vic_0;
+}
+
 item(FEAT_SHIPS, vclass_s_vic, 39) {
     property {
         name: string(STR_NAME_VCLASS_S_VIC);
@@ -5275,11 +6755,13 @@ item(FEAT_SHIPS, vclass_s_vic, 39) {
         loading_speed: 68;
         sound_effect: SOUND_DEPARTURE_FERRY;
         variant_group: vclass_s;
+        effect_spawn_model: EFFECT_SPAWN_MODEL_STEAM;
     }
     graphics {
         cargo_capacity: sw_cap_vclass_s_vic;
         purchase_cargo_capacity: sw_cap_vclass_s_vic;
         additional_text: return string(STR_DESC_VCLASS_S_VIC);
+        create_effect: sw_fx_vclass_s_vic;
         purchase: ss_vclass_s_vic;
         default: sw_gfx_vclass_s_vic;
     }
@@ -5288,84 +6770,84 @@ item(FEAT_SHIPS, vclass_s_vic, 39) {
 
 /* ---- Salish Heron ---- */
 spriteset(ss_salish_heron, "gfx/salish_heron.png") {
-    [2, 2, 57, 88, -21, -39]
-    [61, 2, 122, 74, -71, -38]
-    [185, 2, 150, 42, -97, -31]
-    [337, 2, 121, 57, -70, -38]
-    [460, 2, 58, 72, -22, -49]
-    [520, 2, 107, 57, -36, -38]
-    [629, 2, 142, 42, -45, -31]
-    [773, 2, 106, 74, -36, -38]
+    [2, 2, 64, 90, -21, -41]
+    [68, 2, 121, 76, -71, -40]
+    [191, 2, 150, 48, -97, -37]
+    [343, 2, 120, 59, -70, -40]
+    [465, 2, 65, 72, -22, -49]
+    [532, 2, 107, 59, -36, -40]
+    [641, 2, 142, 48, -45, -37]
+    [785, 2, 106, 76, -36, -40]
 }
 alternative_sprites(ss_salish_heron, ZOOM_LEVEL_NORMAL, BIT_DEPTH_32BPP, "gfx/salish_heron_1x.png") {
-    [2, 2, 57, 88, -21, -39]
-    [61, 2, 122, 74, -71, -38]
-    [185, 2, 150, 42, -97, -31]
-    [337, 2, 121, 57, -70, -38]
-    [460, 2, 58, 72, -22, -49]
-    [520, 2, 107, 57, -36, -38]
-    [629, 2, 142, 42, -45, -31]
-    [773, 2, 106, 74, -36, -38]
+    [2, 2, 64, 90, -21, -41]
+    [68, 2, 121, 76, -71, -40]
+    [191, 2, 150, 48, -97, -37]
+    [343, 2, 120, 59, -70, -40]
+    [465, 2, 65, 72, -22, -49]
+    [532, 2, 107, 59, -36, -40]
+    [641, 2, 142, 48, -45, -37]
+    [785, 2, 106, 76, -36, -40]
 }
 alternative_sprites(ss_salish_heron, ZOOM_LEVEL_IN_2X, BIT_DEPTH_32BPP, "gfx/salish_heron_2x.png") {
-    [2, 2, 114, 176, -42, -78]
-    [118, 2, 244, 148, -142, -76]
-    [364, 2, 300, 84, -194, -62]
-    [666, 2, 242, 114, -140, -76]
-    [910, 2, 116, 144, -44, -98]
-    [1028, 2, 214, 114, -72, -76]
-    [1244, 2, 284, 84, -90, -62]
-    [1530, 2, 212, 148, -72, -76]
+    [2, 2, 128, 180, -42, -82]
+    [132, 2, 242, 152, -142, -80]
+    [376, 2, 300, 96, -194, -74]
+    [678, 2, 240, 118, -140, -80]
+    [920, 2, 130, 144, -44, -98]
+    [1052, 2, 214, 118, -72, -80]
+    [1268, 2, 284, 96, -90, -74]
+    [1554, 2, 212, 152, -72, -80]
 }
 alternative_sprites(ss_salish_heron, ZOOM_LEVEL_IN_4X, BIT_DEPTH_32BPP, "gfx/salish_heron_4x.png") {
-    [2, 2, 228, 352, -84, -156]
-    [232, 2, 488, 296, -284, -152]
-    [722, 2, 600, 168, -388, -124]
-    [1324, 2, 484, 228, -280, -152]
-    [1810, 2, 232, 288, -88, -196]
-    [2044, 2, 428, 228, -144, -152]
-    [2474, 2, 568, 168, -180, -124]
-    [3044, 2, 424, 296, -144, -152]
+    [2, 2, 256, 360, -84, -164]
+    [260, 2, 484, 304, -284, -160]
+    [746, 2, 600, 192, -388, -148]
+    [1348, 2, 480, 236, -280, -160]
+    [1830, 2, 260, 288, -88, -196]
+    [2092, 2, 428, 236, -144, -160]
+    [2522, 2, 568, 192, -180, -148]
+    [3092, 2, 424, 304, -144, -160]
 }
 spriteset(ss_salish_heron_mv, "gfx/salish_heron_mv.png") {
-    [2, 2, 57, 88, -21, -39]
-    [61, 2, 122, 74, -71, -38]
-    [185, 2, 150, 42, -97, -31]
-    [337, 2, 121, 57, -70, -38]
-    [460, 2, 58, 72, -22, -49]
-    [520, 2, 107, 57, -36, -38]
-    [629, 2, 142, 42, -45, -31]
-    [773, 2, 106, 74, -36, -38]
+    [2, 2, 64, 90, -21, -41]
+    [68, 2, 121, 76, -71, -40]
+    [191, 2, 150, 48, -97, -37]
+    [343, 2, 120, 59, -70, -40]
+    [465, 2, 65, 72, -22, -49]
+    [532, 2, 107, 59, -36, -40]
+    [641, 2, 142, 48, -45, -37]
+    [785, 2, 106, 76, -36, -40]
 }
 alternative_sprites(ss_salish_heron_mv, ZOOM_LEVEL_NORMAL, BIT_DEPTH_32BPP, "gfx/salish_heron_mv_1x.png") {
-    [2, 2, 57, 88, -21, -39]
-    [61, 2, 122, 74, -71, -38]
-    [185, 2, 150, 42, -97, -31]
-    [337, 2, 121, 57, -70, -38]
-    [460, 2, 58, 72, -22, -49]
-    [520, 2, 107, 57, -36, -38]
-    [629, 2, 142, 42, -45, -31]
-    [773, 2, 106, 74, -36, -38]
+    [2, 2, 64, 90, -21, -41]
+    [68, 2, 121, 76, -71, -40]
+    [191, 2, 150, 48, -97, -37]
+    [343, 2, 120, 59, -70, -40]
+    [465, 2, 65, 72, -22, -49]
+    [532, 2, 107, 59, -36, -40]
+    [641, 2, 142, 48, -45, -37]
+    [785, 2, 106, 76, -36, -40]
 }
 alternative_sprites(ss_salish_heron_mv, ZOOM_LEVEL_IN_2X, BIT_DEPTH_32BPP, "gfx/salish_heron_mv_2x.png") {
-    [2, 2, 114, 176, -42, -78]
-    [118, 2, 244, 148, -142, -76]
-    [364, 2, 300, 84, -194, -62]
-    [666, 2, 242, 114, -140, -76]
-    [910, 2, 116, 144, -44, -98]
-    [1028, 2, 214, 114, -72, -76]
-    [1244, 2, 284, 84, -90, -62]
-    [1530, 2, 212, 148, -72, -76]
+    [2, 2, 128, 180, -42, -82]
+    [132, 2, 242, 152, -142, -80]
+    [376, 2, 300, 96, -194, -74]
+    [678, 2, 240, 118, -140, -80]
+    [920, 2, 130, 144, -44, -98]
+    [1052, 2, 214, 118, -72, -80]
+    [1268, 2, 284, 96, -90, -74]
+    [1554, 2, 212, 152, -72, -80]
 }
 alternative_sprites(ss_salish_heron_mv, ZOOM_LEVEL_IN_4X, BIT_DEPTH_32BPP, "gfx/salish_heron_mv_4x.png") {
-    [2, 2, 228, 352, -84, -156]
-    [232, 2, 488, 296, -284, -152]
-    [722, 2, 600, 168, -388, -124]
-    [1324, 2, 484, 228, -280, -152]
-    [1810, 2, 232, 288, -88, -196]
-    [2044, 2, 428, 228, -144, -152]
-    [2474, 2, 568, 168, -180, -124]
-    [3044, 2, 424, 296, -144, -152]
+    [2, 2, 256, 360, -84, -164]
+    [260, 2, 484, 304, -284, -160]
+    [746, 2, 600, 192, -388, -148]
+    [1348, 2, 480, 236, -280, -160]
+    [1830, 2, 260, 288, -88, -196]
+    [2092, 2, 428, 236, -144, -160]
+    [2522, 2, 568, 192, -180, -148]
+    [3092, 2, 424, 304, -144, -160]
 }
 
 // Wake and bow wave only while under way
@@ -5383,6 +6865,42 @@ switch(FEAT_SHIPS, SELF, sw_cap_salish_heron_freight, cargo_type_in_veh) {
 switch(FEAT_SHIPS, SELF, sw_cap_salish_heron, cargo_classes & bitmask(CC_PASSENGERS)) {
     0: sw_cap_salish_heron_freight;
     return max(1, 600 >> cap_mode);
+}
+
+switch(FEAT_SHIPS, SELF, sw_fx_salish_heron_0, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 4, 4, 30), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -4, -4, 30), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_salish_heron_1, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 6, 0, 30), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -6, 0, 30), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_salish_heron_2, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 4, -4, 30), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -4, 4, 30), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_salish_heron_3, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, -6, 30), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 6, 30), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_salish_heron_4, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -4, -4, 30), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 4, 4, 30), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_salish_heron_5, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -6, 0, 30), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 6, 0, 30), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_salish_heron_6, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -4, 4, 30), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 4, -4, 30), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_salish_heron_7, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, 6, 30), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 0, -6, 30), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_salish_heron, direction) {
+    0: sw_fx_salish_heron_0;
+    1: sw_fx_salish_heron_1;
+    2: sw_fx_salish_heron_2;
+    3: sw_fx_salish_heron_3;
+    4: sw_fx_salish_heron_4;
+    5: sw_fx_salish_heron_5;
+    6: sw_fx_salish_heron_6;
+    7: sw_fx_salish_heron_7;
+    sw_fx_salish_heron_0;
 }
 
 item(FEAT_SHIPS, salish_heron, 40) {
@@ -5407,11 +6925,13 @@ item(FEAT_SHIPS, salish_heron, 40) {
         loading_speed: 30;
         sound_effect: SOUND_DEPARTURE_FERRY;
         variant_group: salish;
+        effect_spawn_model: EFFECT_SPAWN_MODEL_ELECTRIC;
     }
     graphics {
         cargo_capacity: sw_cap_salish_heron;
         purchase_cargo_capacity: sw_cap_salish_heron;
         additional_text: return string(STR_DESC_SALISH_HERON);
+        create_effect: sw_fx_salish_heron;
         purchase: ss_salish_heron;
         default: sw_gfx_salish_heron;
     }
@@ -5517,6 +7037,42 @@ switch(FEAT_SHIPS, SELF, sw_cap_clipper4, cargo_classes & bitmask(CC_PASSENGERS)
     return max(1, 330 >> cap_mode);
 }
 
+switch(FEAT_SHIPS, SELF, sw_fx_clipper4_0, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 4, 5, 11), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 5, 4, 11), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_clipper4_1, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 6, 1, 11), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 6, -1, 11), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_clipper4_2, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 5, -4, 11), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 4, -5, 11), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_clipper4_3, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 1, -6, 11), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -1, -6, 11), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_clipper4_4, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -4, -5, 11), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -5, -4, 11), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_clipper4_5, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -6, -1, 11), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -6, 1, 11), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_clipper4_6, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -5, 4, 11), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -4, 5, 11), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_clipper4_7, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -1, 6, 11), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 1, 6, 11), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_clipper4, direction) {
+    0: sw_fx_clipper4_0;
+    1: sw_fx_clipper4_1;
+    2: sw_fx_clipper4_2;
+    3: sw_fx_clipper4_3;
+    4: sw_fx_clipper4_4;
+    5: sw_fx_clipper4_5;
+    6: sw_fx_clipper4_6;
+    7: sw_fx_clipper4_7;
+    sw_fx_clipper4_0;
+}
+
 item(FEAT_SHIPS, clipper4, 41) {
     property {
         name: string(STR_NAME_CLIPPER4);
@@ -5536,11 +7092,13 @@ item(FEAT_SHIPS, clipper4, 41) {
         refit_cost: 10;
         loading_speed: 16;
         sound_effect: SOUND_DEPARTURE_FERRY;
+        effect_spawn_model: EFFECT_SPAWN_MODEL_STEAM;
     }
     graphics {
         cargo_capacity: sw_cap_clipper4;
         purchase_cargo_capacity: sw_cap_clipper4;
         additional_text: return string(STR_DESC_CLIPPER4);
+        create_effect: sw_fx_clipper4;
         purchase: ss_clipper4;
         default: sw_gfx_clipper4;
     }
@@ -5646,6 +7204,42 @@ switch(FEAT_SHIPS, SELF, sw_cap_clipper5, cargo_classes & bitmask(CC_PASSENGERS)
     return max(1, 540 >> cap_mode);
 }
 
+switch(FEAT_SHIPS, SELF, sw_fx_clipper5_0, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 4, 6, 11), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 6, 4, 11), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_clipper5_1, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 7, 1, 11), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 7, -1, 11), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_clipper5_2, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 6, -4, 11), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 4, -6, 11), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_clipper5_3, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 1, -7, 11), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -1, -7, 11), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_clipper5_4, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -4, -6, 11), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -6, -4, 11), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_clipper5_5, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -7, -1, 11), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -7, 1, 11), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_clipper5_6, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -6, 4, 11), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -4, 6, 11), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_clipper5_7, [STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, -1, 7, 11), 0x100), STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, 1, 7, 11), 0x101)]) {
+    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | 2;
+}
+switch(FEAT_SHIPS, SELF, sw_fx_clipper5, direction) {
+    0: sw_fx_clipper5_0;
+    1: sw_fx_clipper5_1;
+    2: sw_fx_clipper5_2;
+    3: sw_fx_clipper5_3;
+    4: sw_fx_clipper5_4;
+    5: sw_fx_clipper5_5;
+    6: sw_fx_clipper5_6;
+    7: sw_fx_clipper5_7;
+    sw_fx_clipper5_0;
+}
+
 item(FEAT_SHIPS, clipper5, 42) {
     property {
         name: string(STR_NAME_CLIPPER5);
@@ -5666,11 +7260,13 @@ item(FEAT_SHIPS, clipper5, 42) {
         loading_speed: 27;
         sound_effect: SOUND_DEPARTURE_FERRY;
         variant_group: clipper4;
+        effect_spawn_model: EFFECT_SPAWN_MODEL_STEAM;
     }
     graphics {
         cargo_capacity: sw_cap_clipper5;
         purchase_cargo_capacity: sw_cap_clipper5;
         additional_text: return string(STR_DESC_CLIPPER5);
+        create_effect: sw_fx_clipper5;
         purchase: ss_clipper5;
         default: sw_gfx_clipper5;
     }

@@ -58,6 +58,7 @@ def classic_hull(s, h, key, lower="navy", **kw):
 
 
 def classic_funnel(s, u, v, z0, z1, ru=0.9, rv=0.8):
+    s.exhaust(u, v, z1 + 0.3)
     zm = z0 + (z1 - z0) * 0.45
     s.funnel(u, v, z0, z1, ru=ru, rv=rv, mat="white", top="black", top_h=0.7,
              band=((zm - 0.4, zm + 0.4), "ltblue"))
@@ -398,6 +399,8 @@ def m_pacificat():
     s.block(-h + 3.0, h - 6.0, 5.8, 7.0, wf=1.0, v0=-s.B / 2 + 0.8, v1=s.B / 2 - 0.8,
             win_mat="window")
     s.box(-h + 1.5, -h + 3.0, -1.6, 1.6, 7.0, 7.8, "steel")  # exhaust housings
+    s.exhaust(-h + 2.2, -1.0, 8.0)
+    s.exhaust(-h + 2.2, 1.0, 8.0)
     return s
 
 
@@ -416,6 +419,7 @@ def m_intermediate(key="intermediate"):
     s.block(-hh + 0.3, hh - 0.3, 5.4, 7.2, wf=0.95, rect=True, panes=(0.5, 0.62))
     s.block(-1.8, 1.8, 7.2, 8.8, wf=0.62, round_ends=False)      # wheelhouse
     logo_panel(s, 0.0, 0.0, 8.8, 10.0, ru=0.9)
+    s.exhaust(0.4, 0.0, 10.3)
     s.mast(-1.2, 8.8, 10.6)
     s.lifeboat(-hh + 1.0, -hh + 2.2, -1, 5.4)
     return s
@@ -467,22 +471,37 @@ def salish_art(L2, lo, hi, art):
 
 
 def m_salish(key="salish", art="orca"):
+    """Salish class (photos: Salish Raven at Tsawwassen / Mayne Island): long
+    passenger decks, then a single central tower carrying a wide overhanging
+    glass wheelhouse with a lattice mast and radome. Two copper gooseneck
+    exhausts stand at the ends of the bridge deck. The LNG tanks are below
+    deck; nothing on top."""
     s = Ship(L(107), Bm(23.5), "double", taper=0.22, blunt=0.42)
     h = s.L / 2
     # tall hull side: the artwork covers roughly half the ship's visible height
     modern_hull(s, 5.0, 1.3, key, stripe=4.78, paint=salish_art(h, 1.35, 4.62, art),
                 mark=(0.0, 3.5, 0.95), name=(0.0, 2.05, 0.32))
     s.portal_cars(1.5)
-    s.block(-h + 2.4, h - 2.4, 5.0, 7.0, wf=0.96)
-    s.block(-h + 3.4, h - 3.4, 7.0, 8.8, wf=0.9)
-    double_ender_top(s, h - 3.4, 8.8, deck_h=1.6, wf=0.66, bridge_len=1.5)
-    s.box(-2.8, -0.4, -1.1, 1.1, 8.8, 10.0, "steel")           # LNG tank
-    logo_panel(s, -h + 4.8, 0.0, 8.8, 11.4, ru=1.1)
-    for v in (-0.9, 0.9):                                      # thin exhaust pipes
-        s.funnel(1.2, v, 8.8, 11.6, ru=0.18, rv=0.18, mat="steel", top="dark", top_h=0.3)
-    s.liferafts(-1.6, 1.6, 8.8, s.B / 2 * 0.9)
+    s.block(-h + 2.4, h - 2.4, 5.0, 7.0, wf=0.96, rect=True, panes=(0.5, 0.6))
+    s.block(-h + 3.6, h - 3.6, 7.0, 8.6, wf=0.9, rect=True, panes=(0.6, 0.5))
+    s.block(-2.2, 2.2, 8.6, 10.6, wf=0.55, round_ends=False, panes=(0.7, 0.45))  # tower
+    s.block(-3.2, 3.2, 10.6, 12.6, wf=1.0, rect=True, panes=(0.42, 0.86))         # bridge
+    for end in (-1, 1):                                        # gooseneck exhausts
+        u = end * 3.55
+        s.funnel(u, 0.0, 8.6, 13.1, ru=0.17, rv=0.17, mat="white", top="copper",
+                 top_h=0.9, hollow=False)
+        a, b = sorted((u, u + end * 0.45))
+        s.box(a, b, -0.15, 0.15, 12.85, 13.15, "copper")
+        s.exhaust(u + end * 0.45, 0.0, 13.0)
+    s.box(-0.2, 0.2, -0.2, 0.2, 12.6, 15.2, "white")           # lattice mast
+    s.box(-0.9, 0.9, -0.06, 0.06, 14.4, 14.55, "white")
+    s.box(-0.5, 0.5, -0.06, 0.06, 15.05, 15.2, "dark")
+    s.radome(-1.6, 0.6, 12.6, r=0.3)
+    logo_panel(s, 2.9, 0.0, 7.0, 9.4, ru=1.0)
+    s.lifeboat(-4.6, -3.4, -1, 7.0)
+    s.liferafts(-h + 4.2, -h + 5.6, 8.6, s.B / 2 * 0.9)
+    s.liferafts(h - 5.6, h - 4.2, 8.6, s.B / 2 * 0.9)
     return s
-
 
 def m_island():
     s = Ship(L(81), Bm(17.8), "double", taper=0.2, blunt=0.5)
@@ -497,6 +516,7 @@ def m_island():
     s.block(-h + 3.6, h - 3.6, 5.0, 6.6, wf=1.0, v0=s.B / 2 - 2.0, v1=s.B / 2 - 0.2)
     s.box(-2.0, 2.0, s.B / 2 - 2.21, s.B / 2 - 0.09, 3.6, 3.75, "navy")
     logo_panel(s, 0.0, s.B / 2 - 1.0, 6.6, 8.2, ru=0.8)
+    s.exhaust(-0.6, s.B / 2 - 1.0, 8.4)
     s.mast(-h + 4.2, 6.6, 8.6, v=s.B / 2 - 1.0)
     return s
 
@@ -596,6 +616,7 @@ def m_coho():
     s.block(h - 5.6, h - 3.8, 7.4, 8.8, wf=0.78, round_ends=False)   # bridge
     s.funnel(0.9, 0.0, 7.4, 10.8, ru=1.1, rv=0.85, mat="white", top="black", top_h=0.55,
              band=((9.7, 10.3), "red"), rake=-0.08)
+    s.exhaust(0.6, 0.0, 11.2)
     s.mast(h - 4.8, 8.8, 11.6)
     s.mast(-h + 2.2, 7.4, 9.6)
     s.lifeboat(-0.9, 0.3, -1, 7.4)
@@ -746,6 +767,8 @@ def m_clipper(mk=5):
                          h=1.5, width=0.7 * h)])
     s.block(h - 5.2, h - 3.0, top + 1.5, top + 2.7, wf=0.72, round_ends=False)   # bridge
     s.mast(h - 4.0, top + 2.7, top + 4.4)
+    s.exhaust(-h + 1.4, -0.8, top + 1.7)
+    s.exhaust(-h + 1.4, 0.8, top + 1.7)
     s.radome(h - 4.6, 0.5, top + 2.7, r=0.22)
     s.liferafts(-h + 1.4, -h + 3.2, top + 1.5, s.B / 2 * 0.9)
     return s

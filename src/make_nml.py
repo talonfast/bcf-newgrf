@@ -60,7 +60,7 @@ switch(FEAT_SHIPS, SELF, sw_cap_%(id)s, cargo_classes & bitmask(CC_PASSENGERS)) 
     return max(1, %(pax)d >> cap_mode);
 }
 
-item(FEAT_SHIPS, %(id)s, %(num)d) {
+%(smoke_sw)sitem(FEAT_SHIPS, %(id)s, %(num)d) {
     property {
         name: string(STR_NAME_%(ID)s);
         climates_available: bitmask(CLIMATE_TEMPERATE, CLIMATE_ARCTIC, CLIMATE_TROPICAL);
@@ -77,13 +77,13 @@ item(FEAT_SHIPS, %(id)s, %(num)d) {
 %(refit)s
         refit_cost: 10;
         loading_speed: %(loading)d;
-        sound_effect: SOUND_DEPARTURE_FERRY;%(variant)s
+        sound_effect: SOUND_DEPARTURE_FERRY;%(variant)s%(smoke_prop)s
     }
     graphics {
         cargo_capacity: sw_cap_%(id)s;
         purchase_cargo_capacity: sw_cap_%(id)s;
         additional_text: return string(STR_DESC_%(ID)s);
-        purchase: ss_%(id)s;
+%(smoke_cb)s        purchase: ss_%(id)s;
         default: sw_gfx_%(id)s;
     }
 }
@@ -110,6 +110,29 @@ REFIT_FERRY = """        refittable_cargo_classes: bitmask(CC_PASSENGERS, CC_MAI
 # passenger-only boats: passengers, or mail (pax / 20 bags)
 REFIT_PAX = """        refittable_cargo_classes: bitmask(CC_PASSENGERS, CC_MAIL);
         non_refittable_cargo_classes: bitmask(CC_LIQUID, CC_BULK, CC_PIECE_GOODS);"""
+
+# LNG / hybrid ships puff less (random "electric" model); diesels puff steadily.
+LIGHT_SMOKE = {"salish", "salish_eagle", "salish_raven", "salish_heron", "island",
+               "spirit_lng"}
+
+
+def smoke_switches(ident, pts_by_dir):
+    """Exhaust smoke at the real stack outlets: one switch per direction
+    storing create_effect() offsets in temp registers 0x100+."""
+    if not pts_by_dir or not pts_by_dir[0]:
+        return ""
+    out = []
+    for d, pts in enumerate(pts_by_dir):
+        stores = ", ".join("STORE_TEMP(create_effect(EFFECT_SPRITE_DIESEL, %d, %d, %d), 0x%X)"
+                           % (x, y, z, 0x100 + i) for i, (x, y, z) in enumerate(pts))
+        out.append("switch(FEAT_SHIPS, SELF, sw_fx_%s_%d, [%s]) {\n"
+                   "    return CB_RESULT_CREATE_EFFECT_CENTER | CB_RESULT_CREATE_EFFECT_NO_ROTATION | %d;\n}\n"
+                   % (ident, d, stores, len(pts)))
+    out.append("switch(FEAT_SHIPS, SELF, sw_fx_%s, direction) {\n%s    sw_fx_%s_0;\n}\n\n"
+               % (ident, "".join("    %d: sw_fx_%s_%d;\n" % (d, ident, d) for d in range(8)),
+                  ident))
+    return "".join(out)
+
 
 SPRITESET = """spriteset(ss_%(name)s, "gfx/%(file)s.png") {
 %(s8)s
@@ -144,6 +167,12 @@ def main():
         out.append(ITEM % dict(
             s, ID=s["id"].upper(), num=num, spritesets=spritesets,
             refit=REFIT_PAX if s.get("pax_only") else REFIT_FERRY,
+            smoke_sw=smoke_switches(s["id"], meta[s["id"]].get("smoke")),
+            smoke_prop=("\n        effect_spawn_model: %s;" % (
+                "EFFECT_SPAWN_MODEL_ELECTRIC" if s["id"] in LIGHT_SMOKE
+                else "EFFECT_SPAWN_MODEL_STEAM")) if meta[s["id"]].get("smoke", [[]])[0] else "",
+            smoke_cb=("        create_effect: sw_fx_%s;\n" % s["id"])
+            if meta[s["id"]].get("smoke", [[]])[0] else "",
             cars=s["cars"] if not s.get("pax_only") else 10,
             cars2=s["cars"] * 2 if not s.get("pax_only") else max(10, s["pax"] // 20),
             kmh=s["kn"] * 1.852, loading=max(10, s["pax"] // 20), variant=variant))

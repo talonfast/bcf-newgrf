@@ -257,6 +257,7 @@ class Ship:
         self.scale = 1.0          # extra per-ship size factor on top of SCALE
         self.weather = 0.35       # 0 = showroom clean .. 1 = rust-streaked veteran
         self.speed = 15.0         # knots, sizes the wake
+        self.exhausts = []        # (u, v, w) stack outlets, for in-game smoke
         self.ops = []
 
     # half-beam of the hull at position u
@@ -347,11 +348,17 @@ class Ship:
             self.funnel(u, v, z0, z1, ru=ru, rv=rv, mat="stackblue", top="stackblue", top_h=0,
                         rake=rake, taper=taper, hollow=False, decal=logo)
         ut = u + rake * (z1 - z0)
+        self.exhaust(ut, v, z1 + 0.8)
         r = min(ru, rv) * (0.3 if louvred else 1 + taper) * 0.28 * (2.2 if louvred else 1)
         for i in range(pipes):
             du = (i - (pipes - 1) / 2) * r * 2.4
             self.funnel(ut + du, v, z1 - 0.2, z1 + 0.7, ru=r, rv=r, mat="dark",
                         top="copper", top_h=0.2)
+        return self
+
+    def exhaust(self, u, v, w):
+        """Mark a stack outlet; OpenTTD spawns smoke there (max 4 per ship)."""
+        self.exhausts.append((u, v, w))
         return self
 
     def solid(self, fn, mat, u0=-1e9, u1=1e9):

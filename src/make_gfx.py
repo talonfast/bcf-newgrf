@@ -8,6 +8,7 @@ Per ship:  <id>.png     1x 8bpp (DOS palette) base sprites
 Usage: python src/make_gfx.py [--preview out.png] [--zoom 1|2|4] [ids...]
 """
 import json
+import math
 import os
 import sys
 import time
@@ -16,7 +17,7 @@ import numpy as np
 from PIL import Image
 
 sys.path.insert(0, os.path.dirname(__file__))
-from render import save_sheet_8, save_sheet_32, views_at  # noqa: E402
+from render import save_sheet_8, save_sheet_32, views_at, HEADINGS, SCALE, ZS  # noqa: E402
 from ships import FLEET  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -53,13 +54,32 @@ def preview(rows, path, zoom):
     im.save(path)
 
 
+def smoke_offsets(model):
+    """World (x, y, z) offsets of each stack outlet for the 8 directions,
+    in OpenTTD units, for the create_effect callback (max 4 outlets)."""
+    k = SCALE * model.scale
+    out = []
+    for hx, hy in HEADINGS:
+        n = math.hypot(hx, hy)
+        hx, hy = hx / n, hy / n
+        px, py = -hy, hx
+        pts = []
+        for u, v, w in model.exhausts[:4]:
+            x = (u * hx + v * px) * k
+            y = (u * hy + v * py) * k
+            z = w * ZS * k
+            pts.append([int(round(np.clip(c, -128, 127))) for c in (x, y, z)])
+        out.append(pts)
+    return out
+
+
 def build_ship(ship):
     model = ship["model"]()
     model.speed = ship["kn"]
     if "weather" in ship:
         model.weather = ship["weather"]
     views = model.render()
-    meta, prev = {}, {}
+    meta, prev = {"smoke": smoke_offsets(model)}, {}
     for state, moving in (("still", False), ("moving", True)):
         base = os.path.join(GFX, ship["id"] + ("_mv" if moving else ""))
         z1, z2, z4 = (views_at(views, z, moving) for z in (1, 2, 4))

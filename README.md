@@ -27,6 +27,7 @@ the JGRPP fork with seaplanes and seaplane terminals.
 | Victoria Harbour Seaplane Terminal | Commuter airport | 5 × 4 | 3 | 1 | 1950 |
 | Vancouver (Coal Harbour) Seaplane Terminal | International airport | 7 × 7 | 6 | 2 | 1950 |
 | Wooden Seaplane Dock | TGTFTD seaplane dock | 1 × 2 | 1 | none | 1920 |
+| Seaplane Kerb Dock | TGTFTD seaplane kerb dock | 6 × 3 | 8 slots | none | 1950 |
 
 * **Victoria**: a floating terminal barge with a wavy green living roof, glulam posts and silver siding.
   It has a flag deck, a gangway to a floating hangar, and three berths between finger docks.
@@ -36,6 +37,10 @@ the JGRPP fork with seaplanes and seaplane terminals.
 * **Wooden Seaplane Dock**: just a small floating wooden dock with pilings and one berth. Seaplanes land and take
   off on the open water beside it, outside the 1 × 2 footprint. It comes in all four rotations (rotate it in the
   airport window), so you can put that open water on whichever side of the dock has it.
+* **Seaplane Kerb Dock**: a long floating dock where seaplanes pull up alongside at the first free slot, like cars
+  at a kerb, and leave forward along a one-way lane. Its split water runway is inside the 6 × 3 footprint, so it
+  needs no open water around it; if all eight slots are taken, a landed seaplane takes off again and comes back.
+  Needs TGTFTD with kerb docks (`tgtftd_seaplanes` feature version 3); four rotations.
   It has no hangar, so seaplanes are bought and serviced at a terminal that has one. It needs a TGTFTD build with
   seaplane docks (`tgtftd_seaplanes` feature version 2); on older builds it is hidden.
 

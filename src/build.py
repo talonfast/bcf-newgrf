@@ -22,12 +22,13 @@ from terminals import SCENES
 from tiles import cut
 
 GRFID = b"HAS\x01"
-VERSION = 3
+VERSION = 4
 NAME = "PNW Aviation"
 DESCRIPTION = (
     "{BLUE}PNW Aviation{}{BLACK}Pacific Northwest aircraft: DHC-2 Beaver, DHC-3T Turbo Otter, DHC-6 Twin Otter and "
     "Cessna 208B Grand Caravan EX seaplanes in Harbour Air livery, the Sikorsky S-76 helicopter in Helijet livery, "
-    "the Victoria Harbour and Vancouver (Coal Harbour) seaplane terminals and a small wooden seaplane dock. "
+    "the Victoria Harbour and Vancouver (Coal Harbour) seaplane terminals, a small wooden seaplane dock and a "
+    "seaplane kerb dock with eight slots. "
     "{}{ORANGE}The seaplanes and terminals need TGTFTD; without it they are hidden. The S-76 works everywhere."
 )
 
@@ -73,8 +74,11 @@ AIRPORTS = [
     (0, "victoria", "Victoria Harbour Seaplane Terminal", 0x05, 1950, 1),
     (1, "vancouver", "Vancouver (Coal Harbour) Seaplane Terminal", 0x04, 1950, 1),
     (2, "dock", "Wooden Seaplane Dock", 0x00, 1920, 2),
+    (3, "kerb", "Seaplane Kerb Dock", 0x00, 1950, 3),
 ]
 BIT_SEAPLANE_DOCKS = 6  # bit of global variable 9D: TGTFTD seaplanes feature version >= 2 (seaplane docks)
+BIT_SEAPLANE_KERB_DOCKS = 7  # bit of global variable 9D: TGTFTD seaplanes feature version >= 3 (kerb docks)
+FEATURE_BIT = {2: BIT_SEAPLANE_DOCKS, 3: BIT_SEAPLANE_KERB_DOCKS}
 AIRPORT_NAME_TEXT = 0xDC00
 
 
@@ -113,6 +117,9 @@ def build(out_path: Path, vanilla_test: bool = False):
              # Feature test: set bit BIT_SEAPLANE_DOCKS of variable 9D if TGTFTD seaplanes version >= 2 (seaplane docks).
              + b"C" + b"FTST" + b"T" + b"NAME" + b"\x00" + text("tgtftd_seaplanes")
              + a14_binary(b"MINV", w(2)) + a14_binary(b"SETP", bytes([BIT_SEAPLANE_DOCKS])) + b"\x00"
+             # ... and bit BIT_SEAPLANE_KERB_DOCKS if version >= 3 (kerb docks).
+             + b"C" + b"FTST" + b"T" + b"NAME" + b"\x00" + text("tgtftd_seaplanes")
+             + a14_binary(b"MINV", w(3)) + a14_binary(b"SETP", bytes([BIT_SEAPLANE_KERB_DOCKS])) + b"\x00"
              + b"\x00")
 
     # ------------------------------------------------------------------ aircraft
@@ -192,16 +199,16 @@ def build(out_path: Path, vanilla_test: bool = False):
     # ------------------------------------------------------------------ terminals
     print("rendering terminals ...")
     # A seaplane dock has no land equivalent; the vanilla test build leaves it out.
-    airports = [a for a in AIRPORTS if not (vanilla_test and a[5] == 2)]
+    airports = [a for a in AIRPORTS if not (vanilla_test and a[5] >= 2)]
     tile_ids = {}          # id(TileGraphics) -> local airport tile ID
     tile_list = []         # TileGraphics in ID order
     layouts = {}
     for local_id, scene_name, name, substitute, year, kind in airports:
         # Docks come in all four rotations, so the open water for landing can be on any side.
-        rotations = range(4) if kind == 2 else [0]
+        rotations = range(4) if kind >= 2 else [0]
         layouts[local_id] = []
         for rot in rotations:
-            scene = SCENES[scene_name](rot) if kind == 2 else SCENES[scene_name]()
+            scene = SCENES[scene_name](rot) if kind >= 2 else SCENES[scene_name]()
             cut_tiles = cut(scene)
             layouts[local_id].append((rot * 2, scene.size, cut_tiles))  # Direction: N=0, E=2, S=4, W=6
             for t in cut_tiles.values():
@@ -240,7 +247,7 @@ def build(out_path: Path, vanilla_test: bool = False):
 
     if not vanilla_test:
         # Without TGTFTD skip all airports; docks additionally need feature version 2 (one more Action 7 each).
-        n_sprites = sum(2 if a[5] == 2 else 1 for a in airports)
+        n_sprites = sum(2 if a[5] >= 2 else 1 for a in airports)
         g.pseudo(skip_if_bit(0x8D, BIT_AIRPORT_MAPPED, False, n_sprites))
     for local_id, scene_name, name, substitute, year, kind in airports:
         layout = bytearray()
@@ -261,8 +268,8 @@ def build(out_path: Path, vanilla_test: bool = False):
             b(0x0C) + w(year) + w(0xFFFF),
             b(0x10) + w(AIRPORT_NAME_TEXT + local_id),
         ]
-        if kind == 2 and not vanilla_test:
-            g.pseudo(skip_if_bit(0x9D, BIT_SEAPLANE_DOCKS, False, 1))
+        if kind >= 2 and not vanilla_test:
+            g.pseudo(skip_if_bit(0x9D, FEATURE_BIT[kind], False, 1))
         g.pseudo(b(0x00, FEAT_AIRPORTS, len(props), 1) + ext(local_id) + b"".join(props))
 
     data = g.build()

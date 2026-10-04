@@ -178,6 +178,8 @@ def cylinder(scene, layer, cx, cy, r, z0, z1, colour, top_colour=None):
 
 
 def sphere(scene, layer, cx, cy, cz, r, colour):
+    if getattr(scene, "rotation", 0):
+        cx, cy = scene.to_world(cx, cy)
     th = np.arange(0, np.pi / 2 + 1e-6, STEP / r)
     ph = np.arange(0, 2 * np.pi, STEP / r)
     T, P = np.meshgrid(th, ph, indexing="ij")
@@ -403,3 +405,45 @@ def wooden_dock(rotation=0) -> Scene:
 
 
 SCENES["dock"] = wooden_dock
+
+
+def kerb_dock(rotation=0) -> Scene:
+    """Seaplane kerb dock, 6 x 3 tiles (TGTFTD kerb dock state machine).
+
+    Eight slots nose-to-tail along a long floating dock on the north-west edge (aircraft at y = 12, facing north-east,
+    wings over the dock), a one-way lane at y = 24 and a split runway at y = 40, all inside the footprint.
+    """
+    s = Scene(6, 3, rotation)
+    x0, x1, y0, y1 = 1.0, 95.0, 0.8, 6.4
+
+    def planks(x, y, z, face):
+        c = np.empty((len(x), 3), np.float32)
+        c[:] = PLANK
+        if face == "top":
+            c[np.mod(x - x0, 1.1) < 0.18] = PLANK_GAP  # planks laid across the dock
+        else:
+            c[z < 0.55] = HULL
+            c[z >= 0.55] = PLANK_GAP
+        return c
+
+    box(s, "ground", x0, x1, y0, y1, -0.3, 1.2, planks)
+    for px in np.arange(x0 + 0.4, x1, 15.6):
+        for py in (y0 + 0.3, y1 - 0.3):
+            cylinder(s, "building", px, py, 0.32, 0.6, 4.2, PILING, top_colour=PLANK_GAP)
+    # A cleat at every slot, lamp posts between some of them.
+    for sx in (84, 73, 62, 51, 40, 29, 18, 7):
+        box(s, "building", sx - 0.5, sx + 0.5, y1 - 0.7, y1 - 0.3, 1.2, 1.7, DARK)
+    for lx in (34.5, 67.5):
+        cylinder(s, "building", lx, y0 + 0.8, 0.12, 1.2, 7.5, DARK)
+        sphere(s, "building", lx, y0 + 0.8, 7.8, 0.4, (250, 240, 200))
+    # Small waiting shelter past slot 1.
+    box(s, "building", 90.5, 94.5, 1.4, 5.4, 1.2, 6.0, lambda x, y, z, f: np.where((z > 2.0)[:, None] & (z < 5.0)[:, None], GLASS, WHITE)
+        if f != "top" else np.broadcast_to(np.asarray(WHITE, np.float32), (len(x), 3)), top=NAVY)
+    # Runway buoys: ends of the water runway and a hold-short pair in the middle.
+    for bx in (2.0, 94.0):
+        buoy(s, bx, 34.5); buoy(s, bx, 45.5)
+    buoy(s, 50.0, 34.5, YELLOW); buoy(s, 50.0, 45.5, YELLOW)
+    return s
+
+
+SCENES["kerb"] = kerb_dock

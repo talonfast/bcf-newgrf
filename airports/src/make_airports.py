@@ -21,7 +21,7 @@ from nmlcommon import write  # noqa: E402
 import airport_buildings as AB  # noqa: E402
 
 GFX = os.path.join(ROOT, "gfx")
-VERSION = 1
+VERSION = 2
 
 # Order = object ID: append only!
 OBJECTS = [

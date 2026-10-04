@@ -4,7 +4,7 @@ grf {
     grfid: "TFBT";
     name: string(STR_GRF_NAME);
     desc: string(STR_GRF_DESC);
-    version: 1;
+    version: 2;
     min_compatible_version: 1;
 }
 
@@ -1047,19 +1047,19 @@ switch(FEAT_OBJECTS, SELF, sw_obj_sbterminal_0_v0, relative_x + 16 * relative_y)
 }
 spriteset(ss_obj_sbterminal_0_v1, "gfx/obj_sbterminal_0_v1.png") {
     [2, 2, 66, 35, -33, -2]
-    [70, 2, 66, 47, -33, -14]
+    [70, 2, 66, 46, -33, -13]
 }
 alternative_sprites(ss_obj_sbterminal_0_v1, ZOOM_LEVEL_NORMAL, BIT_DEPTH_32BPP, "gfx/obj_sbterminal_0_v1_1x.png") {
     [2, 2, 66, 35, -33, -2]
-    [70, 2, 66, 47, -33, -14]
+    [70, 2, 66, 46, -33, -13]
 }
 alternative_sprites(ss_obj_sbterminal_0_v1, ZOOM_LEVEL_IN_2X, BIT_DEPTH_32BPP, "gfx/obj_sbterminal_0_v1_2x.png") {
     [2, 2, 132, 70, -66, -4]
-    [136, 2, 132, 94, -66, -28]
+    [136, 2, 132, 92, -66, -26]
 }
 alternative_sprites(ss_obj_sbterminal_0_v1, ZOOM_LEVEL_IN_4X, BIT_DEPTH_32BPP, "gfx/obj_sbterminal_0_v1_4x.png") {
     [2, 2, 264, 140, -132, -8]
-    [268, 2, 264, 188, -132, -56]
+    [268, 2, 264, 184, -132, -52]
 }
 spritelayout lay_obj_sbterminal_0_v1_0 {
     ground { sprite: GROUNDSPRITE_CONCRETE; }
@@ -1076,19 +1076,19 @@ switch(FEAT_OBJECTS, SELF, sw_obj_sbterminal_0_v1, relative_x + 16 * relative_y)
 }
 spriteset(ss_obj_sbterminal_0_v2, "gfx/obj_sbterminal_0_v2.png") {
     [2, 2, 66, 35, -33, -2]
-    [70, 2, 66, 47, -33, -14]
+    [70, 2, 66, 46, -33, -13]
 }
 alternative_sprites(ss_obj_sbterminal_0_v2, ZOOM_LEVEL_NORMAL, BIT_DEPTH_32BPP, "gfx/obj_sbterminal_0_v2_1x.png") {
     [2, 2, 66, 35, -33, -2]
-    [70, 2, 66, 47, -33, -14]
+    [70, 2, 66, 46, -33, -13]
 }
 alternative_sprites(ss_obj_sbterminal_0_v2, ZOOM_LEVEL_IN_2X, BIT_DEPTH_32BPP, "gfx/obj_sbterminal_0_v2_2x.png") {
     [2, 2, 132, 70, -66, -4]
-    [136, 2, 132, 94, -66, -28]
+    [136, 2, 132, 92, -66, -26]
 }
 alternative_sprites(ss_obj_sbterminal_0_v2, ZOOM_LEVEL_IN_4X, BIT_DEPTH_32BPP, "gfx/obj_sbterminal_0_v2_4x.png") {
     [2, 2, 264, 140, -132, -8]
-    [268, 2, 264, 188, -132, -56]
+    [268, 2, 264, 184, -132, -52]
 }
 spritelayout lay_obj_sbterminal_0_v2_0 {
     ground { sprite: GROUNDSPRITE_CONCRETE; }
@@ -1105,19 +1105,19 @@ switch(FEAT_OBJECTS, SELF, sw_obj_sbterminal_0_v2, relative_x + 16 * relative_y)
 }
 spriteset(ss_obj_sbterminal_0_v3, "gfx/obj_sbterminal_0_v3.png") {
     [2, 2, 66, 36, -33, -3]
-    [70, 2, 66, 42, -33, -9]
+    [70, 2, 66, 39, -33, -6]
 }
 alternative_sprites(ss_obj_sbterminal_0_v3, ZOOM_LEVEL_NORMAL, BIT_DEPTH_32BPP, "gfx/obj_sbterminal_0_v3_1x.png") {
     [2, 2, 66, 36, -33, -3]
-    [70, 2, 66, 42, -33, -9]
+    [70, 2, 66, 39, -33, -6]
 }
 alternative_sprites(ss_obj_sbterminal_0_v3, ZOOM_LEVEL_IN_2X, BIT_DEPTH_32BPP, "gfx/obj_sbterminal_0_v3_2x.png") {
     [2, 2, 132, 72, -66, -6]
-    [136, 2, 132, 84, -66, -18]
+    [136, 2, 132, 78, -66, -12]
 }
 alternative_sprites(ss_obj_sbterminal_0_v3, ZOOM_LEVEL_IN_4X, BIT_DEPTH_32BPP, "gfx/obj_sbterminal_0_v3_4x.png") {
     [2, 2, 264, 144, -132, -12]
-    [268, 2, 264, 168, -132, -36]
+    [268, 2, 264, 156, -132, -24]
 }
 spritelayout lay_obj_sbterminal_0_v3_0 {
     ground { sprite: GROUNDSPRITE_CONCRETE; }
@@ -1726,32 +1726,32 @@ spritelayout lay_obj_islgantry_0_v0_0 {
     building { sprite: ss_obj_islgantry_0_v0(0); xextent: 16; yextent: 16; zextent: 32; }
 }
 spriteset(ss_obj_islgantry_0_v1, "gfx/obj_islgantry_0_v1.png") {
-    [2, 2, 66, 43, -33, -10]
+    [2, 2, 66, 42, -33, -9]
 }
 alternative_sprites(ss_obj_islgantry_0_v1, ZOOM_LEVEL_NORMAL, BIT_DEPTH_32BPP, "gfx/obj_islgantry_0_v1_1x.png") {
-    [2, 2, 66, 43, -33, -10]
+    [2, 2, 66, 42, -33, -9]
 }
 alternative_sprites(ss_obj_islgantry_0_v1, ZOOM_LEVEL_IN_2X, BIT_DEPTH_32BPP, "gfx/obj_islgantry_0_v1_2x.png") {
-    [2, 2, 132, 86, -66, -20]
+    [2, 2, 132, 84, -66, -18]
 }
 alternative_sprites(ss_obj_islgantry_0_v1, ZOOM_LEVEL_IN_4X, BIT_DEPTH_32BPP, "gfx/obj_islgantry_0_v1_4x.png") {
-    [2, 2, 264, 172, -132, -40]
+    [2, 2, 264, 168, -132, -36]
 }
 spritelayout lay_obj_islgantry_0_v1_0 {
     ground { sprite: GROUNDSPRITE_CONCRETE; }
     building { sprite: ss_obj_islgantry_0_v1(0); xextent: 16; yextent: 16; zextent: 32; }
 }
 spriteset(ss_obj_islgantry_0_v2, "gfx/obj_islgantry_0_v2.png") {
-    [2, 2, 66, 51, -33, -18]
+    [2, 2, 66, 50, -33, -17]
 }
 alternative_sprites(ss_obj_islgantry_0_v2, ZOOM_LEVEL_NORMAL, BIT_DEPTH_32BPP, "gfx/obj_islgantry_0_v2_1x.png") {
-    [2, 2, 66, 51, -33, -18]
+    [2, 2, 66, 50, -33, -17]
 }
 alternative_sprites(ss_obj_islgantry_0_v2, ZOOM_LEVEL_IN_2X, BIT_DEPTH_32BPP, "gfx/obj_islgantry_0_v2_2x.png") {
-    [2, 2, 132, 102, -66, -36]
+    [2, 2, 132, 100, -66, -34]
 }
 alternative_sprites(ss_obj_islgantry_0_v2, ZOOM_LEVEL_IN_4X, BIT_DEPTH_32BPP, "gfx/obj_islgantry_0_v2_4x.png") {
-    [2, 2, 264, 204, -132, -72]
+    [2, 2, 264, 200, -132, -68]
 }
 spritelayout lay_obj_islgantry_0_v2_0 {
     ground { sprite: GROUNDSPRITE_CONCRETE; }

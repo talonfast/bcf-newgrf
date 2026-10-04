@@ -19,6 +19,7 @@ import render
 from render import Ship, MAT_RGB, GLOSSY, LIGHT, ZOOM, BASE_STEP, shade, raster, over, _blur
 
 TILE = 16
+DETAIL = True      # False: classic OpenTTD style - no people, stains or fine texture
 
 
 class Building(Ship):
@@ -37,10 +38,23 @@ class Building(Ship):
         return self.solid(lambda U, V, W: fn(U + cx, V + cy, W), mat, x0 - cx, x1 - cx)
 
     def _top(self):
-        top = 0.0
-        for kind, p in self.ops:
-            top = max(top, p.get("z1", 0) + 1)
-        return top + self.extra_top
+        """Height of the voxel grid: measured, so free-form solids (towers,
+        trees, roofs) are never clipped. A coarse pass finds the highest
+        occupied voxel; extra_top is kept as headroom."""
+        if getattr(self, "_top_cache", None) is None:
+            import render as _r
+            fine = _r.STEP
+            _r.STEP = 0.5
+            try:
+                us = np.arange(-self.L / 2, self.L / 2, 0.5) + 0.25
+                vs = np.arange(-self.B / 2 - 0.9, self.B / 2 + 0.9, 0.5) + 0.25
+                ws = np.arange(0, 120.0, 0.5) + 0.25
+                occ = (self.voxelise(us, vs, ws)[0] > 0).any(axis=(0, 1))
+                hi = ws[np.nonzero(occ)[0].max()] if occ.any() else 1.0
+            finally:
+                _r.STEP = fine
+            self._top_cache = hi + 2.0
+        return self._top_cache
 
     extra_top = 2.0
 
@@ -55,6 +69,15 @@ class Building(Ship):
         shin = np.where(glossy, 40.0, 14.0).astype(np.float32)
         X, Y, Z = pos[:, 0] + self.cx, pos[:, 1] + self.cy, pos[:, 2]
         nu, nv, nz = nrm[:, 0], nrm[:, 1], nrm[:, 2]
+        Zm = Z.copy()                                  # model height, for textures
+        zs = getattr(self, "zscale", 1.0)
+        if zs != 1.0:
+            # OpenTTD draws buildings tall: stretch everything above deck /
+            # ground level (z > 1) vertically, leaving floats and hulls thin
+            Z = np.where(Z > 1.0, 1.0 + (Z - 1.0) * zs, Z)
+            nz = nz / zs
+            ln = np.sqrt(nu ** 2 + nv ** 2 + nz ** 2) + 1e-6
+            nu, nv, nz = nu / ln, nv / ln, nz / ln
         Wp, Dp = self.W * TILE, self.D * TILE
         out = {}
         for view in views:
@@ -66,7 +89,10 @@ class Building(Ship):
                 x, y, nx, ny, fw, fd = Wp - X, Dp - Y, -nu, -nv, self.W, self.D
             else:
                 x, y, nx, ny, fw, fd = Y, Wp - X, nv, -nu, self.D, self.W
-            col = shade(x, y, Z, nx, ny, nz, base, ao, glossy, spec_k, shin)
+            if getattr(self, "style", "detailed") == "classic":
+                col = shade_classic(nx, ny, nz, base, X, Y, Zm)
+            else:
+                col = shade(x, y, Z, nx, ny, nz, base, ao, glossy, spec_k, shin)
             gx, gy = x - LIGHT[0] * Z / LIGHT[2], y - LIGHT[1] * Z / LIGHT[2]
             tiles = []
             for tx in range(fw):
@@ -89,6 +115,10 @@ class Building(Ship):
         y0 = (int(np.floor(ally.min())) // ZOOM - 1) * ZOOM
         wdt = -(-(int(np.ceil(allx.max())) - x0 + 3) // ZOOM) * ZOOM
         hgt = -(-(int(np.ceil(ally.max())) - y0 + 3) // ZOOM) * ZOOM
+        classic = getattr(self, "style", "detailed") == "classic"
+        if classic:
+            bc, ba = raster_hard(sx, sy, lx + ly + 2 * lz, col[sel], x0, y0, wdt, hgt)
+            return np.dstack([bc, ba]), x0, y0
         bc, ba = raster(sx, sy, lx + ly + 2 * lz, col[sel], x0, y0, wdt, hgt)
         sh = np.zeros(hgt * wdt, np.float32)
         sh[(gsy.astype(int) - y0) * wdt + (gsx.astype(int) - x0)] = 1
@@ -96,6 +126,56 @@ class Building(Ship):
         sh_c = np.broadcast_to(np.array([20, 22, 26], np.float32), (hgt, wdt, 3))
         c, a = over(bc, ba, sh_c, sh_a)
         return np.dstack([c, a]), x0, y0
+
+
+def shade_classic(nx, ny, nz, base, X=None, Y=None, Z=None):
+    """OpenTTD base-set look (cf. the Swedish Houses set): one flat tone per
+    face orientation - roofs lightest, the left (south-west, +x) face mid, the
+    right (south-east, +y) face darker - plus hand-drawn texture: roof tile
+    rows on slopes, plank/siding lines on walls and a little pixel noise."""
+    top = np.clip(nz, 0, 1)
+    left = np.clip(nx, 0, 1)
+    right = np.clip(ny, 0, 1)
+    tot = top + left + right + 1e-6
+    level = (1.08 * top + 0.95 * left + 0.74 * right) / tot
+    level = np.round(level * 10) / 10
+    if Z is not None:
+        slope = (nz > 0.2) & (nz < 0.95)                  # pitched roofs: tile rows
+        level = np.where(slope & (np.mod(np.floor(Z / 0.45), 2) == 1), level * 0.9, level)
+        wall = np.abs(nz) < 0.2                           # walls: siding / plank lines
+        level = np.where(wall & (np.mod(Z, 0.5) < 0.1), level * 0.92, level)
+        h = np.sin(X * 91.7 + Y * 47.3 + Z * 13.1) * 43758.5453
+        level = level * (0.96 + 0.08 * (h - np.floor(h)))  # hand-pixelled noise
+    return np.clip(base * level[:, None], 0, 255)
+
+
+OUTLINE = 0.78      # classic style: edges only slightly darkened, like base-set sprites
+
+
+def raster_hard(sx, sy, depth, col, x0, y0, wdt, hgt):
+    """Single-sample z-buffer (crisp pixel edges) with a dark outline round
+    the silhouette and along depth breaks, like hand-drawn sprites."""
+    order = np.argsort(depth)
+    lin = (np.floor(sy + 0.5).astype(int) - y0) * wdt + (np.floor(sx + 0.5).astype(int) - x0)
+    buf = np.full(hgt * wdt, -1, dtype=np.int64)
+    buf[lin[order]] = order
+    hit = buf >= 0
+    img = np.zeros((hgt * wdt, 3), np.float32)
+    img[hit] = col[buf[hit]]
+    dmap = np.full(hgt * wdt, -1e9, np.float32)
+    dmap[hit] = depth[buf[hit]]
+    img = img.reshape(hgt, wdt, 3)
+    a = hit.reshape(hgt, wdt)
+    dmap = dmap.reshape(hgt, wdt)
+    edge = np.zeros_like(a)
+    for dy, dx in ((-1, 0), (1, 0), (0, -1), (0, 1), (-2, 0), (2, 0), (0, -2), (0, 2)):
+        na = np.roll(np.roll(a, dy, 0), dx, 1)
+        edge |= a & ~na                            # silhouette, 2 px at 4x
+    for dy, dx in ((-1, 0), (1, 0), (0, -1), (0, 1)):
+        nd = np.roll(np.roll(dmap, dy, 0), dx, 1)
+        edge |= a & (nd - dmap > 4.0)              # a real step to something in front
+    img[edge] *= OUTLINE
+    return img, a.astype(np.float32)
 
 
 # ---------------------------------------------------------------------------
@@ -220,6 +300,8 @@ def quay_market():
 
 def _stain(X, Y, seed, scale=3.0, cover=0.22):
     """Blotchy mask for weathering patches on ground surfaces."""
+    if not DETAIL:
+        return np.zeros(np.shape(X), bool)
     v = (np.sin(X / scale * 1.7 + seed) * np.sin(Y / scale * 1.3 + seed * 2.1) +
          0.5 * np.sin(X / scale * 3.9 + Y / scale * 2.7 + seed * 0.7))
     return v > 1.15 - cover * 3
@@ -258,6 +340,8 @@ CLOTHES = ["car1", "car2", "denim", "car4", "car5", "car6", "white", "red", "nav
 
 def _person(b, x, y, z, rng):
     """A standing person: legs, coloured top, head."""
+    if not DETAIL:
+        return
     top = CLOTHES[rng.randint(len(CLOTHES))]
     b.bx(x - 0.2, x + 0.2, y - 0.16, y + 0.16, z, z + 0.85, "denim" if rng.rand() < 0.6 else "dark")
     b.bx(x - 0.24, x + 0.24, y - 0.2, y + 0.2, z + 0.85, z + 1.6, top)
@@ -265,6 +349,8 @@ def _person(b, x, y, z, rng):
 
 
 def _people(b, n, x0, x1, y0, y1, z, rng, avoid=()):
+    if not DETAIL:
+        return
     for _ in range(n):
         for _try in range(8):
             x, y = rng.uniform(x0, x1), rng.uniform(y0, y1)

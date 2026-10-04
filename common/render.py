@@ -157,6 +157,25 @@ MAT = {
     "silver":    (210, 214, 218),
     "apronconc": (176, 174, 166),
     "harbourblue": (0, 70, 140),
+    # waterfront
+    "fhpink":    (214, 96, 120),
+    "fhteal":    (52, 150, 170),
+    "fhyellow":  (236, 200, 90),
+    "fhnavy":    (44, 66, 112),
+    "fhpurple":  (132, 94, 170),
+    "fhgreen":   (70, 140, 110),
+    "fhred":     (184, 52, 48),
+    "corrugated": (150, 156, 150),
+    "awngreen":  (40, 150, 80),
+    "willow":    (156, 186, 64),
+    "brick":     (150, 62, 48),
+    "sail":      (240, 240, 236),
+    "floatwood": (150, 128, 102),
+    "lime":      (176, 206, 40),
+    "andesite":  (198, 190, 174),
+    "copper":    (96, 168, 140),
+    "gold":      (220, 176, 60),
+    "lawn":      (98, 146, 62),
 }
 MAT_NAMES = list(MAT.keys())
 MAT_ID = {n: i + 1 for i, n in enumerate(MAT_NAMES)}

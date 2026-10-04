@@ -1,6 +1,10 @@
 BC Aviation: Airports - changelog
 =================================
 
+v2 (2026-10-04)
+- Renderer measures each object's true height, so tall free-form parts
+  (towers, trees, roofs) can no longer be clipped.
+
 v1 (2026-10-04)
 - YVR control tower, YVR terminal hall, jet bridge, airport parkade,
   apron service equipment; YYJ terminal (glass rotunda) and control

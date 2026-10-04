@@ -59,7 +59,22 @@ PENDER = (
 )
 PENDER_SHIPS = [("intermediate_cum", "still", 3, 5.5 * 16, 6.6 * 16),
                 ("salish_heron", "moving", 5, 10.5 * 16, 8.2 * 16)]
+VICTORIA = (
+    [("coastal:seawall", tx % 2, 0, tx, 4) for tx in range(0, 12)] +
+    [("coastal:legislature", 0, 0, 0, 1)] +
+    [("coastal:artisanshed", 1, 0, 4, 2), ("coastal:publicmarket", 0, 0, 6, 1),
+     ("coastal:fisgard", 0, 0, 11, 2)] +
+    [("coastal:floathome", (tx * 3 + 1) % 4, 1, 4, ty) for tx, ty in ((0, 6), (1, 7), (2, 8))] +
+    [("coastal:floathome", (tx * 3 + 2) % 4, 1, 6, ty) for tx, ty in ((0, 6), (1, 7), (2, 8))] +
+    [("coastal:dockwalk", 0, 1, 4, 5), ("coastal:dockwalk", 1, 1, 6, 5),
+     ("coastal:fishchips", 0, 0, 5, 5), ("coastal:marina", 0, 0, 8, 7), ("coastal:marina", 1, 0, 9, 7),
+     ("coastal:ferrydock", 0, 0, 1, 5), ("coastal:pilepier", 0, 1, 10, 5)]
+)
 LAYOUTS = {
+    "victoria": dict(placed=VICTORIA, ships=[("clipper5", "moving", 5, 11.0 * 16, 10.5 * 16)], shore=5,
+                     title="Waterfront — Coastal GrfLink",
+                     sub="Fisherman's Wharf float homes & fish and chips float · floating docks · marina · "
+                         "harbour ferry dock · seawall · BC Parliament Buildings · Public Market · Fisgard Lighthouse · 2x zoom"),
     "pender": dict(placed=PENDER, ships=PENDER_SHIPS, shore=5,
                    title="Otter Bay, Pender Island — BC Ferries NewGRF",
                    sub="Gulf Islands forest · island ticket booth · The Stand · Otter Bay ramp "
@@ -94,10 +109,13 @@ def crop(sheet, entry):
     return Image.open(sheet).convert("RGBA").crop((x, y, x + w, y + h)), xo, yo
 
 
+placed_is_island = True
+
+
 def ground(tx, ty, rng, SHORE):
     if ty >= SHORE:
         return tuple(int(c) for c in np.array((46, 92, 146)) + rng.randint(-3, 4, 3))
-    if SHORE == 5:                                            # island: forest floor
+    if SHORE == 5 and placed_is_island:                       # island: forest floor
         return tuple(int(c) for c in np.array((90, 110, 62)) + rng.randint(-4, 5, 3))
     if tx == 0 or (ty == 0 and tx <= 5):
         return (78, 80, 84)                                   # approach road
@@ -111,6 +129,8 @@ def main():
     out = sys.argv[1] if len(sys.argv) > 1 else os.path.join(ROOT, "scene.png")
     L = LAYOUTS[which]
     placed, ships_at, shore = L["placed"] or TSAWWASSEN, L["ships"] or SHIPS, L["shore"]
+    global placed_is_island
+    placed_is_island = which == "pender"
     rng = np.random.RandomState(3)
     W, H = (MAP_W + MAP_H) * TW // 2 + 80, (MAP_W + MAP_H) * TH // 2 + 300
     img = Image.new("RGBA", (W, H), (30, 40, 52, 255))
@@ -123,12 +143,17 @@ def main():
             d.polygon(poly, fill=c)
             d.line(poly + [poly[0]], fill=tuple(max(0, v - 12) for v in c), width=1)
 
-    objs = json.load(open(os.path.join(GFX, "objects.json")))
+    def obj_meta(oid):
+        """'set:id' loads another set's objects (e.g. coastal:floathome)."""
+        setname, _, name = oid.rpartition(":")
+        gfx = os.path.join(os.path.dirname(ROOT), setname, "gfx") if setname else GFX
+        return json.load(open(os.path.join(gfx, "objects.json")))[name], gfx, name
     ships = json.load(open(os.path.join(SHIP_GFX, "sprites.json")))
     sprites = []
     for oid, var, view, ox, oy in placed:
-        v = objs[oid]["variants"][var][str(view)]
-        sheet = os.path.join(GFX, "obj_%s_%d_v%d_2x.png" % (oid, var, view))
+        om, gfx, name = obj_meta(oid)
+        v = om["variants"][var][str(view)]
+        sheet = os.path.join(gfx, "obj_%s_%d_v%d_2x.png" % (name, var, view))
         for (tx, ty), entry in zip(v["tiles"], v["2x"]):
             im, xo, yo = crop(sheet, entry)
             nx, ny = north(ox + tx, oy + ty)

@@ -136,12 +136,15 @@ intercontinental airport, then place these around it). Object classes
 ## Coastal: Waterfront
 Object classes **Waterfront: Victoria**, **Waterfront: Vancouver** and
 **Waterfront: docks & marinas**. Water objects are placed on water tiles.
+Drawn in the classic OpenTTD style (flat-shaded, outlined, no fine detail)
+so they sit comfortably next to base-set buildings.
 
 | Object | Tiles | Notes |
 |---|---|---|
 | Float home | 1x1, water | Fisherman's Wharf; four random colour/shape variants |
 | Fish & chips float | 1x1, water | take-out shack, picnic tables, umbrellas |
 | Fisgard Lighthouse | 1x1 | tower, red lantern, red-brick keeper's house, rocky islet |
+| BC Parliament Buildings | 3x2 | copper domes, gilded Captain Vancouver, fountain, lawn |
 | Granville Island Public Market | 2x2 | corrugated sheds, rooftop sign, striped awnings, produce |
 | Ocean Concrete 'Giants' silos | 2x1 | stylised after the OSGEMEOS murals |
 | Artisan shed | 1x1 | four colours |

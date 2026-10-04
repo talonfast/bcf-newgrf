@@ -14,7 +14,7 @@ V_GRF := vessels/bcferries.grf
 T_GRF := terminals/bc-terminals.grf
 A_GRF := aircraft/bc-aircraft.grf
 
-all: vessels terminals aircraft airports
+all: vessels terminals aircraft airports coastal
 vessels: $(V_GRF)
 terminals: $(T_GRF)
 aircraft: $(A_GRF)
@@ -50,6 +50,7 @@ scenes: vessels/gfx/sprites.json terminals/gfx/objects.json
 	cd terminals && $(PY) src/make_scene.py scene.png tsawwassen
 	cd terminals && $(PY) src/make_scene.py scene_swartzbay.png swartzbay
 	cd terminals && $(PY) src/make_scene.py scene_pender.png pender
+	cd terminals && $(PY) src/make_scene.py ../coastal/scene_victoria.png victoria
 aircraft-preview:
 	cd aircraft && $(PY) src/make_aircraft.py --preview preview.png
 
@@ -75,10 +76,12 @@ release: all
 	$(call pack,terminals,bc-terminals.grf,bc-terminals-v$(T_VER))
 	$(call pack,aircraft,bc-aircraft.grf,bc-aircraft-v$(A_VER))
 	$(call pack,airports,bc-airports.grf,bc-airports-v$(P_VER))
+	$(call pack,coastal,coastal-waterfront.grf,coastal-waterfront-v$(W_VER))
 
 install: release
 	cp releases/bcferries-v$(V_VER).tar releases/bc-terminals-v$(T_VER).tar \
 	   releases/bc-aircraft-v$(A_VER).tar releases/bc-airports-v$(P_VER).tar \
+	   releases/coastal-waterfront-v$(W_VER).tar \
 	   "$(HOME)/Documents/OpenTTD/newgrf/"
 
 setup:
@@ -98,3 +101,13 @@ airports/bc-airports.nml: $(COMMON) $(wildcard airports/src/*.py) terminals/src/
 $(P_GRF): airports/bc-airports.nml
 	cd airports && $(NMLC) -c --grf=bc-airports.grf bc-airports.nml
 .PHONY: airports
+
+# ---- coastal waterfront ----------------------------------------------------
+W_GRF := coastal/coastal-waterfront.grf
+W_VER := $(shell sed -n 's/^VERSION = //p' coastal/src/make_coastal.py)
+coastal: $(W_GRF)
+coastal/coastal-waterfront.nml: $(COMMON) $(wildcard coastal/src/*.py) terminals/src/buildings.py
+	cd coastal && $(PY) src/make_coastal.py
+$(W_GRF): coastal/coastal-waterfront.nml
+	cd coastal && $(NMLC) -c --grf=coastal-waterfront.grf coastal-waterfront.nml
+.PHONY: coastal

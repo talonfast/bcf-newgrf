@@ -1,0 +1,21 @@
+Coastal: Waterfront - changelog
+===============================
+
+v1 (2026-10-04)
+- Victoria: Fisherman's Wharf float homes (four colour/shape variants, on
+  water), fish & chips float, Fisgard Lighthouse, and the BC Parliament
+  Buildings (3x2: central copper dome with the gilded Captain Vancouver,
+  domed turrets and pavilions, stairs, fountain, lawn and flags).
+- Vancouver: Granville Island Public Market, Ocean Concrete 'Giants' silos,
+  artisan sheds, seawall promenade with willows.
+- Docks & marinas (on water): floating dock walkways, marina slips with
+  sailboats and motorboats, harbour ferry dock, timber pile pier.
+- Drawn in the classic OpenTTD sprite style: flat-shaded faces, dark
+  outlines, no people or fine texture, so they sit with base-set buildings.
+- Float homes after Fisherman's Wharf and Fraser River float homes: small,
+  quirky one- and two-storey homes (arched shingle roofs, flat roofs with
+  black-railed rooftop decks, overhanging upper floors, gables with
+  skylights, cottages with big decks), kayaks, gazebos and umbrellas,
+  lining both sides of a walkway that lines up with the dock pieces.
+- Buildings drawn tall, as base-set buildings are, with roof-tile and
+  siding texture (cf. the Swedish Houses set).

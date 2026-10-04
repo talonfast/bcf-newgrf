@@ -744,6 +744,8 @@ def main():
         "horizon": _mask(_logo("horizon", 0, 1905)),
         "westjet": _mask(_logo("westjet", 0, 1580)),
         "thestand": text_mask("THE STAND", "Georgia Bold.ttf"),
+        "publicmarket": text_mask("PUBLIC MARKET", "Arial Black.ttf"),
+        "fishchips": text_mask("FISH & CHIPS", "Arial Black.ttf"),
     }
     names = {
         "spirit": "Spirit of British Columbia", "coastal": "Coastal Renaissance",

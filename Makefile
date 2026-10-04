@@ -111,3 +111,8 @@ coastal/coastal-waterfront.nml: $(COMMON) $(wildcard coastal/src/*.py) terminals
 $(W_GRF): coastal/coastal-waterfront.nml
 	cd coastal && $(NMLC) -c --grf=coastal-waterfront.grf coastal-waterfront.nml
 .PHONY: coastal
+
+# ---- PNW Aviation (TGTFTD seaplanes; own GRF writer, no NML) ---------------
+pnw-aviation:
+	cd pnw-aviation/src && $(PY) build.py
+.PHONY: pnw-aviation

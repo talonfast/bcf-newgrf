@@ -12,9 +12,14 @@ so you can load only what you want:
 | BC Aviation: Aircraft | `aircraft/` | `bc-aircraft.grf` | `TFBA` |
 | BC Aviation: Airports (YVR, YYJ) | `airports/` | `bc-airports.grf` | `TFBY` |
 | Coastal: Waterfront | `coastal/` | `coastal-waterfront.grf` | `TFBW` |
+| PNW Aviation: seaplanes and seaplane terminals (TGTFTD) | `pnw-aviation/` | `pnw_aviation.grf` | `HAS` |
 
 Shared code lives in `common/`: the voxel renderer (`render.py`), NML helpers,
 and the logo/livery artwork in `common/decals/`.
+
+`pnw-aviation/` is separate: Harbour Air seaplanes, the Helijet S-76 and
+seaplane terminals for [TGTFTD](https://github.com/teagangosling/TGTFTD), built
+by its own Python GRF writer instead of NML. See `pnw-aviation/README.md`.
 
 ## Installing
 Download the tars from the GitHub **Releases** page and drop them, as-is, into
@@ -169,6 +174,7 @@ make release      # releases/<set>-vN.tar for each set
 make install      # copy the release tars into OpenTTD's newgrf folder
 make scenes showcase aircraft-preview    # preview images
 make decals       # regenerate common/decals artwork (macOS fonts)
+make pnw-aviation # PNW Aviation GRF (python pnw-aviation/src/build.py)
 ```
 Bump the set's version (`GRF_VERSION` in `vessels/src/make_nml.py`,
 `VERSION` in `terminals/src/make_nml_terminals.py`,

@@ -330,3 +330,40 @@ def vancouver() -> Scene:
 
 
 SCENES = {"victoria": victoria, "vancouver": vancouver}
+
+
+PLANK = (156, 116, 74)
+PLANK_GAP = (110, 80, 50)
+PILING = (104, 80, 56)
+
+
+def wooden_dock() -> Scene:
+    """Small floating wooden seaplane dock, 1 x 2 tiles (TGTFTD seaplane dock state machine).
+
+    One berth at (10, 16), aircraft facing north-west with its wings over the dock; the dock runs along the
+    north-east edge (low x). Seaplanes land and take off on the water lane at x = 24, outside the footprint.
+    """
+    s = Scene(1, 2)
+    x0, x1, y0, y1 = 0.8, 5.4, 1.0, 31.0
+
+    def planks(x, y, z, face):
+        c = np.empty((len(x), 3), np.float32)
+        c[:] = PLANK
+        if face == "top":
+            c[np.mod(y - y0, 1.1) < 0.18] = PLANK_GAP  # planks laid across the dock
+        else:
+            c[z < 0.55] = HULL                          # floats under the deck
+            c[z >= 0.55] = PLANK_GAP
+        return c
+
+    box(s, "ground", x0, x1, y0, y1, -0.3, 1.2, planks)
+    # Pilings at the corners and halfway, mooring cleats on the berth side.
+    for py in (y0 + 0.4, 16.0, y1 - 0.4):
+        for px in (x0 + 0.3, x1 - 0.3):
+            cylinder(s, "building", px, py, 0.32, 0.6, 4.2, PILING, top_colour=PLANK_GAP)
+    for cy in (11.0, 21.0):
+        box(s, "building", x1 - 0.7, x1 - 0.3, cy - 0.5, cy + 0.5, 1.2, 1.7, DARK)
+    return s
+
+
+SCENES["dock"] = wooden_dock

@@ -23,6 +23,7 @@ BERTHS = {
     "vancouver": [((38, 38), 5, "beaver"), ((38, 54), 5, "turbo_otter"), ((38, 70), 5, "twin_otter"),
                   ((70, 38), 1, "grand_caravan"), ((70, 54), 1, "beaver"), ((70, 70), 1, "turbo_otter"),
                   ((22, 87), 6, "twin_otter")],
+    "dock": [((10, 16), 7, "beaver"), ((24, 40), 7, "twin_otter")],
 }
 
 

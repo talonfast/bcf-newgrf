@@ -26,12 +26,17 @@ the JGRPP fork with seaplanes and seaplane terminals.
 |---|---|---|---|---|---|
 | Victoria Harbour Seaplane Terminal | Commuter airport | 5 × 4 | 3 | 1 | 1950 |
 | Vancouver (Coal Harbour) Seaplane Terminal | International airport | 7 × 7 | 6 | 2 | 1950 |
+| Wooden Seaplane Dock | TGTFTD seaplane dock | 1 × 2 | 1 | none | 1920 |
 
 * **Victoria**: a floating terminal barge with a wavy green living roof, glulam posts and silver siding.
   It has a flag deck, a gangway to a floating hangar, and three berths between finger docks.
 * **Vancouver**: a central floating pier with a two-storey glass terminal and a control tower. It has six nose-in
   berths on finger docks, two floating hangars and a fuel dock.
 * Both have marker buoys along the water runways. Taxiways and runways are open water.
+* **Wooden Seaplane Dock**: just a small floating wooden dock with pilings and one berth. Seaplanes land and take
+  off on the open water beside it (south-west of the dock, outside the 1 × 2 footprint), so leave water there.
+  It has no hangar, so seaplanes are bought and serviced at a terminal that has one. It needs a TGTFTD build with
+  seaplane docks (`tgtftd_seaplanes` feature version 2); on older builds it is hidden.
 
 The seaplanes and terminals need TGTFTD. In other builds they are hidden, and only the S-76 remains.
 
@@ -46,7 +51,10 @@ python build.py                 # -> build/pnw_aviation.grf
 python preview.py               # aircraft sprite sheets -> preview/
 python preview_terminals.py 4   # terminal mock-ups at 4x zoom -> preview/
 python verify.py ../build/pnw_aviation.grf   # decode and check the GRF
+python release.py --notes "..."  # build, verify, install locally and upload the GitHub release v<VERSION>
 ```
+
+Releases are made on this machine with `release.py`, not by GitHub Actions. Bump `VERSION` in `build.py` first.
 
 `python build.py out.grf --vanilla-test` builds a test version that keeps everything visible in stock OpenTTD.
 The terminals become land airports, so you can check the graphics without TGTFTD. Don't ship it.
@@ -68,7 +76,8 @@ The terminals become land airports, so you can check the graphics without TGTFTD
   * helicopter rotor: a self wagon-override Action 3 on a 4-sprite set;
   * airport tiles (feature 11): sprite layouts with ground sprite `0x0FDD`, so the game draws the real sea,
     canal or river water underneath;
-  * airports (feature 0D): substitute airport, `airport_seaplane_terminal`, layout, years and name.
+  * airports (feature 0D): substitute airport, `airport_seaplane_terminal` (1 = terminal, 2 = dock), layout,
+    years and name. The dock is guarded by a feature test for `tgtftd_seaplanes` version 2.
 
 Scale: 1 world unit (1/16 tile) = 1.6 m horizontally, 1.6 height pixels per metre.
 

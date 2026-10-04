@@ -12,7 +12,7 @@ so you can load only what you want:
 | BC Aviation: Aircraft | `aircraft/` | `bc-aircraft.grf` | `TFBA` |
 | BC Aviation: Airports (YVR, YYJ) | `airports/` | `bc-airports.grf` | `TFBY` |
 | Coastal: Waterfront | `coastal/` | `coastal-waterfront.grf` | `TFBW` |
-| PNW Aviation: seaplanes and seaplane terminals (TGTFTD) | `pnw-aviation/` | `pnw_aviation.grf` | `HAS` |
+| PNW Aviation: seaplanes and seaplane terminals (TGTFTD) | `pnw-aviation/` | `pnw_aviation.grf` | `HAS\x01` |
 
 Shared code lives in `common/`: the voxel renderer (`render.py`), NML helpers,
 and the logo/livery artwork in `common/decals/`.

@@ -71,14 +71,15 @@ HELICOPTERS = [
 # Airport local ID, scene, name, substitute airport (05 Commuter, 04 International), first year,
 # airport_seaplane_terminal value: 1 = seaplane version of the substitute, 2 = TGTFTD seaplane dock (1x2, one berth, no hangar).
 AIRPORTS = [
-    (0, "victoria", "Victoria Harbour Seaplane Terminal", 0x05, 1950, 1),
-    (1, "vancouver", "Vancouver (Coal Harbour) Seaplane Terminal", 0x04, 1950, 1),
+    (0, "victoria_kerb", "Victoria Harbour Seaplane Terminal", 0x05, 1950, 4),
+    (1, "vancouver_kerb", "Vancouver (Coal Harbour) Seaplane Terminal", 0x04, 1950, 5),
     (2, "dock", "Wooden Seaplane Dock", 0x00, 1920, 2),
-    (3, "kerb", "Seaplane Kerb Dock", 0x00, 1950, 3),
+    (3, "nanaimo", "Nanaimo Harbour Flight Centre", 0x00, 1950, 3),
 ]
 BIT_SEAPLANE_DOCKS = 6  # bit of global variable 9D: TGTFTD seaplanes feature version >= 2 (seaplane docks)
 BIT_SEAPLANE_KERB_DOCKS = 7  # bit of global variable 9D: TGTFTD seaplanes feature version >= 3 (kerb docks)
-FEATURE_BIT = {2: BIT_SEAPLANE_DOCKS, 3: BIT_SEAPLANE_KERB_DOCKS}
+FEATURE_BIT = {2: BIT_SEAPLANE_DOCKS, 3: BIT_SEAPLANE_KERB_DOCKS, 4: BIT_SEAPLANE_KERB_DOCKS, 5: BIT_SEAPLANE_KERB_DOCKS}
+ROTATABLE = {2, 3}  # docks come in all four rotations
 AIRPORT_NAME_TEXT = 0xDC00
 
 
@@ -205,10 +206,10 @@ def build(out_path: Path, vanilla_test: bool = False):
     layouts = {}
     for local_id, scene_name, name, substitute, year, kind in airports:
         # Docks come in all four rotations, so the open water for landing can be on any side.
-        rotations = range(4) if kind >= 2 else [0]
+        rotations = range(4) if kind in ROTATABLE else [0]
         layouts[local_id] = []
         for rot in rotations:
-            scene = SCENES[scene_name](rot) if kind >= 2 else SCENES[scene_name]()
+            scene = SCENES[scene_name](rot) if kind in ROTATABLE else SCENES[scene_name]()
             cut_tiles = cut(scene)
             layouts[local_id].append((rot * 2, scene.size, cut_tiles))  # Direction: N=0, E=2, S=4, W=6
             for t in cut_tiles.values():

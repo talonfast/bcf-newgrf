@@ -447,3 +447,134 @@ def kerb_dock(rotation=0) -> Scene:
 
 
 SCENES["kerb"] = kerb_dock
+
+
+
+def _long_dock(s, x0, x1, y0, y1, piling_every=15.6, cleats=(), cleat_y=None):
+    """Floating wooden dock with pilings along both edges and cleats at the given x positions."""
+    def planks(x, y, z, face):
+        c = np.empty((len(x), 3), np.float32)
+        c[:] = PLANK
+        if face == "top":
+            c[np.mod(x - x0, 1.1) < 0.18] = PLANK_GAP
+        else:
+            c[z < 0.55] = HULL
+            c[z >= 0.55] = PLANK_GAP
+        return c
+
+    box(s, "ground", x0, x1, y0, y1, -0.3, 1.2, planks)
+    for px in np.arange(x0 + 0.4, x1, piling_every):
+        for py in (y0 + 0.3, y1 - 0.3):
+            cylinder(s, "building", px, py, 0.32, 0.6, 4.2, PILING, top_colour=PLANK_GAP)
+    for cx in cleats:
+        box(s, "building", cx - 0.5, cx + 0.5, cleat_y - 0.2, cleat_y + 0.2, 1.2, 1.7, DARK)
+
+
+def victoria_kerb() -> Scene:
+    """Victoria Harbour, kerb style (TGTFTD kerb terminal with hangar, 5 x 4).
+
+    Hangar at tile (0, 0); the wavy-roofed terminal barge on tiles (1, 0)-(3, 0); a long dock in front (y = 18-23)
+    with five slots at y = 29; one-way lane y = 41; split runway y = 56.
+    """
+    s = Scene(5, 4)
+    floating_hangar(s, 0.0, 0.0)
+    # Terminal barge with the wavy living roof.
+    box(s, "ground", 16.8, 79.2, 0.8, 15.6, -0.4, 1.4, HULL, top=DECK_WOOD)
+    bx0, bx1, by0, by1, top = 22.0, 52.0, 3.0, 13.0, 10.5
+
+    def facade(x, y, z, face):
+        c = np.empty((len(x), 3), np.float32)
+        c[:] = SILVER
+        along = x if face == "y" else y
+        glazed = (z > 2.4) & (z < 9.3)
+        c[glazed] = GLASS
+        c[glazed & (np.mod(along - 0.4, 3.0) < 0.45)] = GLULAM
+        c[(z > 9.3) & (z < 9.9)] = GLULAM
+        if face == "y":
+            c[(x > 35.5) & (x < 38.5) & (z < 8.0)] = GLASS_DARK
+        return c
+
+    box(s, "building", bx0, bx1, by0, by1, 1.4, top, facade)
+
+    def roof_h(x, y):
+        return top + 2.2 + 1.7 * np.sin((x - bx0) * 2 * np.pi / 10.0)
+
+    heightfield(s, "building", bx0 - 1.2, bx1 + 1.2, by0 - 1.0, by1 + 1.3, roof_h, LIVING_ROOF, jitter=0.12)
+    heightfield(s, "building", bx0 - 1.2, bx1 + 1.25, by1 + 1.3, by1 + 1.35, roof_h, GLULAM, skirt_to=top + 0.2, skirt_colour=GLULAM)
+    # Flag and benches on the barge deck east of the building.
+    for bx in (58.0, 63.0, 68.0):
+        box(s, "building", bx, bx + 2.4, 11.5, 12.3, 1.4, 2.6, GLULAM)
+    cylinder(s, "building", 76.0, 4.0, 0.18, 1.4, 24.0, WHITE)
+
+    def flag(x, y, z, face):
+        c = np.empty((len(x), 3), np.float32)
+        c[:] = RED
+        c[(y > 5.5) & (y < 7.5)] = (240, 240, 240)
+        return c
+
+    box(s, "building", 75.95, 76.05, 4.1, 8.5, 19.5, 23.5, flag)
+    # Gangways from the barge to the long dock, and the dock with a cleat at every slot.
+    pontoon(s, 36.0, 39.0, 15.6, 18.0)
+    pontoon(s, 64.0, 67.0, 15.6, 18.0)
+    _long_dock(s, 17.0, 79.0, 18.0, 23.4, cleats=(70, 59, 48, 37, 26), cleat_y=22.8)
+    # Water runway markers, hold-short buoys in the middle.
+    for bx in (2.0, 78.0):
+        buoy(s, bx, 50.5); buoy(s, bx, 61.5)
+    buoy(s, 41.0, 50.5, YELLOW); buoy(s, 41.0, 61.5, YELLOW)
+    return s
+
+
+def vancouver_kerb() -> Scene:
+    """Vancouver (Coal Harbour), kerb style (TGTFTD large kerb terminal, 7 x 7).
+
+    A central pier (y = 50-62) with the two-storey glass terminal and the control tower; four slots along each face
+    (north at y = 44, south at y = 68); one-way lanes y = 32 and y = 80; split runways y = 8 and y = 104; floating
+    hangars at tiles (6, 1) and (6, 5).
+    """
+    s = Scene(7, 7)
+    _long_dock(s, 4.0, 94.0, 49.6, 62.4, cleats=(92, 74, 56, 38), cleat_y=50.2)
+    for cx in (20, 38, 56, 74):
+        box(s, "building", cx - 0.5, cx + 0.5, 61.6, 62.0, 1.2, 1.7, DARK)
+    # Two-storey glass terminal on the pier.
+    bx0, bx1, by0, by1, top = 40.0, 72.0, 51.5, 60.5, 15.0
+
+    def curtain(x, y, z, face):
+        c = np.empty((len(x), 3), np.float32)
+        c[:] = GLASS
+        along = x if face == "y" else y
+        c[np.mod(along - bx0, 2.4) < 0.35] = WHITE
+        for zf in (1.5, 8.2, 14.2):
+            c[(z >= zf) & (z < zf + 0.8)] = WHITE
+        if face == "y":
+            c[(x > 54.0) & (x < 58.0) & (z < 7.5)] = GLASS_DARK
+        return c
+
+    box(s, "building", bx0, bx1, by0, by1, 1.2, top, curtain, top=ROOF_GREY)
+    box(s, "building", bx0 - 1.3, bx1 + 1.3, by0 - 1.0, by1 + 1.0, top, top + 1.4,
+        lambda x, y, z, f: np.broadcast_to(np.asarray(WHITE, np.float32), (len(x), 3)), top=ROOF_GREY)
+    box(s, "building", 50.0, 54.0, 53.0, 57.0, top + 1.4, top + 3.0, ROOF_GREY)
+    # Control tower at the west end of the pier.
+    box(s, "building", 9.0, 13.0, 54.0, 58.0, 1.2, 24.0, CONCRETE)
+
+    def cab(x, y, z, face):
+        c = np.empty((len(x), 3), np.float32)
+        c[:] = GLASS_DARK
+        c[z < 25.0] = CONCRETE
+        c[z > 28.6] = WHITE
+        return c
+
+    box(s, "building", 7.5, 14.5, 52.5, 59.5, 24.0, 29.2, cab, top=DARK)
+    box(s, "building", 7.0, 15.0, 52.0, 60.0, 29.2, 30.0, WHITE, top=DARK)
+    cylinder(s, "building", 11.0, 56.0, 0.15, 30.0, 36.0, DARK)
+    floating_hangar(s, 96.0, 16.0)
+    floating_hangar(s, 96.0, 80.0)
+    for y in (8.0, 104.0):
+        runway_buoys(s, y, 2.0, 110.0, every=36)
+    buoy(s, 60.0, 2.5, YELLOW); buoy(s, 60.0, 13.5, YELLOW)
+    buoy(s, 52.0, 98.5, YELLOW); buoy(s, 52.0, 109.5, YELLOW)
+    return s
+
+
+SCENES["victoria_kerb"] = victoria_kerb
+SCENES["vancouver_kerb"] = vancouver_kerb
+SCENES["nanaimo"] = kerb_dock

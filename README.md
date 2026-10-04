@@ -11,6 +11,7 @@ so you can load only what you want:
 | BC Ferries: Terminals | `terminals/` | `bc-terminals.grf` | `TFBT` |
 | BC Aviation: Aircraft | `aircraft/` | `bc-aircraft.grf` | `TFBA` |
 | BC Aviation: Airports (YVR, YYJ) | `airports/` | `bc-airports.grf` | `TFBY` |
+| Coastal: Waterfront | `coastal/` | `coastal-waterfront.grf` | `TFBW` |
 
 Shared code lives in `common/`: the voxel renderer (`render.py`), NML helpers,
 and the logo/livery artwork in `common/decals/`.
@@ -132,6 +133,24 @@ intercontinental airport, then place these around it). Object classes
 | YYJ control tower | 1x1 | |
 | Floatplane dock (Harbour Air) | 1x1 | on water, DHC-2 Beaver moored |
 
+## Coastal: Waterfront
+Object classes **Waterfront: Victoria**, **Waterfront: Vancouver** and
+**Waterfront: docks & marinas**. Water objects are placed on water tiles.
+
+| Object | Tiles | Notes |
+|---|---|---|
+| Float home | 1x1, water | Fisherman's Wharf; four random colour/shape variants |
+| Fish & chips float | 1x1, water | take-out shack, picnic tables, umbrellas |
+| Fisgard Lighthouse | 1x1 | tower, red lantern, red-brick keeper's house, rocky islet |
+| Granville Island Public Market | 2x2 | corrugated sheds, rooftop sign, striped awnings, produce |
+| Ocean Concrete 'Giants' silos | 2x1 | stylised after the OSGEMEOS murals |
+| Artisan shed | 1x1 | four colours |
+| Seawall promenade | 1x1 | bike path, railing, willow (one of two variants) |
+| Floating dock walkway | 1x1, water | two variants |
+| Marina slips | 1x1, water | sailboats and motorboats, two variants |
+| Harbour ferry dock | 1x1, water | ticket hut, little harbour ferries |
+| Timber pile pier | 1x1, water | |
+
 ## Logos
 Liveries and signage use the official vector logos, fetched by
 `common/fetch_logos.py` into `common/logos/` (SVG plus a rasterised PNG):
@@ -142,7 +161,7 @@ decals the renderer projects onto hulls, stacks, fins and fuselages.
 ## Building
 ```
 make setup        # one time: .venv with nml, pillow, numpy
-make              # build every GRF (or: make vessels / terminals / aircraft / airports)
+make              # build every GRF (or: make vessels / terminals / aircraft / airports / coastal)
 make release      # releases/<set>-vN.tar for each set
 make install      # copy the release tars into OpenTTD's newgrf folder
 make scenes showcase aircraft-preview    # preview images
@@ -150,7 +169,8 @@ make decals       # regenerate common/decals artwork (macOS fonts)
 ```
 Bump the set's version (`GRF_VERSION` in `vessels/src/make_nml.py`,
 `VERSION` in `terminals/src/make_nml_terminals.py`,
-`aircraft/src/make_aircraft.py` and `airports/src/make_airports.py`) and add a line to its `CHANGELOG.txt` before
+`aircraft/src/make_aircraft.py`, `airports/src/make_airports.py` and
+`coastal/src/make_coastal.py`) and add a line to its `CHANGELOG.txt` before
 releasing.
 
 Graphics: 8bpp at 1x (fallback) plus 32bpp at 1x, 2x and 4x zoom. The

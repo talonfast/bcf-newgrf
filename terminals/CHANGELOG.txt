@@ -1,0 +1,14 @@
+BC Ferries: Terminals - changelog
+=================================
+
+v2 (2026-10-04)
+- Renderer measures each object's true height, so tall free-form parts
+  (towers, trees, roofs) can no longer be clipped.
+
+v1 (2026-10-04)
+- Split out of the vessels GRF into its own GRF (ID TFBT).
+- Tsawwassen, Swartz Bay and Southern Gulf Islands terminal objects,
+  including The Stand at Otter Bay and Gulf Islands forest.
+- Realism: weathered and stained paving, oil stains in holding lanes,
+  slender Douglas firs, arbutus.
+- Official BC Ferries logo on the terminal facade at its true proportions.

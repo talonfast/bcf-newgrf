@@ -1,0 +1,17 @@
+BC Aviation: Aircraft - changelog
+=================================
+
+v2 (2026-10-04)
+- Alaska Airlines in its new livery: aurora tail (navy, royal blue, teal),
+  aft-fuselage swoosh widening from the wing to the tail, teal nacelle
+  sweeps, large "Alaska" script; the tail face is retired. Applies to the
+  737-900ER, 737 MAX 9 and Horizon E175.
+- New: Alaska Airlines Boeing 787-9.
+
+v1 (2026-10-04)
+- Air Canada A220-300, A321, 737 MAX 8, 787-9, 777-300ER and Air Canada
+  Express Dash 8-400; Alaska 737-900ER, 737 MAX 9 and Horizon E175;
+  WestJet 737-800. Current liveries, using the airlines' official vector
+  logos (Air Canada wordmark and rondelle, Air Canada Express, Alaska,
+  Horizon, WestJet wordmark and leaf). Cockpit windscreens, flat-shaded
+  wings, fins in proportion to the fuselage.

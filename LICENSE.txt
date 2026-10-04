@@ -1,0 +1,13 @@
+BC Ferries, MV Coho & Victoria Clipper - OpenTTD NewGRF
+Copyright (c) 2026 Talon Fast. Personal use only.
+
+This set depicts real vessels and the trademarks, liveries and artwork they
+carry, which belong to their owners:
+  - BC Ferries name, logos and liveries: British Columbia Ferry Services Inc.
+  - Salish class hull art: Darlene Gait, John Marston, Thomas Cannell and
+    Maynard Johnny Jr. (renderings of their copyrighted works).
+  - MV Coho / Black Ball Ferry Line; Victoria Clipper / Clipper Navigation;
+    Pirate Pak / White Spot Restaurants; Vancouver 2010 marks: their owners.
+
+You may use this set in your own games. Do not publish or redistribute it
+(including on BaNaNaS) without permission from those rights holders.

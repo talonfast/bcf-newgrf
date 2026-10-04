@@ -1,0 +1,8 @@
+.venv/
+.nmlcache/
+__pycache__/
+*.grf
+preview.png
+dist/
+releases/
+.DS_Store

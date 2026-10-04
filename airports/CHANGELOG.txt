@@ -1,0 +1,8 @@
+BC Aviation: Airports - changelog
+=================================
+
+v1 (2026-10-04)
+- YVR control tower, YVR terminal hall, jet bridge, airport parkade,
+  apron service equipment; YYJ terminal (glass rotunda) and control
+  tower; Harbour Air floatplane dock (on water). Objects to dress
+  standard OpenTTD airports.

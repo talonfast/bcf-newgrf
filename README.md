@@ -1,7 +1,29 @@
-# BC Ferries, MV Coho & Victoria Clipper — OpenTTD NewGRF
+![Coastal GrfLink](docs/coastal-grflink.png)
 
-43 ships (27 classes plus named sister ships) from British Columbia's ferry fleet, plus Black Ball Line's MV Coho.
-Plain NewGRF (NML), so it works in vanilla OpenTTD 13+ and JGR's Patch Pack.
+OpenTTD NewGRFs for coastal British Columbia: the BC Ferries fleet and its
+terminals, plus the airlines and airports that connect the coast. Plain
+NewGRF (NML), for OpenTTD 13+ and JGR's Patch Pack. One repo, separate GRFs
+so you can load only what you want:
+
+| Set | Folder | GRF | GRF ID |
+|---|---|---|---|
+| BC Ferries: Vessels | `vessels/` | `bcferries.grf` | `TFBC` |
+| BC Ferries: Terminals | `terminals/` | `bc-terminals.grf` | `TFBT` |
+| BC Aviation: Aircraft | `aircraft/` | `bc-aircraft.grf` | `TFBA` |
+| BC Aviation: Airports (YVR, YYJ) | `airports/` | `bc-airports.grf` | `TFBY` |
+
+Shared code lives in `common/`: the voxel renderer (`render.py`), NML helpers,
+and the logo/livery artwork in `common/decals/`.
+
+## Installing
+Download the tars from the GitHub **Releases** page and drop them, as-is, into
+`~/Documents/OpenTTD/newgrf/` (Windows: `Documents\OpenTTD\newgrf\`). OpenTTD
+reads the GRFs straight from the tars. Remove an older tar of the same set
+when you update.
+
+## BC Ferries: Vessels
+43 ships (27 classes plus named sister ships) from British Columbia's ferry
+fleet, plus Black Ball Line's MV Coho and the Victoria Clipper.
 
 | Ship | Year | Pax | Vehicles | Knots |
 |---|---|---|---|---|
@@ -33,8 +55,15 @@ Figures are approximate, rounded real-world values. In-game years are the
 years each class entered service. Variants appear grouped under the parent
 ship in the build list (OpenTTD 13+/JGRPP).
 
-## Terminal objects
-Placeable from the landscaping toolbar under **BC Ferries terminals**:
+### Cargo
+Passengers by default. Refit to the vehicle deck to carry `VEHI` (FIRS-style
+"Vehicles", one per car space) or any mail/express/piece-goods/armoured/
+refrigerated cargo (two units per car space). Bulk and liquid are excluded.
+
+**Parameter "Capacity scale":** 100% (realistic), 50% or 25%.
+
+## BC Ferries: Terminals
+Placeable from the landscaping toolbar under **BC Ferries: Tsawwassen**:
 | Object | Tiles | Notes |
 |---|---|---|
 | Tsawwassen Quay Market | 2x1 | glass hall, glulam timber, from 2009 |
@@ -45,29 +74,85 @@ Placeable from the landscaping toolbar under **BC Ferries terminals**:
 | Berth wingwall and dolphin | 1x1 | on water; fenders face the neighbouring tile |
 | Passenger walkway | 1x1 | place tiles in a row |
 | Terminal control tower | 1x1 | |
+| Foot passenger and bus shelter | 1x1 | bus lane on one side |
+| Foot passenger plaza | 1x1 | two random layouts |
+| Walkway stair tower | 1x1 | walkway leaves from one side; continue with walkway tiles |
 
-`make scene` composes `scene.png`, a whole terminal from these sprites.
+Swartz Bay has its own object class:
 
-## Cargo
-Passengers by default. Refit to the vehicle deck to carry `VEHI` (FIRS-style
-"Vehicles", one per car space) or any mail/express/piece-goods/armoured/
-refrigerated cargo (two units per car space). Bulk and liquid are excluded.
+| Object | Tiles | Notes |
+|---|---|---|
+| Departures / Arrivals building | 2x1 | blue portal frames, roof-edge lettering, flags |
+| Lands End cafe and market tent | 2x1 | |
+| Traffic tower and playground | 1x1 | |
+| Foot passenger bridge (open truss) | 1x1 | place tiles in a row |
+| Foot bridge tower and gangway | 1x1 | bridge arrives from one side, gangway leaves the other |
+| Berth ramp gantry (lattice) | 1x1 | |
+| Berth wall (blue and orange fenders) | 1x1 | on water |
 
-**Parameter "Capacity scale":** 100% (realistic), 50% or 25%.
+The Southern Gulf Islands class has: Otter Bay ramp towers, island berth
+wall (red fenders, on water), timber trestle pier (on water), timber pile
+dolphins (on water), island ticket booth, **The Stand (Otter Bay)** - the
+burger stand run from a converted RV - and Gulf Islands forest (firs, arbutus,
+mossy granite; three random layouts).
 
-## Installing a release
-Drop `releases/bcferries-vN.tar` into `~/Documents/OpenTTD/newgrf/` (Windows:
-`Documents\OpenTTD\newgrf\`) as-is - OpenTTD reads the GRF straight from the
-tar. See `CHANGELOG.txt` for what changed and `LICENSE.txt` for terms.
+`make scenes` composes `terminals/scene*.png` (Tsawwassen, Swartz Bay,
+Pender Island) from these sprites.
+
+
+
+## BC Aviation: Aircraft
+| Aircraft | Airline | Year | Seats |
+|---|---|---|---|
+| Dash 8-400 (Q400) | Air Canada Express | 2011 | 78 |
+| Airbus A321 | Air Canada | 2001 | 190 |
+| Boeing 777-300ER | Air Canada | 2007 | 400 |
+| Boeing 787-9 | Air Canada | 2015 | 298 |
+| Boeing 737 MAX 8 | Air Canada | 2017 | 169 |
+| Airbus A220-300 | Air Canada | 2020 | 137 |
+| Boeing 737-900ER / 737 MAX 9 (variant) | Alaska Airlines | 2012 / 2019 | 178 |
+| Embraer 175 | Alaska (Horizon) | 2017 | 76 |
+| Boeing 787-9 | Alaska Airlines | 2025 | 300 |
+| Boeing 737-800 | WestJet | 2003 | 174 |
+
+## BC Aviation: Airports
+OpenTTD's airport layouts and aircraft movement are built into the game, so
+this set dresses a standard airport (build an international or
+intercontinental airport, then place these around it). Object classes
+**BC Aviation: YVR & airside** and **BC Aviation: YYJ & floatplanes**:
+
+| Object | Tiles | Notes |
+|---|---|---|
+| YVR control tower | 1x1 | banded teal glass cab |
+| YVR terminal hall | 2x2 | barrel-vault roof, departures curb |
+| Jet bridge | 1x1 | rotunda at the terminal side, cab towards the stand |
+| Airport parkade | 2x2 | |
+| Apron service equipment | 1x1 | two random layouts |
+| YYJ terminal | 2x1 | glass rotunda with disc roof |
+| YYJ control tower | 1x1 | |
+| Floatplane dock (Harbour Air) | 1x1 | on water, DHC-2 Beaver moored |
+
+## Logos
+Liveries and signage use the official vector logos, fetched by
+`common/fetch_logos.py` into `common/logos/` (SVG plus a rasterised PNG):
+BC Ferries, Air Canada, Air Canada Express, Alaska Airlines, Horizon,
+WestJet and the Vancouver 2010 emblem. `make decals` cuts them into the
+decals the renderer projects onto hulls, stacks, fins and fuselages.
 
 ## Building
 ```
-make setup     # one time: venv with nml, pillow, numpy
-make           # renders gfx/, generates bcferries.nml, compiles bcferries.grf
-make preview   # preview.png of all ships at 4x
-make install   # copy to ~/Documents/OpenTTD/newgrf/
-make release   # package releases/bcferries-vN.tar (bump GRF_VERSION in src/make_nml.py first)
+make setup        # one time: .venv with nml, pillow, numpy
+make              # build every GRF (or: make vessels / terminals / aircraft / airports)
+make release      # releases/<set>-vN.tar for each set
+make install      # copy the release tars into OpenTTD's newgrf folder
+make scenes showcase aircraft-preview    # preview images
+make decals       # regenerate common/decals artwork (macOS fonts)
 ```
+Bump the set's version (`GRF_VERSION` in `vessels/src/make_nml.py`,
+`VERSION` in `terminals/src/make_nml_terminals.py`,
+`aircraft/src/make_aircraft.py` and `airports/src/make_airports.py`) and add a line to its `CHANGELOG.txt` before
+releasing.
+
 Graphics: 8bpp at 1x (fallback) plus 32bpp at 1x, 2x and 4x zoom. The
 32bpp sprites need a 32bpp blitter (the default in current OpenTTD/JGRPP).
 Liveries are matched to photos: the modern BC Ferries scheme (black lower
@@ -82,8 +167,8 @@ lime-royal-navy swooshes, with the Olympic and Paralympic emblems. The
 photo panels are original artwork in the same composition, not the
 copyrighted photographs.
 
-Logos and lettering are decal masks in `src/decals/` (generated by
-`src/make_decals.py` from macOS system fonts; only needed to redo artwork)
+Logos and lettering are decal masks in `common/decals/` (generated by
+`common/make_decals.py` from macOS system fonts; only needed to redo artwork)
 projected onto the 3D hulls and stacks.
 
 Rendering: cast shadows with soft edges, ambient occlusion, glass and paint
@@ -105,3 +190,7 @@ without permission from BC Ferries and the artists.
 
 Sprites are rendered procedurally from 3D models in `src/ships_models.py` (stats in `src/ships.py`)
 (`src/render.py` is a small voxel renderer that outputs sprites in all 8 directions at 4x, then downsamples). Edit a model or stat there and rerun `make`.
+
+Airline liveries, logos and the Air Canada, Alaska Airlines and WestJet marks
+belong to those airlines; like the BC Ferries material, they are depicted
+for personal use only.

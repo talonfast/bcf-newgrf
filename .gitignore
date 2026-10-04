@@ -5,3 +5,4 @@ __pycache__/
 preview.png
 dist/
 releases/
+.DS_Store

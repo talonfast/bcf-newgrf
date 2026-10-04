@@ -22,7 +22,7 @@ from terminals import SCENES
 from tiles import cut
 
 GRFID = b"HAS\x01"
-VERSION = 2
+VERSION = 3
 NAME = "PNW Aviation"
 DESCRIPTION = (
     "{BLUE}PNW Aviation{}{BLACK}Pacific Northwest aircraft: DHC-2 Beaver, DHC-3T Turbo Otter, DHC-6 Twin Otter and "
@@ -196,14 +196,18 @@ def build(out_path: Path, vanilla_test: bool = False):
     tile_ids = {}          # id(TileGraphics) -> local airport tile ID
     tile_list = []         # TileGraphics in ID order
     layouts = {}
-    for local_id, scene_name, *_ in airports:
-        scene = SCENES[scene_name]()
-        cut_tiles = cut(scene)
-        layouts[local_id] = (scene.size, cut_tiles)
-        for t in cut_tiles.values():
-            if t is not None:
-                tile_ids[id(t)] = len(tile_list)
-                tile_list.append(t)
+    for local_id, scene_name, name, substitute, year, kind in airports:
+        # Docks come in all four rotations, so the open water for landing can be on any side.
+        rotations = range(4) if kind == 2 else [0]
+        layouts[local_id] = []
+        for rot in rotations:
+            scene = SCENES[scene_name](rot) if kind == 2 else SCENES[scene_name]()
+            cut_tiles = cut(scene)
+            layouts[local_id].append((rot * 2, scene.size, cut_tiles))  # Direction: N=0, E=2, S=4, W=6
+            for t in cut_tiles.values():
+                if t is not None:
+                    tile_ids[id(t)] = len(tile_list)
+                    tile_list.append(t)
 
     # Airport tiles: substitute = default tile 00 (apron), no animation.
     g.pseudo(b(0x00, FEAT_AIRPORTTILES, 1, len(tile_list)) + ext(0) + b(0x08) + b(0x00) * len(tile_list))
@@ -239,20 +243,21 @@ def build(out_path: Path, vanilla_test: bool = False):
         n_sprites = sum(2 if a[5] == 2 else 1 for a in airports)
         g.pseudo(skip_if_bit(0x8D, BIT_AIRPORT_MAPPED, False, n_sprites))
     for local_id, scene_name, name, substitute, year, kind in airports:
-        (sx, sy), cut_tiles = layouts[local_id]
-        layout = bytearray(b(0x00))  # rotation: north
-        for ty in range(sy):
-            for tx in range(sx):
-                t = cut_tiles[(tx, ty)]
-                if t is None:
-                    layout += b(tx, ty, 0x00)  # default tile: drawn as plain water on a seaplane terminal
-                else:
-                    layout += b(tx, ty, 0xFE) + w(tile_ids[id(t)])
-        layout += b(0x00, 0x80)
+        layout = bytearray()
+        for rotation, (sx, sy), cut_tiles in layouts[local_id]:
+            layout += b(rotation)
+            for ty in range(sy):
+                for tx in range(sx):
+                    t = cut_tiles[(tx, ty)]
+                    if t is None:
+                        layout += b(tx, ty, 0x00)  # default tile: drawn as plain water on a seaplane terminal
+                    else:
+                        layout += b(tx, ty, 0xFE) + w(tile_ids[id(t)])
+            layout += b(0x00, 0x80)
         props = [
             b(0x08, substitute),
             b(PROP_AIRPORT_SEAPLANE_TERMINAL, 0x01, kind) if not vanilla_test else b(0x0E, 4),
-            b(0x0A, 1) + d(len(layout)) + bytes(layout),
+            b(0x0A, len(layouts[local_id])) + d(len(layout)) + bytes(layout),
             b(0x0C) + w(year) + w(0xFFFF),
             b(0x10) + w(AIRPORT_NAME_TEXT + local_id),
         ]

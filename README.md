@@ -34,7 +34,8 @@ the JGRPP fork with seaplanes and seaplane terminals.
   berths on finger docks, two floating hangars and a fuel dock.
 * Both have marker buoys along the water runways. Taxiways and runways are open water.
 * **Wooden Seaplane Dock**: just a small floating wooden dock with pilings and one berth. Seaplanes land and take
-  off on the open water beside it (south-west of the dock, outside the 1 × 2 footprint), so leave water there.
+  off on the open water beside it, outside the 1 × 2 footprint. It comes in all four rotations (rotate it in the
+  airport window), so you can put that open water on whichever side of the dock has it.
   It has no hangar, so seaplanes are bought and serviced at a terminal that has one. It needs a TGTFTD build with
   seaplane docks (`tgtftd_seaplanes` feature version 2); on older builds it is hidden.
 

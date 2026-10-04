@@ -48,9 +48,24 @@ BUOY = (250, 170, 30)
 
 
 class Scene:
-    def __init__(self, size_x, size_y):
-        self.size = (size_x, size_y)
+    """
+    rotation: 0 = north (as designed), 1 = east, 2 = south, 3 = west; primitives are given in the north frame and
+    placed rotated, matching how OpenTTD rotates airport movement data (RotateAirportMovingData).
+    """
+
+    def __init__(self, size_x, size_y, rotation=0):
+        self.design_size = (size_x, size_y)
+        self.rotation = rotation
+        self.size = (size_y, size_x) if rotation in (1, 3) else (size_x, size_y)
         self.parts = {"ground": [], "building": []}
+
+    def to_world(self, x, y):
+        w0, h0 = self.design_size[0] * 16, self.design_size[1] * 16
+        return [(x, y), (y, w0 - x), (w0 - x, h0 - y), (h0 - y, x)][self.rotation]
+
+    def to_design(self, x, y):
+        w0, h0 = self.design_size[0] * 16, self.design_size[1] * 16
+        return [(x, y), (w0 - y, x), (w0 - x, h0 - y), (y, h0 - x)][self.rotation]
 
     def add(self, layer, pos, normal, rgb, gain=None):
         self.parts[layer].append(Cloud(pos, normal, rgb, gain))
@@ -75,6 +90,25 @@ def _colour(spec, x, y, z, face):
 def box(scene, layer, x0, x1, y0, y1, z0, z1, colour, top=None):
     """Axis-aligned box; only the faces the camera can see (+x, +y, +z) are sampled."""
     top = colour if top is None else top
+    if getattr(scene, "rotation", 0):
+        # Rotate the box, sample it in the world frame, colour it with design-frame coordinates.
+        (ax, ay), (bx, by) = scene.to_world(x0, y0), scene.to_world(x1, y1)
+        swap = scene.rotation in (1, 3)
+
+        def wrap(spec):
+            if not callable(spec):
+                return spec
+
+            def f(x, y, z, face):
+                dx, dy = scene.to_design(x, y)
+                return spec(dx, dy, z, {"x": "y", "y": "x"}.get(face, face) if swap else face)
+            return f
+        r, scene.rotation = scene.rotation, 0
+        try:
+            box(scene, layer, min(ax, bx), max(ax, bx), min(ay, by), max(ay, by), z0, z1, wrap(colour), wrap(top))
+        finally:
+            scene.rotation = r
+        return
     X, Y = _grid(x0, x1, y0, y1)
     Z = np.full_like(X, z1)
     scene.add(layer, np.stack([X, Y, Z], 1), np.tile([0, 0, 1.0], (len(X), 1)), _colour(top, X, Y, Z, "top"))
@@ -125,6 +159,8 @@ def heightfield(scene, layer, x0, x1, y0, y1, h, colour, skirt_to=None, skirt_co
 
 
 def cylinder(scene, layer, cx, cy, r, z0, z1, colour, top_colour=None):
+    if getattr(scene, "rotation", 0):
+        cx, cy = scene.to_world(cx, cy)
     ang = np.arange(-np.pi / 4 - np.pi / 2, np.pi * 0.75 + 1e-6, STEP / max(r, 0.2))  # camera-facing half
     zz = np.arange(z0, z1 + 1e-6, STEP, dtype=np.float32)
     A, Z = np.meshgrid(ang, zz, indexing="ij")
@@ -337,13 +373,13 @@ PLANK_GAP = (110, 80, 50)
 PILING = (104, 80, 56)
 
 
-def wooden_dock() -> Scene:
+def wooden_dock(rotation=0) -> Scene:
     """Small floating wooden seaplane dock, 1 x 2 tiles (TGTFTD seaplane dock state machine).
 
     One berth at (10, 16), aircraft facing north-west with its wings over the dock; the dock runs along the
     north-east edge (low x). Seaplanes land and take off on the water lane at x = 24, outside the footprint.
     """
-    s = Scene(1, 2)
+    s = Scene(1, 2, rotation)
     x0, x1, y0, y1 = 0.8, 5.4, 1.0, 31.0
 
     def planks(x, y, z, face):

@@ -1,5 +1,5 @@
 .venv/
-.nmlcache/
+.grfcache/
 __pycache__/
 *.grf
 preview.png

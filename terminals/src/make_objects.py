@@ -1,5 +1,5 @@
 """Render the terminal objects to gfx/obj_<id>_v<view>[_1x|_2x|_4x].png and
-write gfx/objects.json (per view: tile order + NML sprite entries).
+write gfx/objects.json (per view: tile order + sprite sheet entries).
 
 Usage: python src/make_objects.py [--preview out.png]
 """

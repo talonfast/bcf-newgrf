@@ -18,12 +18,12 @@ import math
 import os
 import numpy as np
 from PIL import Image
-from nml.palette import raw_palette_data
+from newgrf.palette import NML_DOS_PALETTE
 
 # ---------------------------------------------------------------------------
 # Palette
 # ---------------------------------------------------------------------------
-DOS_PAL = raw_palette_data[0]
+DOS_PAL = [c for rgb in NML_DOS_PALETTE for c in rgb]
 PAL_RGB = np.array(DOS_PAL, dtype=np.float32).reshape(256, 3)
 
 # Usable indices: skip 0 (transparent), company colours (198-205) and the

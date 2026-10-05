@@ -1,4 +1,4 @@
-"""Render every ship to gfx/ and write gfx/sprites.json (NML sprite entries).
+"""Render every ship to gfx/ and write gfx/sprites.json (sprite sheet entries).
 
 Per ship:  <id>.png     1x 8bpp (DOS palette) base sprites
            <id>_1x.png  1x 32bpp

@@ -1,25 +1,23 @@
 ![Coastal GrfLink](docs/coastal-grflink.png)
 
 OpenTTD NewGRFs for coastal British Columbia: the BC Ferries fleet and its
-terminals, plus the airlines and airports that connect the coast. Plain
-NewGRF (NML), for OpenTTD 13+ and JGR's Patch Pack. One repo, separate GRFs
-so you can load only what you want:
+terminals, plus the airlines, seaplanes and airports that connect the coast.
+For OpenTTD 13+ and JGR's Patch Pack; the Harbour Air seaplanes and the
+seaplane terminals need [TGTFTD](https://github.com/teagangosling/TGTFTD), the
+JGRPP fork with seaplanes. One repo, separate GRFs so you can load only what
+you want:
 
 | Set | Folder | GRF | GRF ID |
 |---|---|---|---|
 | BC Ferries: Vessels | `vessels/` | `bcferries.grf` | `TFBC` |
 | BC Ferries: Terminals | `terminals/` | `bc-terminals.grf` | `TFBT` |
-| BC Aviation: Aircraft | `aircraft/` | `bc-aircraft.grf` | `TFBA` |
-| BC Aviation: Airports (YVR, YYJ) | `airports/` | `bc-airports.grf` | `TFBY` |
+| BC Aviation: Aircraft (airliners, seaplanes, S-76) | `aircraft/` | `bc-aircraft.grf` | `TFBA` |
+| BC Aviation: Airports (YVR, YYJ, seaplane terminals) | `airports/` | `bc-airports.grf` | `TFBY` |
 | Coastal: Waterfront | `coastal/` | `coastal-waterfront.grf` | `TFBW` |
-| PNW Aviation: seaplanes and seaplane terminals (TGTFTD) | `pnw-aviation/` | `pnw_aviation.grf` | `HAS\x01` |
 
-Shared code lives in `common/`: the voxel renderer (`render.py`), NML helpers,
-and the logo/livery artwork in `common/decals/`.
-
-`pnw-aviation/` is separate: Harbour Air seaplanes, the Helijet S-76 and
-seaplane terminals for [TGTFTD](https://github.com/teagangosling/TGTFTD), built
-by its own Python GRF writer instead of NML. See `pnw-aviation/README.md`.
+Shared code lives in `common/`: the GRF writer (`newgrf/`), the voxel
+renderer (`render.py`), the point-cloud renderer of the seaplanes and seaplane
+terminals (`pointcloud.py`), and the logo/livery artwork in `common/decals/`.
 
 ## Installing
 Download the tars from the GitHub **Releases** page and drop them, as-is, into
@@ -121,6 +119,31 @@ Pender Island) from these sprites.
 | Boeing 787-9 | Alaska Airlines | 2025 | 300 |
 | Boeing 737-800 | WestJet | 2003 | 174 |
 
+### Seaplanes and helicopter
+| Aircraft | Livery | Type | Passengers | Mail | Game speed | Introduced |
+|---|---|---|---|---|---|---|
+| DHC-2 Beaver | Harbour Air | seaplane | 6 | 1 | 184 mph | 1948 |
+| DHC-6 Twin Otter | Harbour Air | seaplane | 19 | 3 | 216 mph | 1966 |
+| Sikorsky S-76 | Helijet | helicopter | 12 | 2 | 200 mph | 1979 |
+| DHC-3T Turbo Otter | Harbour Air | seaplane | 14 | 2 | 192 mph | 1980 |
+| Cessna 208B Grand Caravan EX | Harbour Air | seaplane | 9 | 2 | 208 mph | 2013 |
+
+* The seaplanes need TGTFTD 0.2.0 or newer (`tgtftd_seaplanes` feature
+  version 3) and use its seaplane terminals (BC Aviation: Airports). In other
+  builds they are hidden, and only the S-76 remains.
+* Passenger numbers come from the Harbour Air and Helijet fleet pages. Speeds
+  are raised to about 200 mph so the aircraft keep up in the game (real cruise
+  speeds are 180-296 km/h for the seaplanes and 135 kn for the S-76); the
+  faster types stay slightly faster.
+* All seaplanes are *small* aircraft, so they are safe at short-strip terminals.
+* The S-76 is a normal helicopter: it uses land heliports and airports, not
+  seaplane terminals, and works in any OpenTTD build. It has its own rotor
+  sprites (stopped, plus three spinning frames).
+* Harbour Air: white fuselage; navy rear fuselage and fin with a yellow
+  pinstripe and yellow "HA" logo; navy wings, nacelles and Caravan struts;
+  white floats with red bands. Helijet: white nose and cockpit; metallic blue
+  body behind a raked split with a red stripe.
+
 ## BC Aviation: Airports
 OpenTTD's airport layouts and aircraft movement are built into the game, so
 this set dresses a standard airport (build an international or
@@ -137,6 +160,37 @@ intercontinental airport, then place these around it). Object classes
 | YYJ terminal | 2x1 | glass rotunda with disc roof |
 | YYJ control tower | 1x1 | |
 | Floatplane dock (Harbour Air) | 1x1 | on water, DHC-2 Beaver moored |
+
+### Seaplane terminals (TGTFTD)
+Real airports for the seaplanes, built on water. They need TGTFTD 0.2.0 or
+newer; in other builds they are hidden.
+
+| Terminal | TGTFTD terminal type | Size | Slots | Hangars | Available |
+|---|---|---|---|---|---|
+| Victoria Harbour Seaplane Terminal | kerb terminal with hangar | 5 x 4 | 5 | 1 | 1950 |
+| Vancouver (Coal Harbour) Seaplane Terminal | large kerb terminal | 7 x 7 | 8 | 2 | 1950 |
+| Nanaimo Harbour Flight Centre | kerb dock | 6 x 3 | 8 | none | 1950 |
+| Wooden Seaplane Dock | seaplane dock | 1 x 2 | 1 | none | 1920 |
+
+All terminals are kerb style: seaplanes pull up alongside a long dock at the
+first free slot and leave forward along a one-way lane, and every water runway
+is split so one seaplane can land while another takes off.
+
+* **Victoria**: the floating terminal barge with its wavy green living roof, a
+  floating hangar, and a long dock with five slots in front of them.
+* **Vancouver**: a central pier with the two-storey glass terminal and the
+  control tower, four slots along each face, two floating hangars and two
+  water runways (one per side of the pier).
+* **Nanaimo**: a long floating dock with eight slots and a small waiting
+  shelter; no hangar. Four rotations.
+* **Wooden Seaplane Dock**: a small floating wooden dock with one berth.
+  Seaplanes land and take off on the open water beside it, outside the 1 x 2
+  footprint; four rotations, so that water can be on any side.
+
+The docks are drawn as ground overlays on the game's own water, so sea, canal
+and river water show through. Harbour Air and Helijet names and liveries are
+used for a fan-made game add-on; this project isn't affiliated with either
+company.
 
 ## Coastal: Waterfront
 Object classes **Waterfront: Victoria**, **Waterfront: Vancouver** and
@@ -167,20 +221,50 @@ WestJet and the Vancouver 2010 emblem. `make decals` cuts them into the
 decals the renderer projects onto hulls, stacks, fins and fuselages.
 
 ## Building
+Needs Python 3.10+ with `numpy` and `Pillow` (and `scipy` to re-render the
+seaplanes and seaplane terminals). No NML or grfcodec: `common/newgrf/`
+writes the GRFs directly (container version 2, 8bpp and 32bpp sprites at 1x,
+2x and 4x zoom).
 ```
-make setup        # one time: .venv with nml, pillow, numpy
-make              # build every GRF (or: make vessels / terminals / aircraft / airports / coastal)
-make release      # releases/<set>-vN.tar for each set
-make install      # copy the release tars into OpenTTD's newgrf folder
-make scenes showcase aircraft-preview    # preview images
-make decals       # regenerate common/decals artwork (macOS fonts)
-make pnw-aviation # PNW Aviation GRF (python pnw-aviation/src/build.py)
+python build.py                  # build every GRF (or: python build.py vessels aircraft ...)
+python tools/release.py          # build, then package releases/<set>-vN.tar for each set
+python tools/release.py --install                      # ... and copy them into $OPENTTD_NEWGRF
+python tools/release.py aircraft --upload --notes ".." # ... and publish GitHub release bc-aircraft-vN
 ```
-Bump the set's version (`GRF_VERSION` in `vessels/src/make_nml.py`,
-`VERSION` in `terminals/src/make_nml_terminals.py`,
-`aircraft/src/make_aircraft.py`, `airports/src/make_airports.py` and
-`coastal/src/make_coastal.py`) and add a line to its `CHANGELOG.txt` before
-releasing.
+With make: `make setup` (one time: `.venv` with pillow, numpy, scipy), `make`,
+`make release`, `make install`, `make scenes showcase aircraft-preview
+seaplane-preview` (preview images) and `make decals` (regenerate
+common/decals artwork, macOS fonts).
+
+The rendered sprite sheets in each set's `gfx/` are committed, so a build
+doesn't render anything. `make` re-renders a set when its models change; by
+hand: `vessels/src/make_gfx.py`, `terminals/src/make_objects.py`,
+`aircraft/src/make_aircraft.py` and `make_seaplanes.py`,
+`airports/src/make_airports.py` and `make_seaplane_terminals.py`,
+`coastal/src/make_coastal.py`. Sprite encoding is cached in `.grfcache/`.
+
+Bump the set's `VERSION` in its `src/build_<set>.py` and add a line to its
+`CHANGELOG.txt` before releasing. Item IDs are append only (list position =
+ID); the seaplanes and the S-76 use aircraft IDs 0x60-0x64, after the default
+aircraft, so they replace none of them.
+
+`python aircraft/src/build_aircraft.py test.grf --vanilla-test` (and the same
+for `airports/src/build_airports.py`) builds a test version that keeps the
+seaplanes and kerb terminals visible in stock OpenTTD, as ordinary small
+planes and land airports, to check their graphics without TGTFTD. Don't ship
+it.
+
+`python tools/compare_grf.py NEW.grf REF.grf [REF2.grf ...]` compares GRFs by
+behaviour: properties, strings, sprites (pixel by pixel) and every graphics
+and callback chain, evaluated for all the values of the variables it reads.
+
+TGTFTD support (`common/newgrf/tgtftd.py`): Action 14 property mappings for
+`aircraft_is_seaplane` and `airport_seaplane_terminal`, and feature tests for
+`tgtftd_seaplanes` versions 2 (seaplane docks) and 3 (kerb docks); Action 7 on
+the bits they set skips the TGTFTD-only parts in other builds. Seaplane
+terminal tiles (feature 11) use sprite layouts on ground sprite `0x0FDD`, so the
+game draws its real water underneath. Seaplane scale: 1 world unit (1/16 tile)
+= 1.6 m horizontally, 1.6 height pixels per metre.
 
 Graphics: 8bpp at 1x (fallback) plus 32bpp at 1x, 2x and 4x zoom. The
 32bpp sprites need a 32bpp blitter (the default in current OpenTTD/JGRPP).

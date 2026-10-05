@@ -10,45 +10,48 @@
 
 PY     := $(if $(wildcard .venv/bin/python),$(CURDIR)/.venv/bin/python,python3)
 NEWGRF := build.py $(wildcard common/newgrf/*.py)
-COMMON := common/render.py common/pirate.py $(wildcard common/decals/*.png)
+COMMON := common/render.py common/pirate.py common/newgrf/palette.py $(wildcard common/decals/*.png)
+CLOUD  := common/pointcloud.py common/newgrf/palette.py common/newgrf/sprites.py
+# Re-renders gfx/ only when the inputs' contents changed (file times alone change on every checkout).
+RENDER := $(PY) tools/render_if_changed.py
 
 all: vessels terminals aircraft airports coastal
 
 # ---- vessels ---------------------------------------------------------------
 vessels/gfx/sprites.json: $(COMMON) vessels/src/make_gfx.py vessels/src/ships.py vessels/src/ships_models.py
-	$(PY) vessels/src/make_gfx.py
-vessels/bcferries.grf: vessels/gfx/sprites.json vessels/src/build_vessels.py vessels/src/ships.py $(NEWGRF)
+	$(RENDER) $@ vessels/src/make_gfx.py $^
+vessels/bcferries.grf: vessels/gfx/sprites.json vessels/src/build_vessels.py vessels/src/ships.py vessels/src/ships_models.py $(NEWGRF)
 	$(PY) build.py vessels
 vessels: vessels/bcferries.grf
 
 # ---- terminals -------------------------------------------------------------
 terminals/gfx/objects.json: $(COMMON) terminals/src/buildings.py terminals/src/make_objects.py
-	$(PY) terminals/src/make_objects.py
+	$(RENDER) $@ terminals/src/make_objects.py $^
 terminals/bc-terminals.grf: terminals/gfx/objects.json terminals/src/build_terminals.py $(NEWGRF)
 	$(PY) build.py terminals
 terminals: terminals/bc-terminals.grf
 
 # ---- aircraft (airliners, and the TGTFTD seaplanes and S-76) ---------------
 aircraft/gfx/aircraft.json: $(COMMON) aircraft/src/aircraft.py aircraft/src/make_aircraft.py
-	$(PY) aircraft/src/make_aircraft.py
-aircraft/gfx/seaplanes.json: common/pointcloud.py aircraft/src/seaplanes.py aircraft/src/seaplane_sprites.py aircraft/src/make_seaplanes.py
-	$(PY) aircraft/src/make_seaplanes.py
+	$(RENDER) $@ aircraft/src/make_aircraft.py $^
+aircraft/gfx/seaplanes.json: $(CLOUD) aircraft/src/seaplanes.py aircraft/src/seaplane_sprites.py aircraft/src/make_seaplanes.py
+	$(RENDER) $@ aircraft/src/make_seaplanes.py $^
 aircraft/bc-aircraft.grf: aircraft/gfx/aircraft.json aircraft/gfx/seaplanes.json aircraft/src/build_aircraft.py $(NEWGRF)
 	$(PY) build.py aircraft
 aircraft: aircraft/bc-aircraft.grf
 
 # ---- airports (objects, and the TGTFTD seaplane terminals) -----------------
-airports/gfx/objects.json: $(COMMON) airports/src/airport_buildings.py airports/src/make_airports.py terminals/src/buildings.py
-	$(PY) airports/src/make_airports.py
-airports/gfx/seaplane_terminals.json: common/pointcloud.py airports/src/seaplane_terminals.py airports/src/seaplane_tiles.py airports/src/make_seaplane_terminals.py
-	$(PY) airports/src/make_seaplane_terminals.py
+airports/gfx/objects.json: $(COMMON) airports/src/airport_buildings.py airports/src/make_airports.py terminals/src/buildings.py terminals/src/make_objects.py
+	$(RENDER) $@ airports/src/make_airports.py $^
+airports/gfx/seaplane_terminals.json: $(CLOUD) airports/src/seaplane_terminals.py airports/src/seaplane_tiles.py airports/src/make_seaplane_terminals.py
+	$(RENDER) $@ airports/src/make_seaplane_terminals.py $^
 airports/bc-airports.grf: airports/gfx/objects.json airports/gfx/seaplane_terminals.json airports/src/build_airports.py $(NEWGRF)
 	$(PY) build.py airports
 airports: airports/bc-airports.grf
 
 # ---- coastal waterfront ----------------------------------------------------
-coastal/gfx/objects.json: $(COMMON) coastal/src/waterfront.py coastal/src/make_coastal.py terminals/src/buildings.py
-	$(PY) coastal/src/make_coastal.py
+coastal/gfx/objects.json: $(COMMON) coastal/src/waterfront.py coastal/src/make_coastal.py terminals/src/buildings.py terminals/src/make_objects.py
+	$(RENDER) $@ coastal/src/make_coastal.py $^
 coastal/coastal-waterfront.grf: coastal/gfx/objects.json coastal/src/build_coastal.py $(NEWGRF)
 	$(PY) build.py coastal
 coastal: coastal/coastal-waterfront.grf

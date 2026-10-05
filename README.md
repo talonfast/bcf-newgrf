@@ -25,6 +25,11 @@ Download the tars from the GitHub **Releases** page and drop them, as-is, into
 reads the GRFs straight from the tars. Remove an older tar of the same set
 when you update.
 
+**Had PNW Aviation?** Its seaplanes, S-76 and seaplane terminals are now part
+of BC Aviation: Aircraft v3 and Airports v3. Remove the PNW Aviation GRF
+(`pnw_aviation.grf`, GRF ID `HAS\x01`) from your newgrf folder and your
+game's NewGRF list, or you'll get every seaplane and terminal twice.
+
 ## BC Ferries: Vessels
 43 ships (27 classes plus named sister ships) from British Columbia's ferry
 fleet, plus Black Ball Line's MV Coho and the Victoria Clipper.
@@ -221,7 +226,7 @@ WestJet and the Vancouver 2010 emblem. `make decals` cuts them into the
 decals the renderer projects onto hulls, stacks, fins and fuselages.
 
 ## Building
-Needs Python 3.10+ with `numpy` and `Pillow` (and `scipy` to re-render the
+Needs Python 3.9+ with `numpy` and `Pillow` (and `scipy` to re-render the
 seaplanes and seaplane terminals). No NML or grfcodec: `common/newgrf/`
 writes the GRFs directly (container version 2, 8bpp and 32bpp sprites at 1x,
 2x and 4x zoom).
@@ -231,17 +236,25 @@ python tools/release.py          # build, then package releases/<set>-vN.tar for
 python tools/release.py --install                      # ... and copy them into $OPENTTD_NEWGRF
 python tools/release.py aircraft --upload --notes ".." # ... and publish GitHub release bc-aircraft-vN
 ```
+`--upload` only runs from a clean, pushed commit, and refuses to put a new
+build under an existing release tag at another commit: bump `VERSION` first.
 With make: `make setup` (one time: `.venv` with pillow, numpy, scipy), `make`,
 `make release`, `make install`, `make scenes showcase aircraft-preview
 seaplane-preview` (preview images) and `make decals` (regenerate
 common/decals artwork, macOS fonts).
 
 The rendered sprite sheets in each set's `gfx/` are committed, so a build
-doesn't render anything. `make` re-renders a set when its models change; by
-hand: `vessels/src/make_gfx.py`, `terminals/src/make_objects.py`,
+doesn't render anything. `make` re-renders a set when its models change
+(by content: each `gfx/*.json` has a committed `.inputs` stamp with a hash of
+the files it was rendered from, so a fresh clone or a pull doesn't trigger a
+render); by hand: `vessels/src/make_gfx.py`, `terminals/src/make_objects.py`,
 `aircraft/src/make_aircraft.py` and `make_seaplanes.py`,
 `airports/src/make_airports.py` and `make_seaplane_terminals.py`,
-`coastal/src/make_coastal.py`. Sprite encoding is cached in `.grfcache/`.
+`coastal/src/make_coastal.py` (then `make` writes the new stamp). Renders
+aren't bit-for-bit reproducible across machines: different numpy/scipy versions
+can change a handful of 8bpp pixels. Sprite encoding is cached in `.grfcache/`
+(by sprite content and by the encoder's source, so editing the encoder
+re-encodes everything).
 
 Bump the set's `VERSION` in its `src/build_<set>.py` and add a line to its
 `CHANGELOG.txt` before releasing. Item IDs are append only (list position =
@@ -301,8 +314,9 @@ Johnny Jr. These are the artists' copyrighted works: this set is for
 personal use, and it should not be published (e.g. on BaNaNaS) with them
 without permission from BC Ferries and the artists.
 
-Sprites are rendered procedurally from 3D models in `src/ships_models.py` (stats in `src/ships.py`)
-(`src/render.py` is a small voxel renderer that outputs sprites in all 8 directions at 4x, then downsamples). Edit a model or stat there and rerun `make`.
+Sprites are rendered procedurally from 3D models in `vessels/src/ships_models.py` (stats in
+`vessels/src/ships.py`) by `common/render.py`, a small voxel renderer that outputs sprites in all 8
+directions at 4x, then downsamples. Edit a model or stat there and rerun `make`.
 
 Airline liveries, logos and the Air Canada, Alaska Airlines and WestJet marks
 belong to those airlines; like the BC Ferries material, they are depicted

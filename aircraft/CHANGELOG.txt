@@ -1,12 +1,14 @@
 BC Aviation: Aircraft - changelog
 =================================
 
-v3 (2026-10-04)
+v3 (2026-10-05)
 - New: Harbour Air seaplanes for TGTFTD: DHC-2 Beaver, DHC-3T Turbo Otter,
   DHC-6 Twin Otter and Cessna 208B Grand Caravan EX (from PNW Aviation v4).
   Without TGTFTD they are hidden.
 - New: Helijet Sikorsky S-76 helicopter with its own rotor, in any build.
 - The airliners are unchanged.
+- Replaces PNW Aviation: remove pnw_aviation.grf (GRF ID HAS\x01), or the
+  seaplanes appear twice.
 
 v2 (2026-10-04)
 - Alaska Airlines in its new livery: aurora tail (navy, royal blue, teal),

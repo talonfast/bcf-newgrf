@@ -8,13 +8,16 @@
 
 The header (Action 14 static info, Action 8, the D0xx strings) is put in front of the body when the
 file is written. Identical sprites are stored once. Sprite encoding runs on all cores and is cached
-by content under .grfcache/ in the repository, so rebuilds only encode what changed.
+by content (and by the encoder's own source, so changing sprites.py or lz77.py re-encodes everything)
+under .grfcache/ in the repository, so rebuilds only encode what changed.
 """
 
+import hashlib
 import os
 import time
 from concurrent.futures import ProcessPoolExecutor
 
+from . import lz77
 from . import sprites as S
 from .actions import action4_d0xx, b, d, w
 from .text import encode as text
@@ -137,8 +140,20 @@ class GRF:
         return out
 
 
+def _encoder_version():
+    """Hash of the encoder's source, so editing it invalidates the cached encodings."""
+    h = hashlib.sha1()
+    for mod in (S, lz77):
+        with open(mod.__file__, "rb") as f:
+            h.update(f.read())
+    return h.digest()
+
+
+ENCODER_VERSION = _encoder_version()
+
+
 def _cache_path(key):
-    h = key.hex()
+    h = hashlib.sha1(ENCODER_VERSION + key).hexdigest()
     return os.path.join(CACHE, h[:2], h[2:] + ".bin")
 
 

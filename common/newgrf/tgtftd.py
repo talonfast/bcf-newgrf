@@ -6,7 +6,7 @@ tgtftd_seaplanes feature has at least the given version. Action 7 on those bits 
 TGTFTD-only parts in other builds.
 """
 
-from .actions import b, w
+from .actions import b, fits, w
 from .text import encode as text
 
 PROP_AIRCRAFT_IS_SEAPLANE = 0xF0
@@ -43,4 +43,5 @@ def mapped(prop, values):
 
 def skip_if_bit(variable, bit, is_set, num_sprites):
     """Action 7: skip num_sprites if the bit of the global variable is set (is_set) or clear."""
-    return b(0x07, variable, 0x01, 0x00 if is_set else 0x01, bit, num_sprites)
+    # 0 would skip to the end of the file.
+    return b(0x07, variable, 0x01, 0x00 if is_set else 0x01, bit, fits(num_sprites, "action 7 skip", low=1))

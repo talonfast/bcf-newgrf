@@ -35,6 +35,13 @@ def d(value):
     return struct.pack("<I", value & 0xFFFFFFFF)
 
 
+def fits(n, what, high=0xFF, low=0):
+    """A count or ID that must fit its field; b() alone would silently wrap it."""
+    if not low <= n <= high:
+        raise ValueError(f"{what} is {n}, must be {low}..{high}")
+    return n
+
+
 def ext(value):
     """Extended byte: one byte, or FF followed by a word."""
     return bytes([value]) if value < 0xFF else b"\xff" + w(value)
@@ -87,7 +94,8 @@ def aircraft_speed_kmh(kmh):
 
 def action0(feature, first_id, props, count=1):
     """props: [(property number, value bytes for all count IDs)]"""
-    return b(0x00, feature, len(props), count) + ext(first_id) + b"".join(b(p) + v for p, v in props)
+    return (b(0x00, feature, fits(len(props), "action 0 properties"), fits(count, "action 0 IDs", low=1))
+            + ext(first_id) + b"".join(b(p) + v for p, v in props))
 
 
 def action1(feature, num_sets, sprites_per_set, first_set=0):
@@ -98,23 +106,28 @@ def action1(feature, num_sets, sprites_per_set, first_set=0):
 
 def action2_vehicle(feature, set_id, loaded, loading):
     """Basic action 2 for vehicles: lists of sprite set numbers."""
-    return b(0x02, feature, set_id, len(loaded), len(loading)) + b"".join(w(s) for s in loaded + loading)
+    return (b(0x02, feature, fits(set_id, "action 2 set ID"), fits(len(loaded), "loaded sets"),
+              fits(len(loading), "loading sets")) + b"".join(w(s) for s in loaded + loading))
 
 
 def action3(feature, ids, default, cargo=(), override=False):
     """ids: item IDs; cargo: [(cargo type, set ID)]; default: set ID."""
-    out = b(0x03, feature, len(ids) | (0x80 if override else 0)) + b"".join(ext(i) for i in ids)
-    out += b(len(cargo)) + b"".join(b(c) + w(s) for c, s in cargo)
+    out = b(0x03, feature, fits(len(ids), "action 3 IDs", 0x7F, 1) | (0x80 if override else 0))
+    out += b"".join(ext(i) for i in ids)
+    out += b(fits(len(cargo), "action 3 cargo types")) + b"".join(b(c) + w(s) for c, s in cargo)
     return out + w(default)
 
 
 def action4_names(feature, first_id, names):
     """Names of vehicles etc. by item ID (language "any")."""
-    return b(0x04, feature, 0x7F, len(names)) + ext(first_id) + b"".join(text(s) for s in names)
+    # Byte IDs only: an ID from 0xFF needs the word form (language ID | 0x80).
+    return (b(0x04, feature, 0x7F, fits(len(names), "action 4 names", low=1),
+              fits(first_id, "action 4 ID", 0xFE)) + b"".join(text(s) for s in names))
 
 
 def action4_d0xx(first_id, strings, feature=0x00):
-    return b(0x04, feature, 0xFF, len(strings)) + w(first_id) + b"".join(text(s) for s in strings)
+    return (b(0x04, feature, 0xFF, fits(len(strings), "action 4 strings", low=1)) + w(first_id)
+            + b"".join(text(s) for s in strings))
 
 
 def cargo_table(labels):
@@ -167,10 +180,10 @@ def varaction2(feature, set_id, adjusts, ranges, default, scope="self", size=4):
     set ID or cb(value). With no ranges the calculated value itself is the callback result."""
     type_byte = {("self", 1): 0x81, ("self", 2): 0x85, ("self", 4): 0x89,
                  ("parent", 1): 0x82, ("parent", 2): 0x86, ("parent", 4): 0x8A}[(scope, size)]
-    out = b(0x02, feature, set_id, type_byte)
+    out = b(0x02, feature, fits(set_id, "action 2 set ID"), type_byte)
     for i, a in enumerate(adjusts):
         out += a.encode(size, i == 0, i == len(adjusts) - 1)
-    out += b(len(ranges))
+    out += b(fits(len(ranges), "varaction2 ranges"))
     for result, lo, hi in ranges:
         out += w(result) + _sized(lo, size) + _sized(hi, size)
     return out + w(default)

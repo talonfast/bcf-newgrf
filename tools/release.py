@@ -9,11 +9,14 @@
 4. --upload: creates (or updates) the GitHub release <release>-v<VERSION> per set on the repository of
    the "origin" remote (or --repo) and uploads the tar. Re-running with the same VERSION replaces that
    release's tar. Authentication uses the GitHub credentials stored for git (git credential fill).
+   Upload refuses to run from a working tree with uncommitted changes, from a commit that isn't
+   pushed to origin, or when the release already exists at a different commit (bump VERSION).
 
 Releases are made locally, not by GitHub Actions. Bump the set's VERSION in its src/build_<set>.py and
 add a line to its CHANGELOG.txt first.
 """
 
+import argparse
 import glob
 import json
 import os
@@ -67,6 +70,9 @@ def github_token() -> str:
     out = subprocess.run(["git", "credential", "fill"], input="protocol=https\nhost=github.com\n\n",
                          capture_output=True, text=True, check=True, cwd=ROOT).stdout
     fields = dict(line.split("=", 1) for line in out.splitlines() if "=" in line)
+    if not fields.get("password"):
+        raise SystemExit("no GitHub credentials stored for git (git credential fill); "
+                         "log in with gh auth login")
     return fields["password"]
 
 
@@ -79,7 +85,7 @@ def api(method, url, token, data=None, content_type="application/json"):
             raw = r.read()
             return json.loads(raw) if raw else None
     except urllib.error.HTTPError as e:
-        if e.code == 404:
+        if e.code == 404 and method == "GET":
             return None
         raise RuntimeError(f"{method} {url}: {e.code} {e.read().decode(errors='replace')}") from e
 
@@ -91,6 +97,34 @@ def origin_repo():
     if not m:
         raise SystemExit(f"origin ({url}) is not a GitHub repository; use --repo owner/name")
     return m.group(1)
+
+
+def git(*args):
+    return subprocess.run(["git", *args], capture_output=True, text=True, check=True, cwd=ROOT).stdout.strip()
+
+
+def remote_tag_commit(tag):
+    """Commit the tag points to on origin, or None."""
+    out = git("ls-remote", "--tags", "origin", f"refs/tags/{tag}", f"refs/tags/{tag}^{{}}")
+    refs = dict(reversed(line.split("\t")) for line in out.splitlines())
+    return refs.get(f"refs/tags/{tag}^{{}}") or refs.get(f"refs/tags/{tag}")
+
+
+def check_upload(names):
+    """Fail before building if the releases wouldn't match a pushed commit. Returns HEAD."""
+    if git("status", "--porcelain"):
+        raise SystemExit("--upload: the working tree has uncommitted changes; commit (and push) them first")
+    head = git("rev-parse", "HEAD")
+    git("fetch", "--quiet", "origin")
+    if not git("branch", "-r", "--contains", head):
+        raise SystemExit("--upload: HEAD is not on any branch of origin; push it first")
+    for name in names:
+        tag = f"{build.SETS[name][3]}-v{build.version(name)}"
+        at = remote_tag_commit(tag)
+        if at and at != head:
+            raise SystemExit(f"--upload: {tag} already exists at {at[:7]}, not HEAD {head[:7]}; "
+                             f"bump VERSION in {build.SETS[name][0]}/{build.SETS[name][4]}")
+    return head
 
 
 def upload(name, path, repo, notes, token, head):
@@ -117,38 +151,33 @@ def upload(name, path, repo, notes, token, head):
 
 
 def main():
-    args = sys.argv[1:]
-
-    def option(flag):
-        if flag in args:
-            i = args.index(flag)
-            value = args[i + 1]
-            del args[i:i + 2]
-            return value
-        return None
-
-    notes = option("--notes") or ""
-    repo = option("--repo")
-    target = option("--install-dir") or os.environ.get("OPENTTD_NEWGRF") or os.path.join(
-        os.path.expanduser("~"), "Documents", "OpenTTD", "newgrf")
-    do_install, do_upload = "--install" in args, "--upload" in args
-    names = [a for a in args if not a.startswith("--")] or list(build.SETS)
+    ap = argparse.ArgumentParser(description="Build, package, install and publish releases.")
+    ap.add_argument("sets", nargs="*", metavar="set",
+                    help=f"sets to release (default: all): {', '.join(build.SETS)}")
+    ap.add_argument("--install", action="store_true", help="copy the tars into OpenTTD's newgrf folder")
+    ap.add_argument("--install-dir",
+                    help="newgrf folder (default: $OPENTTD_NEWGRF or ~/Documents/OpenTTD/newgrf)")
+    ap.add_argument("--upload", action="store_true", help="create or update the GitHub releases")
+    ap.add_argument("--notes", default="", help="release notes")
+    ap.add_argument("--repo", help="owner/name (default: the origin remote)")
+    args = ap.parse_args()
+    names = args.sets or list(build.SETS)
     unknown = [n for n in names if n not in build.SETS]
     if unknown:
-        sys.exit(f"unknown set(s) {', '.join(unknown)}; sets: {', '.join(build.SETS)}")
+        ap.error(f"unknown set(s) {', '.join(unknown)}; sets: {', '.join(build.SETS)}")
+    target = args.install_dir or os.environ.get("OPENTTD_NEWGRF") or os.path.join(
+        os.path.expanduser("~"), "Documents", "OpenTTD", "newgrf")
 
+    head = check_upload(names) if args.upload else None
     build.build(names)
     paths = {name: package(name) for name in names}
-    if do_install:
+    if args.install:
         install(paths.values(), target)
-    if do_upload:
-        head = subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True, text=True, cwd=ROOT).stdout.strip()
-        if subprocess.run(["git", "status", "--porcelain"], capture_output=True, text=True, cwd=ROOT).stdout.strip():
-            print("warning: working tree has uncommitted changes; the releases are tagged at the last commit")
+    if args.upload:
         token = github_token()
-        repo = repo or origin_repo()
+        repo = args.repo or origin_repo()
         for name in names:
-            upload(name, paths[name], repo, notes, token, head)
+            upload(name, paths[name], repo, args.notes, token, head)
 
 
 if __name__ == "__main__":

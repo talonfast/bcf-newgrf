@@ -1,12 +1,14 @@
 BC Aviation: Airports - changelog
 =================================
 
-v3 (2026-10-04)
+v3 (2026-10-05)
 - New: seaplane terminals for TGTFTD (from PNW Aviation v4): Victoria
   Harbour Seaplane Terminal, Vancouver (Coal Harbour) Seaplane Terminal,
   Nanaimo Harbour Flight Centre and a wooden seaplane dock. Without TGTFTD
   they are hidden.
 - The objects are unchanged.
+- Replaces PNW Aviation: remove pnw_aviation.grf (GRF ID HAS\x01), or the
+  seaplane terminals appear twice.
 
 v2 (2026-10-04)
 - Renderer measures each object's true height, so tall free-form parts
